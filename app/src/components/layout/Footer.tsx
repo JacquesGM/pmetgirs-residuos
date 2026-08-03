@@ -34,7 +34,7 @@ const colunas = [
     titulo: 'Dados abertos',
     itens: [
       'Os dados públicos do PMetGIRS são estruturados em arquivos JSON, com fonte e data de referência.',
-      'Disponibilização de um portal de dados abertos está prevista para versões futuras.',
+      'Baixe os dados de indicadores, projetos, infraestrutura e municípios em JSON diretamente nas páginas correspondentes.',
     ],
   },
 ];

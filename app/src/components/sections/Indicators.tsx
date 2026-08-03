@@ -5,6 +5,7 @@ import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
+import { DownloadButton } from '../ui/DownloadButton';
 
 const indicadores = indicadoresData as Indicador[];
 
@@ -26,6 +27,10 @@ export function Indicators() {
       title="Indicadores de destaque"
       subtitle="Números que resumem a escala do desafio metropolitano de resíduos sólidos. Cada indicador informa fonte, período e situação de validação."
     >
+      <div className="mb-6">
+        <DownloadButton filename="indicadores-pmetgirs.json" data={indicadores} />
+      </div>
+
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {indicadores.map((indicador) => {
           const { prefixo, valor } = splitValorExibicao(indicador.valorExibicao);

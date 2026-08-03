@@ -7,6 +7,8 @@ import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 import { PopulationChart } from '../charts/PopulationChart';
+import { MunicipalityComparator } from './MunicipalityComparator';
+import { DownloadButton } from '../ui/DownloadButton';
 
 const municipios = municipiosData as Municipio[];
 
@@ -25,6 +27,10 @@ export function MetropolitanMap() {
       title="Mapa da Região Metropolitana"
       subtitle="Selecione um município para consultar população, área e situação de dados. Onde não houver informação consolidada de geração de resíduos ou projetos, a página indica 'Informação em atualização'."
     >
+      <div className="mb-6">
+        <DownloadButton filename="municipios-pmetgirs.json" data={municipios} />
+      </div>
+
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="h-[420px] overflow-hidden rounded-xl border border-neutral-200 sm:h-[480px]">
           <MapContainer
@@ -103,6 +109,10 @@ export function MetropolitanMap() {
       <Card className="mt-6">
         <PopulationChart />
       </Card>
+
+      <div className="mt-6">
+        <MunicipalityComparator />
+      </div>
     </Section>
   );
 }

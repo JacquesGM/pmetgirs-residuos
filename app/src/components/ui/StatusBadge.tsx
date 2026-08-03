@@ -65,3 +65,5 @@ export function StatusBadge({ status, className = '' }: { status: StatusKey; cla
 export function statusLabel(status: StatusKey): string {
   return statusConfig[status]?.label ?? status;
 }
+
+export const KNOWN_STATUSES = Object.keys(statusConfig) as StatusKey[];

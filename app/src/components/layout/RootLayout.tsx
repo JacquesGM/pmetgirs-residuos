@@ -5,6 +5,7 @@ import { Footer } from './Footer';
 import { BackToTop } from './BackToTop';
 import { ScrollToTop } from './ScrollToTop';
 import { RouteTitle } from './RouteTitle';
+import { VLibrasWidget } from './VLibrasWidget';
 
 export function RootLayout() {
   return (
@@ -18,6 +19,7 @@ export function RootLayout() {
       </main>
       <Footer />
       <BackToTop />
+      <VLibrasWidget />
     </>
   );
 }

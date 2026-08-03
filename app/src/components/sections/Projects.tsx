@@ -7,6 +7,7 @@ import { Card } from '../ui/Card';
 import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { EmptyState } from '../ui/EmptyState';
 import { DataValue } from '../ui/DataValue';
+import { DownloadButton } from '../ui/DownloadButton';
 import { uniqueOptions } from '../../lib/filters';
 
 const projetos = projetosData as Projeto[];
@@ -101,9 +102,12 @@ export function Projects() {
         </label>
       </form>
 
-      <p className="mb-4 text-sm text-neutral-500" role="status">
-        {filtrados.length} {filtrados.length === 1 ? 'projeto encontrado' : 'projetos encontrados'}
-      </p>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-neutral-500" role="status">
+          {filtrados.length} {filtrados.length === 1 ? 'projeto encontrado' : 'projetos encontrados'}
+        </p>
+        <DownloadButton filename="projetos-pmetgirs.json" data={projetos} />
+      </div>
 
       {filtrados.length === 0 ? (
         <EmptyState message="Nenhum projeto encontrado para os filtros selecionados." onClear={limparFiltros} />

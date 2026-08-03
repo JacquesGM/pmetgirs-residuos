@@ -5,6 +5,7 @@ import { Section } from '../ui/Section';
 import { StatusBadge } from '../ui/StatusBadge';
 import { Card } from '../ui/Card';
 import { InfrastructureDivergenceChart } from '../charts/InfrastructureDivergenceChart';
+import { DownloadButton } from '../ui/DownloadButton';
 
 const infraestruturas = infraestruturasData as Infraestrutura[];
 
@@ -23,6 +24,10 @@ export function Infrastructure() {
           (termodegradação). A informação permanece <strong>Em validação</strong> até a consolidação
           oficial — as duas versões são apresentadas abaixo, sem escolher silenciosamente uma delas.
         </p>
+      </div>
+
+      <div className="mb-6">
+        <DownloadButton filename="infraestruturas-pmetgirs.json" data={infraestruturas} />
       </div>
 
       <Card className="mb-6">
