@@ -1,0 +1,119 @@
+[
+  {
+    "id": "divergencia-unidades-termicas",
+    "categoria": "divergencia_de_dados",
+    "titulo": "Divergência na distribuição das unidades térmicas",
+    "descricao": "O total de 28 unidades térmicas de recuperação energética é consistente entre os documentos, mas a distribuição entre usinas de combustão e usinas de gaseificação (termodegradação) diverge: o Plano de Ações indica 15 usinas de combustão e 13 de gaseificação, enquanto o Prognóstico Geral indica 13 usinas de combustão e 15 de gaseificação.",
+    "impacto": "Afeta o dimensionamento técnico e financeiro das licitações de recuperação energética.",
+    "situacao": "em_validacao",
+    "areaResponsavel": "IRM — equipe técnica responsável pela consolidação do Prognóstico Geral e do Plano de Ações",
+    "encaminhamento": "Aguarda consolidação oficial entre as equipes responsáveis pelos dois documentos.",
+    "ultimaAtualizacao": null,
+    "fontes": [
+      { "fonte": "Plano de Ações (Anexo III)", "valor": "15 usinas de combustão / 13 de gaseificação" },
+      { "fonte": "Prognóstico Geral", "valor": "13 usinas de combustão / 15 de gaseificação" }
+    ]
+  },
+  {
+    "id": "divergencia-geracao-diaria",
+    "categoria": "divergencia_de_dados",
+    "titulo": "Divergência na geração diária de RSU",
+    "descricao": "A geração diária de resíduos sólidos urbanos aparece como 16.926 t/dia nas narrativas do Diagnóstico Geral e do Plano de Ações, mas as tabelas de totalização de ambos os documentos registram 16.929 t/dia.",
+    "impacto": "Afeta o dimensionamento de infraestrutura e os indicadores per capita apresentados publicamente.",
+    "situacao": "em_validacao",
+    "areaResponsavel": "IRM — equipe técnica responsável pelo Diagnóstico Geral",
+    "encaminhamento": "Aguarda consolidação de uma base única de geração diária.",
+    "ultimaAtualizacao": null,
+    "fontes": [
+      { "fonte": "Diagnóstico Geral e Plano de Ações (texto narrativo)", "valor": "16.926 t/dia" },
+      { "fonte": "Diagnóstico Geral e Plano de Ações (tabelas de totalização)", "valor": "16.929 t/dia" }
+    ]
+  },
+  {
+    "id": "divergencia-investimento-estimado",
+    "categoria": "divergencia_de_dados",
+    "titulo": "Divergência na estimativa de investimento das usinas",
+    "descricao": "O Prognóstico Geral apresenta um CAPEX total consolidado de R$ 4,73 bilhões na avaliação de viabilidade técnica e econômica (EVTE) das usinas térmicas, enquanto o Plano de Ações cita uma estimativa de R$ 12,5 bilhões para os centros de triagem e as usinas de conversão de RSU em energia elétrica, em todas as etapas.",
+    "impacto": "Gera incerteza sobre o volume de investimento necessário para o planejamento orçamentário e para negociação com o setor privado.",
+    "situacao": "em_validacao",
+    "areaResponsavel": "IRM — equipes técnicas responsáveis pelo Prognóstico Geral e pelo Plano de Ações",
+    "encaminhamento": "Aguarda o Plano de Negócios (ver Portfólio de Projetos) para consolidar uma estimativa financeira única.",
+    "ultimaAtualizacao": null,
+    "fontes": [
+      { "fonte": "Prognóstico Geral (EVTE consolidada)", "valor": "R$ 4,73 bilhões (CAPEX)" },
+      { "fonte": "Plano de Ações", "valor": "R$ 12,5 bilhões (estimativa, todas as etapas)" }
+    ]
+  },
+  {
+    "id": "revisao-estudo-biogas",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Revisão do estudo de aproveitamento de biogás",
+    "descricao": "O Prognóstico Geral apresenta uma avaliação de viabilidade técnica e econômica específica para a captação e aproveitamento do biogás gerado nos aterros sanitários, cujos parâmetros financeiros seguem em processo de revisão.",
+    "impacto": "Pode alterar o dimensionamento e o retorno financeiro estimado para essa frente de recuperação energética.",
+    "situacao": "em_validacao",
+    "areaResponsavel": "IRM",
+    "encaminhamento": "Em análise técnica.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  },
+  {
+    "id": "cronograma-iniciado-2024",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Cronograma original iniciado em 2024",
+    "descricao": "O cronograma físico do Plano de Ações foi elaborado com início de referência em 2024 e ano-horizonte em 2033; o andamento real de cada etapa está sujeito a atualização conforme o avanço da implementação.",
+    "impacto": "Pode gerar diferença entre o cronograma original e o ritmo real de execução das ações.",
+    "situacao": "em_atualizacao",
+    "areaResponsavel": "IRM",
+    "encaminhamento": "Acompanhamento contínuo via monitoramento do plano.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  },
+  {
+    "id": "indicadores-incompletos",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Indicadores de desempenho ainda incompletos",
+    "descricao": "Parte dos indicadores de desempenho previstos para o monitoramento do PMetGIRS depende de dados municipais que ainda não foram integralmente consolidados.",
+    "impacto": "Limita, por ora, o acompanhamento público de alguns resultados por município.",
+    "situacao": "em_atualizacao",
+    "areaResponsavel": "IRM e municípios da RMRJ",
+    "encaminhamento": "Depende da estruturação do Banco de Dados e Aplicativo Digital do PMetGIRS.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  },
+  {
+    "id": "responsabilidades-difusas",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Responsabilidades entre IRM e municípios ainda em definição",
+    "descricao": "A divisão de responsabilidades operacionais entre o IRM, os municípios e futuros concessionários/parceiros privados ainda está sendo detalhada para diversas ações previstas no Plano de Ações.",
+    "impacto": "Pode atrasar a contratação e execução de algumas ações até a definição formal de responsabilidades.",
+    "situacao": "em_estruturacao",
+    "areaResponsavel": "IRM",
+    "encaminhamento": "Detalhamento previsto no Plano de Negócios e nos modelos de concessão/PPP descritos no Plano de Ações.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  },
+  {
+    "id": "atualizacao-municipal-pendente",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Atualização de dados municipais pendente",
+    "descricao": "Alguns municípios não participaram integralmente dos workshops e seminários realizados durante a elaboração do Diagnóstico Geral, o que resulta em lacunas pontuais de informação por município.",
+    "impacto": "Pode reduzir a precisão de indicadores municipais específicos até a atualização dos dados.",
+    "situacao": "em_atualizacao",
+    "areaResponsavel": "Municípios da RMRJ, com apoio do IRM",
+    "encaminhamento": "Nova rodada de coleta de dados municipais.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  },
+  {
+    "id": "estudos-locacionais-ambientais",
+    "categoria": "ponto_em_revisao",
+    "titulo": "Estudos locacionais e ambientais pendentes",
+    "descricao": "A definição final dos locais das usinas de triagem, unidades térmicas e demais infraestruturas planejadas depende de estudos locacionais e ambientais ainda não concluídos.",
+    "impacto": "As localizações apresentadas neste momento são preliminares e podem ser alteradas.",
+    "situacao": "em_atualizacao",
+    "areaResponsavel": "IRM",
+    "encaminhamento": "Licenciamento ambiental e estudos técnicos em andamento.",
+    "ultimaAtualizacao": null,
+    "fontes": null
+  }
+]

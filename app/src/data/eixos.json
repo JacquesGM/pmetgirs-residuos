@@ -1,0 +1,122 @@
+[
+  {
+    "id": "governanca-marco-legal",
+    "nome": "Governança e marco legal",
+    "descricao": "Estruturação de um Comitê Metropolitano de Gestão para o Saneamento e ajustes na legislação municipal e metropolitana necessários para viabilizar a execução do PMetGIRS, incluindo o regramento dos planos de gerenciamento obrigatórios.",
+    "objetivo": "Criar as bases institucionais e legais para a governança compartilhada da gestão de resíduos entre os 22 municípios e o IRM.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": ["municipios-abrangidos"],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "dados-indicadores-transparencia",
+    "nome": "Dados, indicadores e transparência",
+    "descricao": "Elaboração, manutenção e atualização de um Banco de Dados e Aplicativo Digital reunindo informações dos 22 municípios da RMRJ e dos atores responsáveis pelo manejo de resíduos, com indicadores de desempenho e monitoramento periódico de resultados.",
+    "objetivo": "Garantir informação pública, atualizada e rastreável sobre a execução do plano.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "coleta-domiciliar-seletiva",
+    "nome": "Coleta domiciliar e seletiva",
+    "descricao": "Diretrizes, estratégias e metas para universalização da coleta domiciliar e ampliação progressiva da coleta seletiva nos 22 municípios, incluindo áreas de difícil acesso.",
+    "objetivo": "Universalizar a coleta domiciliar e alcançar 100% de coleta seletiva no horizonte de 20 anos.",
+    "responsavel": "Municípios da RMRJ, com apoio técnico do IRM",
+    "situacao": "nao_iniciado",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "logistica-estacoes-transferencia",
+    "nome": "Logística e estações de transferência",
+    "descricao": "Implantação de estações de transferência sempre que a distância entre o centro de coleta e a área de disposição final exceder 30 km, reduzindo custos logísticos de transporte.",
+    "objetivo": "Otimizar a logística de transporte de resíduos na Região Metropolitana.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "triagem-reciclagem",
+    "nome": "Triagem e reciclagem",
+    "descricao": "Licitação e implantação de 25 usinas de triagem de resíduos sólidos urbanos previstas no Plano de Ações, com destinação dos recicláveis recuperados para comercialização.",
+    "objetivo": "Ampliar a recuperação de materiais recicláveis e reduzir o volume de resíduos encaminhado a aterros.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": ["usinas-triagem"],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "inclusao-cooperativas",
+    "nome": "Inclusão e fortalecimento das cooperativas",
+    "descricao": "Apoio à legalização, organização e capacitação de cooperativas e catadores individuais, incluindo o projeto social 'Os Invisíveis', voltado à reinserção de moradores de rua na coleta seletiva.",
+    "objetivo": "Fortalecer a cadeia de reciclagem com inclusão social e geração de renda.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "tratamento-fracao-organica",
+    "nome": "Tratamento da fração orgânica",
+    "descricao": "Implantação de unidade de biodigestão da fração orgânica dos resíduos, compostagem de resíduos rurais e avaliação da incorporação do lodo de estações de tratamento de esgoto (ETE) aos sistemas de biodigestão.",
+    "objetivo": "Reduzir a fração orgânica destinada a aterro e viabilizar geração de energia e composto orgânico.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["prognostico-geral"]
+  },
+  {
+    "id": "recuperacao-energetica",
+    "nome": "Recuperação energética",
+    "descricao": "Estudo e licitação de 28 unidades térmicas de conversão de resíduos em energia, entre usinas de combustão e de gaseificação (termodegradação), além de usinas de asfalto para absorção das cinzas geradas nos processos térmicos.",
+    "objetivo": "Reduzir o volume de resíduos enterrados por meio de recuperação energética condicionada à viabilidade técnica e financeira.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo",
+    "indicadoresRelacionados": ["unidades-termicas"],
+    "documentosRelacionados": ["plano-de-acoes", "prognostico-geral"]
+  },
+  {
+    "id": "remediacao-passivos",
+    "nome": "Remediação de passivos ambientais",
+    "descricao": "Assessoria aos municípios para remediação de lixões e aterros controlados encerrados, com especificação de valores e fontes de financiamento, em até 23 áreas identificadas preliminarmente.",
+    "objetivo": "Eliminar passivos ambientais herdados da disposição inadequada de resíduos.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": ["areas-remediacao"],
+    "documentosRelacionados": ["diagnostico-geral"]
+  },
+  {
+    "id": "energia-solar",
+    "nome": "Energia solar",
+    "descricao": "Orientação aos municípios sobre a adoção de células fotovoltaicas em áreas remediadas, aproveitando o potencial de até 23 áreas para geração de energia solar.",
+    "objetivo": "Viabilizar o reaproveitamento energético de áreas remediadas.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estudo",
+    "indicadoresRelacionados": ["areas-remediacao"],
+    "documentosRelacionados": ["prognostico-geral"]
+  },
+  {
+    "id": "educacao-ambiental",
+    "nome": "Educação ambiental",
+    "descricao": "Programas de sensibilização aos 3R's em escolas municipais e para lideranças comunitárias, capacitação técnica com apoio de universidades (UFRJ, UFRRJ, UERJ) e distribuição de material didático e composteiras domésticas.",
+    "objetivo": "Fortalecer a cultura de redução, reuso e reciclagem na população metropolitana.",
+    "responsavel": "IRM e secretarias municipais de educação",
+    "situacao": "em_estruturacao",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  },
+  {
+    "id": "lixo-flutuante-corpos-hidricos",
+    "nome": "Lixo flutuante e proteção dos corpos hídricos",
+    "descricao": "Diretrizes, estratégias e metas específicas para o lixo flutuante, estruturadas em programas de produção e gestão do conhecimento, medidas de mitigação e governança e integração institucional entre os órgãos envolvidos.",
+    "objetivo": "Reduzir o descarte inadequado de resíduos em corpos hídricos e proteger os recursos aquáticos da Região Metropolitana.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo",
+    "indicadoresRelacionados": [],
+    "documentosRelacionados": ["plano-de-acoes"]
+  }
+]

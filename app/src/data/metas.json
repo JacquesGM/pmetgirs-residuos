@@ -1,0 +1,67 @@
+[
+  {
+    "id": "coleta-domiciliar-universal",
+    "nome": "Universalização da coleta domiciliar",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Coleta domiciliar universalizada em todos os 22 municípios",
+    "prazo": "Até 2 anos",
+    "municipios": "22 municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "metodologia": null,
+    "fonte": "Plano de Ações do PMetGIRS",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "coleta-seletiva-50",
+    "nome": "Coleta seletiva — primeira etapa",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "50% de cobertura de coleta seletiva",
+    "prazo": "2 anos",
+    "municipios": "22 municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "metodologia": null,
+    "fonte": "Plano de Ações do PMetGIRS",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "coleta-seletiva-75",
+    "nome": "Coleta seletiva — segunda etapa",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "75% de cobertura de coleta seletiva",
+    "prazo": "10 anos",
+    "municipios": "22 municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "metodologia": null,
+    "fonte": "Plano de Ações do PMetGIRS",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "coleta-seletiva-100",
+    "nome": "Coleta seletiva — meta final",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "100% de cobertura de coleta seletiva",
+    "prazo": "20 anos",
+    "municipios": "22 municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "metodologia": null,
+    "fonte": "Plano de Ações do PMetGIRS",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "areas-dificil-acesso",
+    "nome": "Universalização em áreas de difícil acesso",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Cobertura universalizada em áreas de difícil acesso",
+    "prazo": "Até 10 anos",
+    "municipios": "22 municípios da RMRJ",
+    "situacao": "nao_iniciado",
+    "metodologia": null,
+    "fonte": "Plano de Ações do PMetGIRS",
+    "ultimaAtualizacao": null
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "usinas-triagem",
+    "nome": "Usinas de triagem",
+    "quantidade": "25",
+    "unidade": "usinas",
+    "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "estimativa_tecnica",
+    "valoresDivergentes": null,
+    "observacao": "Infraestrutura planejada; nenhuma unidade construída até o momento."
+  },
+  {
+    "id": "unidades-combustao",
+    "nome": "Unidades de combustão",
+    "quantidade": "Quantidade em validação",
+    "unidade": "unidades",
+    "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "em_validacao",
+    "valoresDivergentes": [
+      { "fonte": "Plano de Ações (Anexo III)", "valor": "15 usinas de combustão" },
+      { "fonte": "Prognóstico Geral", "valor": "13 usinas de combustão" }
+    ],
+    "observacao": "Os documentos divergem quanto à quantidade de usinas de combustão. Ver Pontos em Revisão."
+  },
+  {
+    "id": "gaseificacao-termodegradacao",
+    "nome": "Gaseificação ou termodegradação",
+    "quantidade": "Quantidade em validação",
+    "unidade": "unidades",
+    "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "em_validacao",
+    "valoresDivergentes": [
+      { "fonte": "Plano de Ações (Anexo III)", "valor": "13 usinas de gaseificação" },
+      { "fonte": "Prognóstico Geral", "valor": "15 usinas de termodegradação" }
+    ],
+    "observacao": "Os documentos divergem quanto à quantidade de usinas de gaseificação/termodegradação. Ver Pontos em Revisão."
+  },
+  {
+    "id": "total-unidades-termicas",
+    "nome": "Total de unidades térmicas",
+    "quantidade": "28",
+    "unidade": "unidades",
+    "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "estimativa_tecnica",
+    "valoresDivergentes": null,
+    "observacao": "O total de 28 unidades é consistente entre os dois documentos, apenas a distribuição interna diverge."
+  },
+  {
+    "id": "usinas-asfalto",
+    "nome": "Usinas de asfalto",
+    "quantidade": "6",
+    "unidade": "usinas",
+    "fonte": "Plano de Ações do PMetGIRS",
+    "statusValidacao": "estimativa_tecnica",
+    "valoresDivergentes": null,
+    "observacao": "Destinadas ao aproveitamento das cinzas geradas nos processos térmicos de recuperação de energia."
+  },
+  {
+    "id": "unidade-biodigestao",
+    "nome": "Unidade de biodigestão",
+    "quantidade": "1",
+    "unidade": "unidade",
+    "fonte": "Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "estimativa_tecnica",
+    "valoresDivergentes": null,
+    "observacao": null
+  },
+  {
+    "id": "areas-energia-solar",
+    "nome": "Áreas para energia solar",
+    "quantidade": "Até 23",
+    "unidade": "áreas",
+    "fonte": "Prognóstico Geral do PMetGIRS",
+    "statusValidacao": "em_atualizacao",
+    "valoresDivergentes": null,
+    "observacao": "Associadas às áreas de remediação de passivos ambientais; quantidade final sujeita a estudos locacionais."
+  }
+]

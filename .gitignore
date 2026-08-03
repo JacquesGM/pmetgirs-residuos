@@ -1,0 +1,15 @@
+# Configurações locais do Claude Code (não fazem parte do projeto)
+.claude/
+
+# Dependências
+app/node_modules/
+
+# Build
+app/dist/
+app/*.tsbuildinfo
+app/vite.config.js
+app/vite.config.d.ts
+
+# Sistema
+.DS_Store
+Thumbs.db

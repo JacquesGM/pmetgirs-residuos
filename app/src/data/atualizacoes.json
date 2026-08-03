@@ -1,0 +1,18 @@
+[
+  {
+    "id": "carga-inicial-2026",
+    "data": "2026-08-03",
+    "descricao": "Carga inicial dos dados públicos do PMetGIRS a partir do Diagnóstico Geral, do Prognóstico Geral e do Plano de Ações do PMetGIRS.",
+    "fonte": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT, 2024",
+    "arquivosAfetados": [
+      "municipios.json",
+      "indicadores.json",
+      "eixos.json",
+      "projetos.json",
+      "metas.json",
+      "infraestruturas.json",
+      "documentos.json",
+      "inconsistencias.json"
+    ]
+  }
+]

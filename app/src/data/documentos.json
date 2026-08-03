@@ -1,0 +1,38 @@
+[
+  {
+    "id": "diagnostico-geral",
+    "titulo": "Diagnóstico Geral",
+    "descricao": "Levantamento e caracterização da situação atual da gestão de resíduos sólidos nos 22 municípios da Região Metropolitana do Rio de Janeiro, incluindo aspectos demográficos, econômicos, institucionais e ambientais.",
+    "categoria": "Diagnóstico",
+    "ano": 2024,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "formato": "PDF",
+    "tamanho": "20,8 MB",
+    "link": null,
+    "versao": "1.0"
+  },
+  {
+    "id": "prognostico-geral",
+    "titulo": "Prognóstico Geral",
+    "descricao": "Projeções de geração de resíduos, cenários tecnológicos e análises de viabilidade técnica e econômica (EVTE) para as soluções de tratamento e recuperação energética propostas para a Região Metropolitana.",
+    "categoria": "Prognóstico",
+    "ano": 2024,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "formato": "PDF",
+    "tamanho": "19,1 MB",
+    "link": null,
+    "versao": "1.0"
+  },
+  {
+    "id": "plano-de-acoes",
+    "titulo": "Plano de Ações",
+    "descricao": "Metodologia de priorização, objetivos, metas, indicadores de gestão, cronograma físico e resumo consolidado das ações propostas para a implementação do PMetGIRS.",
+    "categoria": "Plano de Ações",
+    "ano": 2024,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "formato": "PDF",
+    "tamanho": "19,8 MB",
+    "link": null,
+    "versao": "1.0"
+  }
+]
