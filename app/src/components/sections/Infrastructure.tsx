@@ -3,6 +3,8 @@ import infraestruturasData from '../../data/infraestruturas.json';
 import type { Infraestrutura } from '../../types';
 import { Section } from '../ui/Section';
 import { StatusBadge } from '../ui/StatusBadge';
+import { Card } from '../ui/Card';
+import { InfrastructureDivergenceChart } from '../charts/InfrastructureDivergenceChart';
 
 const infraestruturas = infraestruturasData as Infraestrutura[];
 
@@ -22,6 +24,10 @@ export function Infrastructure() {
           oficial — as duas versões são apresentadas abaixo, sem escolher silenciosamente uma delas.
         </p>
       </div>
+
+      <Card className="mb-6">
+        <InfrastructureDivergenceChart />
+      </Card>
 
       {/* Tabela completa — telas médias e grandes */}
       <div className="hidden overflow-x-auto rounded-xl border border-neutral-200 md:block">

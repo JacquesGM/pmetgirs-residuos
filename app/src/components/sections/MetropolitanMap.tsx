@@ -6,6 +6,7 @@ import type { Municipio } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
+import { PopulationChart } from '../charts/PopulationChart';
 
 const municipios = municipiosData as Municipio[];
 
@@ -98,6 +99,10 @@ export function MetropolitanMap() {
           )}
         </Card>
       </div>
+
+      <Card className="mt-6">
+        <PopulationChart />
+      </Card>
     </Section>
   );
 }

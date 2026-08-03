@@ -1,10 +1,12 @@
 import inconsistenciasData from '../../data/inconsistencias.json';
-import type { Inconsistencia, StatusValidacao } from '../../types';
+import glossarioData from '../../data/glossario.json';
+import type { Inconsistencia, StatusValidacao, TermoGlossario } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 
 const inconsistencias = inconsistenciasData as Inconsistencia[];
+const glossario = glossarioData as TermoGlossario[];
 
 const selos: { status: StatusValidacao; descricao: string }[] = [
   { status: 'dado_oficial_validado', descricao: 'Dado confirmado por fonte oficial (ex.: IBGE) ou consolidado formalmente pelo IRM.' },
@@ -81,13 +83,25 @@ export function Transparency() {
         </div>
       </div>
 
-      <div>
+      <div className="mb-10">
         <p className="mb-4 font-semibold text-neutral-900">Pontos em revisão</p>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {pontosEmRevisao.map((item) => (
             <IncidentCard key={item.id} item={item} />
           ))}
         </div>
+      </div>
+
+      <div>
+        <p className="mb-4 font-semibold text-neutral-900">Glossário de siglas e termos técnicos</p>
+        <dl className="grid gap-x-8 gap-y-3 rounded-xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+          {glossario.map((termo) => (
+            <div key={termo.sigla} className="border-b border-neutral-100 pb-3 sm:border-0 sm:pb-0">
+              <dt className="font-semibold text-neutral-900">{termo.sigla}</dt>
+              <dd className="text-sm text-neutral-600">{termo.significado}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </Section>
   );

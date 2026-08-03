@@ -137,6 +137,20 @@ export interface Inconsistencia {
   fontes: ValorDivergente[] | null;
 }
 
+export interface EvolucaoEtapa {
+  id: string;
+  titulo: string;
+  periodo: string;
+  situacao: StatusProjeto;
+  descricao: string;
+  fonte: string;
+}
+
+export interface TermoGlossario {
+  sigla: string;
+  significado: string;
+}
+
 export interface Atualizacao {
   id: string;
   data: string;

@@ -4,6 +4,7 @@ import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 import { DataValue } from '../ui/DataValue';
+import { GoalsTargetChart } from '../charts/GoalsTargetChart';
 
 const metas = metasData as Meta[];
 
@@ -15,6 +16,10 @@ export function Goals() {
       subtitle="Linha do tempo de universalização da coleta domiciliar e ampliação progressiva da coleta seletiva nos 22 municípios da Região Metropolitana."
       tone="muted"
     >
+      <Card className="mb-6">
+        <GoalsTargetChart />
+      </Card>
+
       <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {metas.map((meta) => (
           <li key={meta.id}>
