@@ -1,8 +1,12 @@
+import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertTriangle } from 'lucide-react';
 import atualizacoes from '../../data/atualizacoes.json';
 import type { Atualizacao } from '../../types';
-import { HeroIllustration } from './HeroIllustration';
+
+const HeroMapPreview = lazy(() =>
+  import('./HeroMapPreview').then((m) => ({ default: m.HeroMapPreview })),
+);
 
 const ultimaAtualizacao = (atualizacoes as Atualizacao[])[0];
 
@@ -72,10 +76,12 @@ export function Hero() {
             aria-hidden="true"
             className="aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10"
           >
-            <HeroIllustration />
+            <Suspense fallback={<div className="h-full w-full animate-pulse" />}>
+              <HeroMapPreview />
+            </Suspense>
           </div>
           <p className="mt-3 text-center text-xs text-white/70">
-            Ilustração lúdica da Região Metropolitana do Rio de Janeiro, com os 22 municípios
+            Mapa da Região Metropolitana do Rio de Janeiro, com os 22 municípios em destaque
           </p>
         </div>
       </div>
