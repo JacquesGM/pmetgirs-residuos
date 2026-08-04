@@ -4,7 +4,7 @@
     "titulo": "Diagnóstico Geral",
     "periodo": "2024",
     "situacao": "concluido",
-    "descricao": "Levantamento e caracterização da situação atual da gestão de resíduos sólidos nos 22 municípios da RMRJ.",
+    "descricao": "Levantou e caracterizou a situação atual da gestão de resíduos sólidos nos 22 municípios da RMRJ.",
     "fonte": "Diagnóstico Geral do PMetGIRS"
   },
   {
@@ -12,7 +12,7 @@
     "titulo": "Prognóstico Geral",
     "periodo": "2024",
     "situacao": "concluido",
-    "descricao": "Projeções de geração de resíduos e análise de viabilidade técnica e econômica das soluções de tratamento e recuperação energética.",
+    "descricao": "Projetou a geração futura de resíduos e analisou a viabilidade técnica e econômica das soluções de tratamento e recuperação energética.",
     "fonte": "Prognóstico Geral do PMetGIRS"
   },
   {
@@ -20,7 +20,7 @@
     "titulo": "Plano de Ações",
     "periodo": "2024",
     "situacao": "concluido",
-    "descricao": "Metodologia de priorização, metas, indicadores de gestão e cronograma físico das ações propostas para o PMetGIRS.",
+    "descricao": "Definiu a metodologia de priorização, as metas, os indicadores de gestão e o cronograma físico das ações propostas para o PMetGIRS.",
     "fonte": "Plano de Ações do PMetGIRS"
   },
   {
@@ -28,7 +28,7 @@
     "titulo": "Atualização da linha de base de geração de RSU",
     "periodo": "Em validação",
     "situacao": "dado_em_validacao",
-    "descricao": "Consolidação de uma base única de geração diária de resíduos, hoje divergente entre 16.926 e 16.929 t/dia nos documentos técnicos.",
+    "descricao": "Vai consolidar uma base única de geração diária de resíduos, hoje divergente entre 16.926 e 16.929 t/dia nos documentos técnicos.",
     "fonte": "Diagnóstico Geral e Plano de Ações do PMetGIRS"
   },
   {
@@ -36,7 +36,7 @@
     "titulo": "Governança metropolitana",
     "periodo": "Não iniciado",
     "situacao": "nao_iniciado",
-    "descricao": "Criação do Comitê Metropolitano de Gestão para o Saneamento, instância técnica e administrativa de acompanhamento do plano.",
+    "descricao": "Cria o Comitê Metropolitano de Gestão para o Saneamento, instância técnica e administrativa que vai acompanhar o plano.",
     "fonte": "Plano de Ações do PMetGIRS — Anexo III"
   },
   {
@@ -44,7 +44,7 @@
     "titulo": "Elaboração do Plano de Negócios",
     "periodo": "Em estruturação",
     "situacao": "em_estruturacao",
-    "descricao": "Detalhamento técnico, financeiro, institucional e contratual da implementação do PMetGIRS.",
+    "descricao": "Vai detalhar os aspectos técnicos, financeiros, institucionais e contratuais da implementação do PMetGIRS.",
     "fonte": "Plano de Ações do PMetGIRS"
   },
   {
@@ -52,7 +52,7 @@
     "titulo": "Banco de Dados e Aplicativo Digital",
     "periodo": "Não iniciado",
     "situacao": "nao_iniciado",
-    "descricao": "Sistema para reunir e atualizar informações dos 22 municípios e dos atores responsáveis pelo manejo de RSU.",
+    "descricao": "Vai reunir e manter atualizadas as informações dos 22 municípios e dos atores responsáveis pelo manejo de RSU.",
     "fonte": "Plano de Ações do PMetGIRS — Anexo III"
   },
   {
@@ -60,7 +60,7 @@
     "titulo": "Licitação das usinas (triagem e recuperação energética)",
     "periodo": "Não iniciado",
     "situacao": "nao_iniciado",
-    "descricao": "Contratação das 25 usinas de triagem e das unidades térmicas de recuperação energética, cuja distribuição tecnológica segue em validação.",
+    "descricao": "Prevê a contratação das 25 usinas de triagem e das unidades térmicas de recuperação energética, cuja distribuição tecnológica segue em validação.",
     "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS"
   },
   {
@@ -68,7 +68,7 @@
     "titulo": "Implantação e monitoramento",
     "periodo": "Não iniciado",
     "situacao": "nao_iniciado",
-    "descricao": "Execução das obras planejadas e acompanhamento periódico dos indicadores de desempenho do PMetGIRS.",
+    "descricao": "Compreende a execução das obras planejadas e o acompanhamento periódico dos indicadores de desempenho do PMetGIRS.",
     "fonte": "Plano de Ações do PMetGIRS"
   }
 ]

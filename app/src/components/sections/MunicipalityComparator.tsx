@@ -41,7 +41,7 @@ export function MunicipalityComparator() {
       <p className="text-sm font-semibold text-neutral-900">Comparar municípios</p>
       <p className="mt-1 text-xs text-neutral-500">
         Selecione até {MAX_SELECIONADOS} municípios para comparar lado a lado.
-        {noLimite && ' Limite atingido — desmarque um para trocar.'}
+        {noLimite && ' Limite atingido: desmarque um para trocar.'}
       </p>
 
       <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Seleção de municípios para comparação">

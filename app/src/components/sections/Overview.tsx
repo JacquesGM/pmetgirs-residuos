@@ -26,14 +26,14 @@ export function Overview() {
       <div className="space-y-4 text-neutral-700">
         <p>
           A gestão de resíduos sólidos é um desafio compartilhado por todos os municípios da
-          Região Metropolitana. O PMetGIRS busca aprimorar o planejamento de políticas públicas de
-          resíduos, alinhando-se ao novo marco legal do saneamento básico e às leis federais de
-          resíduos sólidos, consórcios públicos e ao Estatuto das Metrópoles.
+          Região Metropolitana. Por isso, o PMetGIRS busca aprimorar o planejamento de políticas
+          públicas de resíduos, alinhado ao novo marco legal do saneamento básico, às leis federais
+          de resíduos sólidos e de consórcios públicos, e ao Estatuto das Metrópoles.
         </p>
         <p>
-          O papel do IRM é coordenar tecnicamente a elaboração, a aprovação e a implantação do
-          plano em conjunto com os Conselhos Deliberativo e Consultivo da RMRJ e com as
-          prefeituras dos 22 municípios envolvidos.
+          Cabe ao IRM coordenar tecnicamente a elaboração, a aprovação e a implantação do plano, em
+          conjunto com os Conselhos Deliberativo e Consultivo da RMRJ e com as prefeituras dos 22
+          municípios envolvidos.
         </p>
         <div>
           <p className="font-semibold text-neutral-900">Benefícios esperados</p>
@@ -51,8 +51,8 @@ export function Overview() {
       <div className="mt-10">
         <p className="text-lg font-semibold text-neutral-900">Evolução das ações</p>
         <p className="mt-1 text-sm text-neutral-600">
-          Do diagnóstico técnico à implantação, cada etapa do plano com sua situação atual —
-          concluída, em estruturação, em validação ou ainda não iniciada.
+          Cada etapa do plano é acompanhada com sua situação atual, do diagnóstico técnico até a
+          implantação: concluída, em estruturação, em validação ou ainda não iniciada.
         </p>
         <ol className="relative mt-6 space-y-6 border-l-2 border-brand-blue-200 pl-6">
           {etapas.map((etapa) => (

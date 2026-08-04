@@ -14,7 +14,7 @@ const selos: { status: StatusValidacao; descricao: string }[] = [
   { status: 'estimativa_tecnica', descricao: 'Valor calculado tecnicamente pelos estudos do PMetGIRS (Diagnóstico, Prognóstico ou Plano de Ações).' },
   { status: 'dado_historico', descricao: 'Dado de referência de períodos anteriores, mantido para efeito de comparação.' },
   { status: 'dado_preliminar', descricao: 'Primeira versão de um dado, sujeita a revisão antes da consolidação final.' },
-  { status: 'em_atualizacao', descricao: 'Informação aguardando nova coleta ou consolidação — evita-se exibir valor zero ou vazio.' },
+  { status: 'em_atualizacao', descricao: 'Informação aguardando nova coleta ou consolidação; evita-se exibir valor zero ou vazio.' },
   { status: 'em_validacao', descricao: 'Existem versões diferentes do mesmo dado nos documentos oficiais, ainda não conciliadas.' },
   { status: 'informacao_divergente', descricao: 'Divergência confirmada entre fontes, sinalizada explicitamente até resolução.' },
 ];
@@ -59,7 +59,7 @@ export function Transparency() {
     <Section
       id="transparencia"
       title="Transparência dos dados"
-      subtitle="Todo dado publicado nesta página informa origem, metodologia e situação de validação. Divergências entre documentos não são ocultadas — são sinalizadas até a consolidação oficial."
+      subtitle="Todo dado publicado nesta página informa origem, metodologia e situação de validação. As divergências entre documentos não são ocultadas: aparecem sinalizadas até a consolidação oficial."
       tone="muted"
     >
       <div className="mb-10">

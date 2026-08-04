@@ -70,7 +70,7 @@ export function InfrastructureDivergenceChart() {
         </ResponsiveContainer>
       </div>
       <p className="mt-2 text-xs text-neutral-500">
-        As duas fontes são apresentadas lado a lado — nenhuma foi escolhida silenciosamente. Ver aviso de
+        As duas fontes são apresentadas lado a lado, sem escolher nenhuma delas silenciosamente. Ver aviso de
         transparência acima e a tabela abaixo para os valores exatos.
       </p>
     </div>

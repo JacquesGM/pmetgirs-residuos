@@ -19,12 +19,12 @@ const perguntas = [
   {
     pergunta: 'As usinas foram construídas?',
     resposta:
-      'Não. As usinas de triagem, as unidades térmicas de recuperação energética, as usinas de asfalto e a unidade de biodigestão listadas na seção Infraestrutura planejada são infraestrutura prevista pelo Plano de Ações e pelo Prognóstico Geral — nenhuma delas está construída ou em operação até o momento.',
+      'Não. As usinas de triagem, as unidades térmicas de recuperação energética, as usinas de asfalto e a unidade de biodigestão listadas na seção Infraestrutura planejada são infraestrutura prevista pelo Plano de Ações e pelo Prognóstico Geral. Nenhuma delas está construída ou em operação até o momento.',
   },
   {
     pergunta: 'Os valores são definitivos?',
     resposta:
-      'Não. Vários números — como a geração diária de resíduos, a distribuição das unidades térmicas e as estimativas de investimento — aparecem com valores diferentes entre os documentos técnicos. Essas divergências são sinalizadas explicitamente como "Em validação" na seção Transparência, em vez de ocultadas ou resolvidas silenciosamente.',
+      'Não. Alguns números, como a geração diária de resíduos, a distribuição das unidades térmicas e as estimativas de investimento, aparecem com valores diferentes entre os documentos técnicos. Essas divergências são sinalizadas explicitamente como "Em validação" na seção Transparência, em vez de ocultadas ou resolvidas silenciosamente.',
   },
   {
     pergunta: 'Como os dados são atualizados?',

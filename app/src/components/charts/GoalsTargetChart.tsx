@@ -38,7 +38,7 @@ export function GoalsTargetChart() {
         Trajetória-alvo da coleta seletiva
       </p>
       <p className="text-xs text-neutral-500">
-        Linha tracejada = metas do Plano de Ações. Não representa resultado obtido — o resultado atual
+        Linha tracejada = metas do Plano de Ações. Não representa resultado obtido: o resultado atual
         de cada meta segue "Em atualização" (ver cards abaixo).
       </p>
       <div className="mt-3 h-64">

@@ -27,7 +27,7 @@ const colunas = [
     titulo: 'Privacidade e acessibilidade',
     itens: [
       'Não são coletados dados pessoais nesta página pública.',
-      'Busca-se conformidade com WCAG 2.1 nível AA — use o botão "Texto maior" no topo da página.',
+      'Busca-se conformidade com WCAG 2.1 nível AA; use o botão "Texto maior" no topo da página.',
     ],
   },
   {
@@ -99,7 +99,7 @@ export function Footer() {
             Última atualização desta página: <strong className="text-neutral-300">{formatLocalDate(ultimaAtualizacao.data)}</strong>.
             As informações têm como fonte o Diagnóstico Geral, o Prognóstico Geral e o Plano de Ações
             do PMetGIRS (ENGECONSULT, 2024) e permanecem sujeitas a confirmação e atualização pelas
-            fontes oficiais. Dados em validação estão sinalizados explicitamente ao longo da página —
+            fontes oficiais. Dados em validação estão sinalizados explicitamente ao longo da página;
             consulte a seção{' '}
             <Link to="/transparencia" className="text-brand-blue-300 hover:text-brand-blue-200 hover:underline">
               Transparência
@@ -107,7 +107,7 @@ export function Footer() {
             .
           </p>
           <p className="mt-4">
-            © {new Date().getFullYear()} Instituto Rio Metrópole. Conteúdo em elaboração progressiva —
+            © {new Date().getFullYear()} Instituto Rio Metrópole. Conteúdo em elaboração progressiva:
             esta é a versão inicial (MVP) da página pública do PMetGIRS.
           </p>
         </div>
