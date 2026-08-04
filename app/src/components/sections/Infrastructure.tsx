@@ -14,15 +14,14 @@ export function Infrastructure() {
     <Section
       id="infraestrutura"
       title="Infraestrutura planejada"
-      subtitle="Quantidades de referência da infraestrutura prevista no Plano de Ações e no Prognóstico Geral. Nenhuma dessas unidades foi construída ou está em operação até o momento: tudo aqui ainda é planejamento."
+      subtitle="Infraestrutura prevista no Plano de Ações e no Prognóstico Geral. Nada aqui foi construído ainda."
     >
       <div className="mb-6 flex gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
         <AlertTriangle aria-hidden="true" className="h-5 w-5 shrink-0" />
         <p>
-          <strong>Aviso de transparência:</strong> os documentos apresentam divergência na
-          distribuição das 28 unidades térmicas entre usinas de combustão e usinas de gaseificação
-          (termodegradação). A informação permanece <strong>Em validação</strong> até a consolidação
-          oficial, e as duas versões são apresentadas abaixo, sem escolher silenciosamente uma delas.
+          <strong>Aviso de transparência:</strong> os documentos divergem sobre como as 28 unidades
+          térmicas se dividem entre combustão e gaseificação. As duas versões aparecem abaixo, sem
+          escolher uma.
         </p>
       </div>
 

@@ -56,23 +56,10 @@ export function Documents() {
                 </div>
               </div>
               <p className="mt-3 text-sm text-neutral-600">{doc.descricao}</p>
-              <dl className="mt-4 space-y-1 text-xs text-neutral-500">
-                <div className="flex justify-between gap-2">
-                  <dt>Órgão</dt>
-                  <dd className="text-right">{doc.orgao}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt>Formato</dt>
-                  <dd>{doc.formato} · {doc.tamanho ?? 'Não informado'}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt>Versão</dt>
-                  <dd>{doc.versao}</dd>
-                </div>
-              </dl>
-              <p className="mt-3 text-xs italic text-neutral-500">
-                Link de acesso ao PDF a ser disponibilizado nesta versão do site.
+              <p className="mt-4 text-xs text-neutral-500">
+                {doc.orgao} · {doc.formato} {doc.tamanho ?? ''} · v.{doc.versao}
               </p>
+              <p className="mt-2 text-xs italic text-neutral-500">Link do PDF em breve.</p>
             </Card>
           ))}
         </div>

@@ -25,7 +25,7 @@ export function MetropolitanMap() {
     <Section
       id="mapa"
       title="Mapa da Região Metropolitana"
-      subtitle="Selecione um município para consultar população, área e situação de dados. Onde não houver informação consolidada de geração de resíduos ou projetos, a página indica 'Informação em atualização'."
+      subtitle="Clique em um município para ver população, área e situação dos dados."
     >
       <div className="mb-6">
         <DownloadButton filename="municipios-pmetgirs.json" data={municipios} />

@@ -4,19 +4,20 @@ import type { Inconsistencia, StatusValidacao, TermoGlossario } from '../../type
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
+import { InfoDisclosure } from '../ui/InfoDisclosure';
 
 const inconsistencias = inconsistenciasData as Inconsistencia[];
 const glossario = glossarioData as TermoGlossario[];
 
 const selos: { status: StatusValidacao; descricao: string }[] = [
-  { status: 'dado_oficial_validado', descricao: 'Dado confirmado por fonte oficial (ex.: IBGE) ou consolidado formalmente pelo IRM.' },
-  { status: 'dado_municipal_declarado', descricao: 'Informação declarada por um município, ainda sem validação técnica cruzada.' },
-  { status: 'estimativa_tecnica', descricao: 'Valor calculado tecnicamente pelos estudos do PMetGIRS (Diagnóstico, Prognóstico ou Plano de Ações).' },
-  { status: 'dado_historico', descricao: 'Dado de referência de períodos anteriores, mantido para efeito de comparação.' },
-  { status: 'dado_preliminar', descricao: 'Primeira versão de um dado, sujeita a revisão antes da consolidação final.' },
-  { status: 'em_atualizacao', descricao: 'Informação aguardando nova coleta ou consolidação; evita-se exibir valor zero ou vazio.' },
-  { status: 'em_validacao', descricao: 'Existem versões diferentes do mesmo dado nos documentos oficiais, ainda não conciliadas.' },
-  { status: 'informacao_divergente', descricao: 'Divergência confirmada entre fontes, sinalizada explicitamente até resolução.' },
+  { status: 'dado_oficial_validado', descricao: 'Confirmado por fonte oficial (ex.: IBGE) ou pelo IRM.' },
+  { status: 'dado_municipal_declarado', descricao: 'Declarado por um município, sem validação cruzada ainda.' },
+  { status: 'estimativa_tecnica', descricao: 'Calculado pelos estudos técnicos do PMetGIRS.' },
+  { status: 'dado_historico', descricao: 'Referência de períodos anteriores, para comparação.' },
+  { status: 'dado_preliminar', descricao: 'Primeira versão, sujeita a revisão.' },
+  { status: 'em_atualizacao', descricao: 'Aguardando nova coleta ou consolidação.' },
+  { status: 'em_validacao', descricao: 'Versões diferentes do mesmo dado, ainda não conciliadas.' },
+  { status: 'informacao_divergente', descricao: 'Divergência confirmada entre fontes.' },
 ];
 
 const divergencias = inconsistencias.filter((i) => i.categoria === 'divergencia_de_dados');
@@ -27,10 +28,6 @@ function IncidentCard({ item }: { item: Inconsistencia }) {
     <Card>
       <p className="font-semibold text-neutral-900">{item.titulo}</p>
       <p className="mt-2 text-sm text-neutral-600">{item.descricao}</p>
-      <p className="mt-2 text-xs text-neutral-500">
-        <strong className="font-medium text-neutral-700">Impacto: </strong>
-        {item.impacto}
-      </p>
       {item.fontes && (
         <ul className="mt-2 space-y-0.5 text-xs text-neutral-500">
           {item.fontes.map((f) => (
@@ -42,14 +39,12 @@ function IncidentCard({ item }: { item: Inconsistencia }) {
       )}
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <StatusBadge status={item.situacao} />
-        <span className="text-xs text-neutral-500">Responsável: {item.areaResponsavel}</span>
+        <span className="text-xs text-neutral-500">{item.areaResponsavel}</span>
       </div>
-      {item.encaminhamento && (
-        <p className="mt-2 text-xs text-neutral-500">
-          <strong className="font-medium text-neutral-700">Encaminhamento: </strong>
-          {item.encaminhamento}
-        </p>
-      )}
+      <InfoDisclosure label="Impacto e encaminhamento">
+        <span className="block">{item.impacto}</span>
+        {item.encaminhamento && <span className="mt-1 block">{item.encaminhamento}</span>}
+      </InfoDisclosure>
     </Card>
   );
 }
@@ -59,7 +54,7 @@ export function Transparency() {
     <Section
       id="transparencia"
       title="Transparência dos dados"
-      subtitle="Todo dado publicado nesta página informa origem, metodologia e situação de validação. As divergências entre documentos não são ocultadas: aparecem sinalizadas até a consolidação oficial."
+      subtitle="Cada dado mostra sua origem e situação de validação. Divergências entre documentos ficam sinalizadas, nunca escondidas."
       tone="muted"
     >
       <div className="mb-10">

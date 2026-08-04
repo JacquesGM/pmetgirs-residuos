@@ -8,6 +8,8 @@ import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { EmptyState } from '../ui/EmptyState';
 import { DataValue } from '../ui/DataValue';
 import { DownloadButton } from '../ui/DownloadButton';
+import { InfoDisclosure } from '../ui/InfoDisclosure';
+import { eixoIcons, iconFor } from '../../lib/icons';
 import { uniqueOptions } from '../../lib/filters';
 
 const projetos = projetosData as Projeto[];
@@ -46,7 +48,7 @@ export function Projects() {
     <Section
       id="projetos"
       title="Portfólio de projetos"
-      subtitle="Ações do Plano de Ações do PMetGIRS, com eixo, responsável, situação e próximos passos. Nenhum percentual de avanço é calculado sem metodologia formal."
+      subtitle="Ações do PMetGIRS, com situação e responsável de cada uma."
       tone="muted"
     >
       <form
@@ -113,43 +115,37 @@ export function Projects() {
         <EmptyState message="Nenhum projeto encontrado para os filtros selecionados." onClear={limparFiltros} />
       ) : (
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtrados.map((projeto) => (
-            <Card key={projeto.id} className="flex flex-col bg-white">
-              <p className="text-left text-xs font-medium uppercase tracking-wide text-brand-blue-600">
-                {eixoNome(projeto.eixo)}
-              </p>
-              <p className="mt-1 font-semibold text-neutral-900">{projeto.nome}</p>
-              <p className="mt-2 text-sm text-neutral-600">{projeto.descricao}</p>
-              <div className="mt-3">
-                <StatusBadge status={projeto.status} />
-              </div>
-              <dl className="mt-4 space-y-1 text-xs text-neutral-500">
-                <div className="flex justify-between gap-2">
-                  <dt>Responsável</dt>
-                  <dd className="text-right">{projeto.responsavel}</dd>
+          {filtrados.map((projeto) => {
+            const Icon = iconFor(eixoIcons, projeto.eixo);
+            return (
+              <Card key={projeto.id} className="flex flex-col bg-white">
+                <div className="flex items-center gap-2">
+                  <Icon aria-hidden="true" className="h-4 w-4 shrink-0 text-brand-blue-600" />
+                  <p className="text-left text-xs font-medium uppercase tracking-wide text-brand-blue-600">
+                    {eixoNome(projeto.eixo)}
+                  </p>
                 </div>
-                <div className="flex justify-between gap-2">
-                  <dt>Avanço validado</dt>
-                  <dd>
-                    <DataValue value={projeto.percentualAvanco} status="em_atualizacao" />
-                  </dd>
+                <p className="mt-1 font-semibold text-neutral-900">{projeto.nome}</p>
+                <p className="mt-2 text-sm text-neutral-600">{projeto.descricao}</p>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <StatusBadge status={projeto.status} />
+                  <span className="text-xs text-neutral-500">{projeto.responsavel}</span>
                 </div>
-                <div className="flex justify-between gap-2">
-                  <dt>Última atualização</dt>
-                  <dd>
-                    <DataValue value={projeto.ultimaAtualizacao} status="em_atualizacao" />
-                  </dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt>Fonte</dt>
-                  <dd className="text-right">{projeto.fonte}</dd>
-                </div>
-              </dl>
-              {projeto.riscos.length > 0 && (
-                <p className="mt-3 text-xs text-status-amber">Risco: {projeto.riscos.join('; ')}</p>
-              )}
-            </Card>
-          ))}
+                {projeto.riscos.length > 0 && (
+                  <p className="mt-3 text-xs text-status-amber">Risco: {projeto.riscos.join('; ')}</p>
+                )}
+                <InfoDisclosure label="Avanço, atualização e fonte">
+                  <span className="block">
+                    Avanço validado: <DataValue value={projeto.percentualAvanco} status="em_atualizacao" />
+                  </span>
+                  <span className="mt-1 block">
+                    Última atualização: <DataValue value={projeto.ultimaAtualizacao} status="em_atualizacao" />
+                  </span>
+                  <span className="mt-1 block">Fonte: {projeto.fonte}</span>
+                </InfoDisclosure>
+              </Card>
+            );
+          })}
         </div>
       )}
     </Section>
