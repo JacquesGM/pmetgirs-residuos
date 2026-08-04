@@ -115,7 +115,7 @@ export function Projects() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filtrados.map((projeto) => (
             <Card key={projeto.id} className="flex flex-col bg-white">
-              <p className="text-xs font-medium uppercase tracking-wide text-brand-blue-600">
+              <p className="text-left text-xs font-medium uppercase tracking-wide text-brand-blue-600">
                 {eixoNome(projeto.eixo)}
               </p>
               <p className="mt-1 font-semibold text-neutral-900">{projeto.nome}</p>

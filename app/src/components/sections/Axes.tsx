@@ -24,7 +24,7 @@ export function Axes() {
           <Card key={eixo.id} className="flex flex-col">
             <p className="font-semibold text-neutral-900">{eixo.nome}</p>
             <p className="mt-2 text-sm text-neutral-600">{eixo.descricao}</p>
-            <p className="mt-3 text-xs font-medium uppercase tracking-wide text-neutral-500">
+            <p className="mt-3 text-left text-xs font-medium uppercase tracking-wide text-neutral-500">
               Objetivo
             </p>
             <p className="text-sm text-neutral-600">{eixo.objetivo}</p>

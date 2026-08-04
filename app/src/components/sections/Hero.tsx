@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
-import { AlertTriangle, MapPin } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import atualizacoes from '../../data/atualizacoes.json';
 import type { Atualizacao } from '../../types';
+import { HeroMap } from './HeroMap';
 
 const ultimaAtualizacao = (atualizacoes as Atualizacao[])[0];
 
@@ -19,15 +20,17 @@ export function Hero() {
     <section id="topo" className="relative overflow-hidden bg-gradient-to-br from-brand-blue-700 via-brand-blue-600 to-brand-green-600 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:px-8 lg:py-24">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-blue-100">
+          <p className="text-left text-sm font-semibold uppercase tracking-wide text-brand-blue-100">
             Instituto Rio Metrópole — Transparência pública
           </p>
-          <h1
-            id="hero-titulo"
-            tabIndex={-1}
-            className="mt-3 text-3xl font-extrabold leading-tight outline-none sm:text-4xl lg:text-5xl"
-          >
-            PMetGIRS — Gestão Metropolitana de Resíduos Sólidos
+          <h1 id="hero-titulo" tabIndex={-1} className="mt-3 outline-none">
+            <span className="block text-5xl font-extrabold leading-none tracking-tight sm:text-6xl lg:text-7xl">
+              PMetGIRS
+            </span>
+            <span className="mt-3 block h-1 w-16 rounded-full bg-brand-green-300" />
+            <span className="mt-3 block text-xl font-medium leading-snug text-brand-blue-50 sm:text-2xl">
+              Gestão Metropolitana de Resíduos Sólidos
+            </span>
           </h1>
           <p className="mt-4 max-w-xl text-base text-brand-blue-50 sm:text-lg">
             Acompanhe as metas, projetos e resultados do planejamento integrado de resíduos sólidos
@@ -64,14 +67,16 @@ export function Hero() {
           </div>
         </div>
 
-        <div
-          aria-hidden="true"
-          className="relative mx-auto flex h-56 w-full max-w-sm items-center justify-center rounded-2xl border border-white/20 bg-white/10 sm:h-72"
-        >
-          <MapPin className="h-16 w-16 text-white/70" />
-          <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-white/70">
-            Mapa estilizado da Região Metropolitana do Rio de Janeiro
-          </span>
+        <div className="mx-auto w-full max-w-lg">
+          <div
+            aria-hidden="true"
+            className="aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-4"
+          >
+            <HeroMap />
+          </div>
+          <p className="mt-3 text-center text-xs text-white/70">
+            Mapa estilizado dos 22 municípios da Região Metropolitana do Rio de Janeiro
+          </p>
         </div>
       </div>
     </section>
