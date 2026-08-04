@@ -1,8 +1,12 @@
+import { lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { AlertTriangle } from 'lucide-react';
 import atualizacoes from '../../data/atualizacoes.json';
 import type { Atualizacao } from '../../types';
-import { HeroMap } from './HeroMap';
+
+const HeroMapPreview = lazy(() =>
+  import('./HeroMapPreview').then((m) => ({ default: m.HeroMapPreview })),
+);
 
 const ultimaAtualizacao = (atualizacoes as Atualizacao[])[0];
 
@@ -70,12 +74,14 @@ export function Hero() {
         <div className="mx-auto w-full max-w-lg">
           <div
             aria-hidden="true"
-            className="aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-4"
+            className="aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10"
           >
-            <HeroMap />
+            <Suspense fallback={<div className="h-full w-full animate-pulse" />}>
+              <HeroMapPreview />
+            </Suspense>
           </div>
           <p className="mt-3 text-center text-xs text-white/70">
-            Mapa estilizado dos 22 municípios da Região Metropolitana do Rio de Janeiro
+            Mapa da Região Metropolitana do Rio de Janeiro, com os 22 municípios ao fundo
           </p>
         </div>
       </div>
