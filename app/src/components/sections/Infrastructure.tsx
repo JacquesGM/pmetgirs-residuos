@@ -2,12 +2,28 @@ import { AlertTriangle } from 'lucide-react';
 import infraestruturasData from '../../data/infraestruturas.json';
 import type { Infraestrutura } from '../../types';
 import { Section } from '../ui/Section';
-import { StatusBadge } from '../ui/StatusBadge';
+import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { Card } from '../ui/Card';
 import { InfrastructureDivergenceChart } from '../charts/InfrastructureDivergenceChart';
+import { InfrastructureCompositionChart } from '../charts/InfrastructureCompositionChart';
 import { DownloadButton } from '../ui/DownloadButton';
+import type { DownloadColumn } from '../../lib/download';
 
 const infraestruturas = infraestruturasData as Infraestrutura[];
+
+const colunasInfraestruturas: DownloadColumn<Infraestrutura>[] = [
+  { key: 'nome', label: 'Infraestrutura' },
+  { key: 'quantidade', label: 'Quantidade de referência' },
+  { key: 'unidade', label: 'Unidade' },
+  { key: 'statusValidacao', label: 'Situação do dado', value: (row) => statusLabel(row.statusValidacao) },
+  {
+    key: 'valoresDivergentes',
+    label: 'Valores divergentes por fonte',
+    value: (row) => row.valoresDivergentes?.map((v) => `${v.fonte}: ${v.valor}`).join(' | '),
+  },
+  { key: 'fonte', label: 'Fonte' },
+  { key: 'observacao', label: 'Observação' },
+];
 
 export function Infrastructure() {
   return (
@@ -26,11 +42,20 @@ export function Infrastructure() {
       </div>
 
       <div className="mb-6">
-        <DownloadButton filename="infraestruturas-pmetgirs.json" data={infraestruturas} />
+        <DownloadButton
+          filename="infraestruturas-pmetgirs"
+          title="Infraestrutura planejada — PMetGIRS"
+          data={infraestruturas}
+          columns={colunasInfraestruturas}
+        />
       </div>
 
       <Card className="mb-6">
         <InfrastructureDivergenceChart />
+      </Card>
+
+      <Card className="mb-6">
+        <InfrastructureCompositionChart />
       </Card>
 
       {/* Tabela completa — telas médias e grandes */}

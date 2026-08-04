@@ -1,14 +1,30 @@
 import { Link } from 'react-router-dom';
 import indicadoresData from '../../data/indicadores.json';
-import type { Indicador } from '../../types';
+import projetosData from '../../data/projetos.json';
+import eixosData from '../../data/eixos.json';
+import type { Eixo, Indicador, Projeto } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
-import { StatusBadge } from '../ui/StatusBadge';
+import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
 import { DownloadButton } from '../ui/DownloadButton';
+import type { DownloadColumn } from '../../lib/download';
 import { indicadorIcons, iconFor } from '../../lib/icons';
+import { StatusDistributionChart } from '../charts/StatusDistributionChart';
 
 const indicadores = indicadoresData as Indicador[];
+const projetos = projetosData as Projeto[];
+const eixos = eixosData as Eixo[];
+
+const colunasIndicadores: DownloadColumn<Indicador>[] = [
+  { key: 'nome', label: 'Indicador' },
+  { key: 'valorExibicao', label: 'Valor' },
+  { key: 'unidade', label: 'Unidade' },
+  { key: 'periodoReferencia', label: 'Período de referência' },
+  { key: 'statusValidacao', label: 'Situação do dado', value: (row) => statusLabel(row.statusValidacao) },
+  { key: 'fonte', label: 'Fonte' },
+  { key: 'observacao', label: 'Observação' },
+];
 
 const prefixosQualificadores = ['aproximadamente', 'até'];
 
@@ -25,7 +41,12 @@ export function Indicators() {
   return (
     <Section id="indicadores" title="Indicadores de destaque" subtitle="Os principais números do desafio metropolitano de resíduos sólidos.">
       <div className="mb-6">
-        <DownloadButton filename="indicadores-pmetgirs.json" data={indicadores} />
+        <DownloadButton
+          filename="indicadores-pmetgirs"
+          title="Indicadores de destaque — PMetGIRS"
+          data={indicadores}
+          columns={colunasIndicadores}
+        />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -52,6 +73,23 @@ export function Indicators() {
           );
         })}
       </div>
+      <div className="mt-8 grid gap-5 lg:grid-cols-2">
+        <Card>
+          <StatusDistributionChart
+            title="Situação dos projetos"
+            statuses={projetos.map((p) => p.status)}
+            source="Plano de Ações do PMetGIRS"
+          />
+        </Card>
+        <Card>
+          <StatusDistributionChart
+            title="Situação dos eixos estratégicos"
+            statuses={eixos.map((e) => e.situacao)}
+            source="Plano de Ações do PMetGIRS"
+          />
+        </Card>
+      </div>
+
       <p className="mt-6 text-sm text-neutral-600">
         Veja também a{' '}
         <Link to="/infraestrutura" className="font-medium text-brand-blue-600 hover:underline">

@@ -74,7 +74,7 @@ export function Hero() {
         <div className="mx-auto w-full max-w-lg">
           <div
             aria-hidden="true"
-            className="aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10"
+            className="isolate aspect-[468/200] w-full overflow-hidden rounded-2xl border border-white/20 bg-white/10"
           >
             <Suspense fallback={<div className="h-full w-full animate-pulse" />}>
               <HeroMapPreview />

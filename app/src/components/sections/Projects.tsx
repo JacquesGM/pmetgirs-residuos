@@ -8,6 +8,7 @@ import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { EmptyState } from '../ui/EmptyState';
 import { DataValue } from '../ui/DataValue';
 import { DownloadButton } from '../ui/DownloadButton';
+import type { DownloadColumn } from '../../lib/download';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
 import { eixoIcons, iconFor } from '../../lib/icons';
 import { uniqueOptions } from '../../lib/filters';
@@ -21,6 +22,16 @@ const responsavelOptions = uniqueOptions(projetos, (p) => p.responsavel);
 function eixoNome(id: string): string {
   return eixos.find((eixo) => eixo.id === id)?.nome ?? id;
 }
+
+const colunasProjetos: DownloadColumn<Projeto>[] = [
+  { key: 'nome', label: 'Projeto' },
+  { key: 'eixo', label: 'Eixo', value: (row) => eixoNome(row.eixo) },
+  { key: 'status', label: 'Situação', value: (row) => statusLabel(row.status) },
+  { key: 'responsavel', label: 'Responsável' },
+  { key: 'abrangencia', label: 'Abrangência' },
+  { key: 'percentualAvanco', label: 'Avanço (%)' },
+  { key: 'fonte', label: 'Fonte' },
+];
 
 const ALL = 'todos';
 
@@ -108,7 +119,12 @@ export function Projects() {
         <p className="text-sm text-neutral-500" role="status">
           {filtrados.length} {filtrados.length === 1 ? 'projeto encontrado' : 'projetos encontrados'}
         </p>
-        <DownloadButton filename="projetos-pmetgirs.json" data={projetos} />
+        <DownloadButton
+          filename="projetos-pmetgirs"
+          title="Portfólio de projetos — PMetGIRS"
+          data={projetos}
+          columns={colunasProjetos}
+        />
       </div>
 
       {filtrados.length === 0 ? (

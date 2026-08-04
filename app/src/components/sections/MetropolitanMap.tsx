@@ -5,12 +5,33 @@ import municipiosData from '../../data/municipios.json';
 import type { Municipio } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
-import { StatusBadge } from '../ui/StatusBadge';
+import { StatusBadge, statusLabel } from '../ui/StatusBadge';
 import { PopulationChart } from '../charts/PopulationChart';
+import { DensityChart } from '../charts/DensityChart';
 import { MunicipalityComparator } from './MunicipalityComparator';
 import { DownloadButton } from '../ui/DownloadButton';
+import type { DownloadColumn } from '../../lib/download';
 
 const municipios = municipiosData as Municipio[];
+
+const colunasMunicipios: DownloadColumn<Municipio>[] = [
+  { key: 'nome', label: 'Município' },
+  { key: 'populacao', label: 'População' },
+  { key: 'populacaoAno', label: 'Ano da população' },
+  { key: 'areaTerritorialKm2', label: 'Área territorial (km²)' },
+  { key: 'areaUrbanizadaKm2', label: 'Área urbanizada (km²)' },
+  { key: 'densidadeDemografica', label: 'Densidade demográfica (hab/km²)' },
+  { key: 'densidadeAno', label: 'Ano da densidade' },
+  { key: 'statusDados', label: 'Situação do dado', value: (row) => statusLabel(row.statusDados) },
+  { key: 'fonte', label: 'Fonte' },
+];
+
+type Metrica = 'populacao' | 'densidade';
+
+const opcoesMetrica: { id: Metrica; label: string }[] = [
+  { id: 'populacao', label: 'População' },
+  { id: 'densidade', label: 'Densidade demográfica' },
+];
 
 function radiusForPopulation(populacao: number): number {
   return Math.max(6, Math.min(28, Math.sqrt(populacao) / 65));
@@ -18,6 +39,7 @@ function radiusForPopulation(populacao: number): number {
 
 export function MetropolitanMap() {
   const [selecionado, setSelecionado] = useState<Municipio | null>(null);
+  const [metrica, setMetrica] = useState<Metrica>('populacao');
 
   const center = useMemo<[number, number]>(() => [-22.75, -43.25], []);
 
@@ -28,11 +50,16 @@ export function MetropolitanMap() {
       subtitle="Clique em um município para ver população, área e situação dos dados."
     >
       <div className="mb-6">
-        <DownloadButton filename="municipios-pmetgirs.json" data={municipios} />
+        <DownloadButton
+          filename="municipios-pmetgirs"
+          title="Municípios da Região Metropolitana — PMetGIRS"
+          data={municipios}
+          columns={colunasMunicipios}
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-        <div className="h-[420px] overflow-hidden rounded-xl border border-neutral-200 sm:h-[480px]">
+        <div className="isolate h-[420px] overflow-hidden rounded-xl border border-neutral-200 sm:h-[480px]">
           <MapContainer
             center={center}
             zoom={9}
@@ -107,7 +134,25 @@ export function MetropolitanMap() {
       </div>
 
       <Card className="mt-6">
-        <PopulationChart />
+        <div role="tablist" aria-label="Métrica do gráfico" className="mb-4 inline-flex rounded-lg border border-neutral-200 bg-neutral-50 p-1">
+          {opcoesMetrica.map((opcao) => (
+            <button
+              key={opcao.id}
+              type="button"
+              role="tab"
+              aria-selected={metrica === opcao.id}
+              onClick={() => setMetrica(opcao.id)}
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                metrica === opcao.id
+                  ? 'bg-white text-brand-blue-700 shadow-sm'
+                  : 'text-neutral-600 hover:text-neutral-900'
+              }`}
+            >
+              {opcao.label}
+            </button>
+          ))}
+        </div>
+        {metrica === 'populacao' ? <PopulationChart /> : <DensityChart />}
       </Card>
 
       <div className="mt-6">
