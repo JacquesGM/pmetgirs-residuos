@@ -1,6 +1,9 @@
 # Configurações locais do Claude Code (não fazem parte do projeto)
 .claude/
 
+# Documentos de referência internos — nunca versionar
+Docs/
+
 # Dependências
 app/node_modules/
 
