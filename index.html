@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/pmetgirs-residuos/favicon.svg" />
+    <title>PMetGIRS — Gestão Metropolitana de Resíduos Sólidos | IRM</title>
+    <meta
+      name="description"
+      content="Acompanhe as metas, projetos e resultados do Plano Metropolitano de Gestão Integrada de Resíduos Sólidos (PMetGIRS) dos 22 municípios da Região Metropolitana do Rio de Janeiro."
+    />
+    <meta property="og:title" content="PMetGIRS — Gestão Metropolitana de Resíduos Sólidos" />
+    <meta
+      property="og:description"
+      content="Transparência, acompanhamento e prestação de contas do Instituto Rio Metrópole (IRM) sobre o PMetGIRS."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "GovernmentOrganization",
+        "name": "Instituto Rio Metrópole",
+        "alternateName": "IRM",
+        "url": "https://www.rj.gov.br/irm"
+      }
+    </script>
+    <!--
+      Decodifica o redirecionamento feito por public/404.html (GitHub Pages não
+      tem servidor, então rotas como /projetos viram 404 sem isso). Roda
+      antes do React Router montar. Padrão: rafgraph/spa-github-pages (MIT).
+    -->
+    <script>
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) {
+              return s.replace(/~and~/g, '&');
+            })
+            .join('?');
+          window.history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+    </script>
+    <script type="module" crossorigin src="/pmetgirs-residuos/assets/index-CzAH9PVX.js"></script>
+    <link rel="stylesheet" crossorigin href="/pmetgirs-residuos/assets/index-BPAcctqY.css">
+  </head>
+  <body>
+    <noscript>
+      Esta página usa JavaScript para exibir a maior parte do conteúdo (indicadores, projetos, mapa,
+      documentos). Ative o JavaScript no navegador para visualizá-la corretamente, ou consulte o
+      site institucional do IRM em
+      <a href="https://www.rj.gov.br/irm">https://www.rj.gov.br/irm</a>.
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>
