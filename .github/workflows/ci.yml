@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      # Alinha a versão do npm com a usada para gerar o package-lock.json
+      # localmente (npm 10, do Node 20 da imagem do runner, resolve
+      # dependências opcionais do esbuild de forma diferente do npm 11 e
+      # rejeita o lock como "fora de sincronia" — não é o lock que está
+      # errado, é a versão do npm).
+      - run: npm install -g npm@11
+
+      - run: npm ci
+
+      - name: Checagem de tipos (tsc)
+        run: npx tsc -b
+
+      - name: Testes (vitest)
+        run: npm run test -- --run
+
+      - name: Build de produção
+        run: npm run build

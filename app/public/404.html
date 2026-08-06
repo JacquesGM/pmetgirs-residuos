@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecionando... | PMetGIRS</title>
+    <!--
+      GitHub Pages é um servidor estático: uma URL como /pmetgirs-residuos/projetos
+      não corresponde a nenhum arquivo físico, então o GitHub serve este 404.html.
+      Ele codifica o caminho pedido numa query string e redireciona para o index.html
+      real, que devolve o caminho original antes do React Router montar (ver o script
+      inline em index.html). Padrão consolidado: rafgraph/spa-github-pages (MIT).
+    -->
+    <script>
+      var pathSegmentsToKeep = 1; // mantém "/pmetgirs-residuos" como prefixo
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
