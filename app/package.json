@@ -11,7 +11,10 @@
     "test:rules": "firebase emulators:exec --only firestore --project demo-pmetgirs \"vitest run --config vitest.rules.config.ts\"",
     "emulators": "firebase emulators:start --project demo-pmetgirs",
     "rules:check": "firebase deploy --only firestore:rules --dry-run --project demo-pmetgirs",
-    "bootstrap:owner": "tsx scripts/bootstrap-owner.ts"
+    "bootstrap:owner": "tsx scripts/bootstrap-owner.ts",
+    "migrate:dry-run": "tsx scripts/migrate-json.ts",
+    "migrate:emulator": "tsx scripts/migrate-json.ts --emulator",
+    "migrate:prod": "tsx scripts/migrate-json.ts --production"
   },
   "dependencies": {
     "firebase": "^12.17.1",

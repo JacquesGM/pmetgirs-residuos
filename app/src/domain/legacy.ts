@@ -86,6 +86,47 @@ export function mapLegacyValidationStatus(status: StatusValidacao): LegacyStatus
   return VALIDATION_MAP[status];
 }
 
+/**
+ * Resolve um status legado sem saber de antemão a que família ele pertence.
+ *
+ * Existe porque os dados de origem nem sempre respeitam o próprio tipo: o
+ * campo `situacao` de `inconsistencias.json` é declarado como StatusValidacao,
+ * mas um registro traz `em_estruturacao`, que é situação de execução. Em vez
+ * de quebrar ou escolher um padrão em silêncio, resolvemos pelas duas famílias
+ * e devolvemos de qual delas veio, para que a migração possa relatar o desvio.
+ */
+export interface ResolvedLegacyStatus extends LegacyStatusMapping {
+  /** Família em que o valor foi de fato encontrado. */
+  resolvedFrom: 'validation' | 'execution';
+  /** true quando o valor não pertence à família declarada pelo tipo. */
+  outOfDeclaredFamily: boolean;
+}
+
+export function resolveLegacyStatus(
+  status: string,
+  declaredFamily: 'validation' | 'execution',
+): ResolvedLegacyStatus | null {
+  const asValidation = VALIDATION_MAP[status as StatusValidacao];
+  if (asValidation) {
+    return {
+      ...asValidation,
+      resolvedFrom: 'validation',
+      outOfDeclaredFamily: declaredFamily !== 'validation',
+    };
+  }
+
+  const asExecution = EXECUTION_MAP[status as StatusProjeto];
+  if (asExecution) {
+    return {
+      ...asExecution,
+      resolvedFrom: 'execution',
+      outOfDeclaredFamily: declaredFamily !== 'execution',
+    };
+  }
+
+  return null;
+}
+
 /** Todos os status legados conhecidos, para conferência de cobertura na migração. */
 export const LEGACY_STATUS_KEYS = [
   ...(Object.keys(EXECUTION_MAP) as StatusProjeto[]),

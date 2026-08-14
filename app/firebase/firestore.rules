@@ -109,7 +109,7 @@ service cloud.firestore {
         'resources', 'resourceAllocations', 'stakeholders',
         'challenges', 'opportunities', 'fundingSources',
         'documents', 'inconsistencies', 'indicators', 'goals',
-        'infrastructures', 'municipalities', 'imports'
+        'infrastructures', 'municipalities', 'imports', 'glossary'
       ];
     }
 
