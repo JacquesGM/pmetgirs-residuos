@@ -8,6 +8,9 @@ import { PrioritizationPage } from '../features/portfolio/PrioritizationPage';
 import { SettingsPage } from '../features/portfolio/SettingsPage';
 import { DependenciesPage } from '../features/portfolio/DependenciesPage';
 import { SchedulePage } from '../features/portfolio/SchedulePage';
+import { InvestmentsPage } from '../features/portfolio/InvestmentsPage';
+import { OpportunitiesPage } from '../features/portfolio/OpportunitiesPage';
+import { ChallengesPage } from '../features/portfolio/ChallengesPage';
 
 export interface PrivateRoute {
   path: string;
@@ -51,39 +54,9 @@ export const privateRoutes: PrivateRoute[] = [
   { path: 'cronograma', title: 'Cronograma', element: <SchedulePage /> },
   { path: 'dependencias', title: 'Dependências', element: <DependenciesPage /> },
   { path: 'priorizacao', title: 'Priorização', element: <PrioritizationPage /> },
-  {
-    path: 'investimentos',
-    title: 'Investimentos',
-    element: (
-      <PlaceholderPage
-        title="Investimentos"
-        phase="Fase 6"
-        description="Funil de estruturação e índice de prontidão para captação, com as lacunas que faltam fechar em cada oportunidade."
-      />
-    ),
-  },
-  {
-    path: 'oportunidades',
-    title: 'Oportunidades',
-    element: (
-      <PlaceholderPage
-        title="Oportunidades"
-        phase="Fase 6"
-        description="Fichas executivas para apresentação ao mercado, sempre distinguindo receita contratual, receita de mercado, economia pública e benefício socioambiental."
-      />
-    ),
-  },
-  {
-    path: 'desafios',
-    title: 'Desafios',
-    element: (
-      <PlaceholderPage
-        title="Desafios e participação do mercado"
-        phase="Fase 6"
-        description="Problemas estruturados com evidência, território e formas possíveis de participação. O sistema divulga; não seleciona empresa nem substitui procedimento oficial."
-      />
-    ),
-  },
+  { path: 'investimentos', title: 'Investimentos', element: <InvestmentsPage /> },
+  { path: 'oportunidades', title: 'Oportunidades', element: <OpportunitiesPage /> },
+  { path: 'desafios', title: 'Desafios', element: <ChallengesPage /> },
   {
     path: 'documentos',
     title: 'Documentos',
