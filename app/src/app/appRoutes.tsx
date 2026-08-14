@@ -6,6 +6,8 @@ import { ProjectDetailPage } from '../features/portfolio/ProjectDetailPage';
 import { ProjectsPage } from '../features/portfolio/ProjectsPage';
 import { PrioritizationPage } from '../features/portfolio/PrioritizationPage';
 import { SettingsPage } from '../features/portfolio/SettingsPage';
+import { DependenciesPage } from '../features/portfolio/DependenciesPage';
+import { SchedulePage } from '../features/portfolio/SchedulePage';
 
 export interface PrivateRoute {
   path: string;
@@ -46,28 +48,8 @@ export const privateRoutes: PrivateRoute[] = [
   },
   { path: 'projetos', title: 'Projetos', element: <ProjectsPage /> },
   { path: 'projetos/:projetoId', title: 'Projeto', element: <ProjectDetailPage /> },
-  {
-    path: 'cronograma',
-    title: 'Cronograma',
-    element: (
-      <PlaceholderPage
-        title="Cronograma"
-        phase="Fase 5"
-        description="Gantt e ondas de início, com tabela equivalente acessível. A biblioteca de gráfico entra sob demanda, só nesta rota."
-      />
-    ),
-  },
-  {
-    path: 'dependencias',
-    title: 'Dependências',
-    element: (
-      <PlaceholderPage
-        title="Dependências e concomitância"
-        phase="Fase 5"
-        description="Rede de precedências, detecção de ciclos, caminho crítico, conflitos de recurso e os painéis “o que pode começar agora” e “o que pode ocorrer em paralelo”."
-      />
-    ),
-  },
+  { path: 'cronograma', title: 'Cronograma', element: <SchedulePage /> },
+  { path: 'dependencias', title: 'Dependências', element: <DependenciesPage /> },
   { path: 'priorizacao', title: 'Priorização', element: <PrioritizationPage /> },
   {
     path: 'investimentos',
