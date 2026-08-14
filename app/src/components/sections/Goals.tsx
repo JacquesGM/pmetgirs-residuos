@@ -13,6 +13,7 @@ const metas = metasData as Meta[];
 export function Goals() {
   return (
     <Section
+      headingLevel={1}
       id="metas"
       title="Metas de coleta e atendimento"
       subtitle="Universalização da coleta e ampliação da coleta seletiva nos 22 municípios."

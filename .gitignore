@@ -1,8 +1,22 @@
 # Configurações locais do Claude Code (não fazem parte do projeto)
 .claude/
 
-# Documentos de referência internos — nunca versionar
+# ---------------------------------------------------------------------------
+# DOCUMENTOS INTERNOS — nunca versionar.
+#
+# Diagnóstico, arquitetura, prompts, plano de fases, segurança, controle de
+# acesso e provisionamento descrevem a estratégia de desenvolvimento do IRM.
+# Este repositório é público; essa documentação não é.
+#
+# Ela permanece na máquina da equipe e circula pelos canais internos do
+# Instituto — não pelo Git.
+# ---------------------------------------------------------------------------
 Docs/
+docs/
+documentacao/
+documentação/
+Documentos/
+documentos/
 
 # Dependências
 app/node_modules/
@@ -12,6 +26,42 @@ app/dist/
 app/*.tsbuildinfo
 app/vite.config.js
 app/vite.config.d.ts
+
+# ---------------------------------------------------------------------------
+# SEGREDOS — nada abaixo desta linha pode entrar no repositório.
+#
+# Chave de service account, credencial do Admin SDK, token de depuração do
+# App Check e qualquer arquivo .env com valores reais. A configuração web do
+# Firebase não é segredo, mas mesmo assim fica fora do Git: cada ambiente
+# preenche o próprio .env.local a partir do .env.example.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+app/.env
+app/.env.*
+!app/.env.example
+
+*serviceAccount*.json
+*service-account*.json
+*-adminsdk-*.json
+*.pem
+*.p12
+*.key
+
+# Artefatos do Firebase
+.firebase/
+app/.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+app/firebase-debug.log*
+app/firestore-debug.log*
+app/ui-debug.log*
+app/firebase/emulator-data/
+
+# Relatórios de migração (podem conter dados internos)
+app/scripts/output/
 
 # Sistema
 .DS_Store

@@ -28,6 +28,7 @@ const colunasInfraestruturas: DownloadColumn<Infraestrutura>[] = [
 export function Infrastructure() {
   return (
     <Section
+      headingLevel={1}
       id="infraestrutura"
       title="Infraestrutura planejada"
       subtitle="Infraestrutura prevista no Plano de Ações e no Prognóstico Geral. Nada aqui foi construído ainda."

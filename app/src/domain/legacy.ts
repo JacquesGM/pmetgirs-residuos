@@ -1,0 +1,93 @@
+import type { StatusProjeto, StatusValidacao } from '../types';
+import type { ActualityStatus, ExecutionStatus, SourceType, ValidationStatus } from './enums';
+
+/**
+ * Conversão dos 18 status legados (um campo só, em português) para as quatro
+ * dimensões independentes do novo modelo.
+ *
+ * Nenhuma conversão descarta informação: o registro migrado guarda o valor
+ * original em `legacyStatus`, para que a decisão seja auditável e reversível.
+ *
+ * O caso que motiva tudo isto é `dado_em_validacao`: hoje ele vive na união de
+ * situação de execução, mas é situação do DADO. Ao migrar, ele sai da dimensão
+ * de execução e deixa a execução indefinida — não vira `not_started`, porque
+ * ninguém afirmou que o projeto não começou.
+ */
+
+export interface LegacyStatusMapping {
+  execution?: ExecutionStatus;
+  validation?: ValidationStatus;
+  actuality?: ActualityStatus;
+  sourceType?: SourceType;
+  /** Valor original, preservado no registro migrado. */
+  legacyStatus: string;
+  /** Explica conversões que não são de um para um. */
+  note?: string;
+}
+
+const EXECUTION_MAP: Record<StatusProjeto, LegacyStatusMapping> = {
+  nao_iniciado: { execution: 'not_started', legacyStatus: 'nao_iniciado' },
+  em_estruturacao: { execution: 'structuring', legacyStatus: 'em_estruturacao' },
+  em_estudo: { execution: 'study', legacyStatus: 'em_estudo' },
+  em_contratacao: { execution: 'procurement', legacyStatus: 'em_contratacao' },
+  em_licenciamento: { execution: 'licensing', legacyStatus: 'em_licenciamento' },
+  em_implantacao: { execution: 'implementation', legacyStatus: 'em_implantacao' },
+  em_operacao: { execution: 'operation', legacyStatus: 'em_operacao' },
+  concluido: { execution: 'completed', legacyStatus: 'concluido' },
+  suspenso: { execution: 'paused', legacyStatus: 'suspenso' },
+  dado_em_validacao: {
+    validation: 'in_validation',
+    legacyStatus: 'dado_em_validacao',
+    note:
+      'Situação do dado, não de execução. A execução fica indefinida na migração: ' +
+      'nenhuma fonte afirmou que o projeto não começou.',
+  },
+};
+
+const VALIDATION_MAP: Record<StatusValidacao, LegacyStatusMapping> = {
+  dado_oficial_validado: {
+    validation: 'validated',
+    sourceType: 'official',
+    legacyStatus: 'dado_oficial_validado',
+    note: 'Um campo legado vira dois: origem oficial e validação concluída.',
+  },
+  dado_municipal_declarado: {
+    sourceType: 'municipal_declared',
+    validation: 'not_assessed',
+    legacyStatus: 'dado_municipal_declarado',
+    note: 'Declaração municipal é origem; não implica validação.',
+  },
+  estimativa_tecnica: {
+    sourceType: 'technical_estimate',
+    validation: 'not_assessed',
+    legacyStatus: 'estimativa_tecnica',
+    note: 'Estimativa é origem, não grau de confiança.',
+  },
+  dado_historico: {
+    actuality: 'historical',
+    legacyStatus: 'dado_historico',
+    note: 'Passa a conviver com qualquer situação de validação.',
+  },
+  dado_preliminar: { validation: 'preliminary', legacyStatus: 'dado_preliminar' },
+  em_atualizacao: { actuality: 'updating', legacyStatus: 'em_atualizacao' },
+  em_validacao: { validation: 'in_validation', legacyStatus: 'em_validacao' },
+  informacao_divergente: {
+    validation: 'divergent',
+    legacyStatus: 'informacao_divergente',
+    note: 'Exige pelo menos duas EvidenceClaim no mesmo fieldPath.',
+  },
+};
+
+export function mapLegacyProjectStatus(status: StatusProjeto): LegacyStatusMapping {
+  return EXECUTION_MAP[status];
+}
+
+export function mapLegacyValidationStatus(status: StatusValidacao): LegacyStatusMapping {
+  return VALIDATION_MAP[status];
+}
+
+/** Todos os status legados conhecidos, para conferência de cobertura na migração. */
+export const LEGACY_STATUS_KEYS = [
+  ...(Object.keys(EXECUTION_MAP) as StatusProjeto[]),
+  ...(Object.keys(VALIDATION_MAP) as StatusValidacao[]),
+];

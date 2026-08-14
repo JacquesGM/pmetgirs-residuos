@@ -57,6 +57,7 @@ export function Projects() {
 
   return (
     <Section
+      headingLevel={1}
       id="projetos"
       title="Portfólio de projetos"
       subtitle="Ações do PMetGIRS, com situação e responsável de cada uma."

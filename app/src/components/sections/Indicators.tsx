@@ -39,7 +39,7 @@ function splitValorExibicao(valor: string): { prefixo: string | null; valor: str
 
 export function Indicators() {
   return (
-    <Section id="indicadores" title="Indicadores de destaque" subtitle="Os principais números do desafio metropolitano de resíduos sólidos.">
+    <Section headingLevel={1} id="indicadores" title="Indicadores de destaque" subtitle="Os principais números do desafio metropolitano de resíduos sólidos.">
       <div className="mb-6">
         <DownloadButton
           filename="indicadores-pmetgirs"

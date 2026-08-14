@@ -44,6 +44,7 @@ const perguntas = [
 export function FAQ() {
   return (
     <Section
+      headingLevel={1}
       id="faq"
       title="Perguntas frequentes"
       subtitle="Respostas rápidas para as dúvidas mais comuns sobre o PMetGIRS."

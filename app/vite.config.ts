@@ -1,15 +1,44 @@
+import { loadEnv } from 'vite';
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
-// base só se aplica ao build de produção: a página é publicada em
-// jacquesgm.github.io/pmetgirs-residuos/ (site de projeto do GitHub Pages,
-// não a raiz do domínio), mas o servidor de desenvolvimento continua em "/".
-export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/pmetgirs-residuos/' : '/',
-  plugins: [react()],
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './src/test/setup.ts',
-  },
-}));
+// O `base` depende de onde o build será publicado:
+//  - GitHub Pages (atual): site de projeto em /pmetgirs-residuos/;
+//  - Firebase Hosting (destino): raiz do domínio.
+// Enquanto os dois convivem, DEPLOY_TARGET decide. O servidor de
+// desenvolvimento é sempre "/".
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const target = env.DEPLOY_TARGET ?? 'github-pages';
+  const base = command === 'build' && target === 'github-pages' ? '/pmetgirs-residuos/' : '/';
+
+  return {
+    base,
+    plugins: [react()],
+    build: {
+      rollupOptions: {
+        output: {
+          // Recharts e Firebase saem do pacote principal: nenhum dos dois é
+          // necessário na primeira dobra do portal público.
+          manualChunks(id: string) {
+            if (id.includes('node_modules/recharts') || id.includes('node_modules/d3-')) {
+              return 'recharts';
+            }
+            if (id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')) {
+              return 'firebase';
+            }
+            return undefined;
+          },
+        },
+      },
+    },
+    test: {
+      environment: 'jsdom',
+      globals: true,
+      setupFiles: './src/test/setup.ts',
+      // Os testes das Security Rules exigem o Emulator e rodam em ambiente
+      // Node, por `npm run test:rules`.
+      exclude: ['node_modules/**', 'dist/**', 'firebase/**'],
+    },
+  };
+});

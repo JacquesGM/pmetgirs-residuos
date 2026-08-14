@@ -45,9 +45,10 @@ export function MetropolitanMap() {
 
   return (
     <Section
+      headingLevel={1}
       id="mapa"
       title="Mapa da Região Metropolitana"
-      subtitle="Clique em um município para ver população, área e situação dos dados."
+      subtitle="Selecione um município — no mapa ou na lista abaixo dele — para ver população, área e situação dos dados."
     >
       <div className="mb-6">
         <DownloadButton
@@ -82,7 +83,28 @@ export function MetropolitanMap() {
                   fillOpacity: 0.55,
                   weight: 1.5,
                 }}
-                eventHandlers={{ click: () => setSelecionado(municipio) }}
+                eventHandlers={{
+                  click: () => setSelecionado(municipio),
+                  // O Leaflet desenha os círculos como <path> sem foco nem nome
+                  // acessível. Ao entrar no mapa, promovemos cada path a botão
+                  // focável e rotulado, acionável por Enter e Espaço.
+                  add: (event) => {
+                    const path = (event.target as { getElement?: () => SVGPathElement | null }).getElement?.();
+                    if (!path) return;
+                    path.setAttribute('tabindex', '0');
+                    path.setAttribute('role', 'button');
+                    path.setAttribute(
+                      'aria-label',
+                      `${municipio.nome}: ${municipio.populacao.toLocaleString('pt-BR')} habitantes em ${municipio.populacaoAno}. Selecionar para ver os dados.`,
+                    );
+                    path.addEventListener('keydown', (keyEvent: KeyboardEvent) => {
+                      if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+                        keyEvent.preventDefault();
+                        setSelecionado(municipio);
+                      }
+                    });
+                  },
+                }}
               >
                 <Popup>
                   <strong>{municipio.nome}</strong>
@@ -127,11 +149,39 @@ export function MetropolitanMap() {
             </div>
           ) : (
             <p className="text-sm text-neutral-500">
-              Clique em um dos 22 municípios no mapa para ver seus dados.
+              Selecione um dos {municipios.length} municípios para ver seus dados.
             </p>
           )}
         </Card>
       </div>
+
+      {/* Alternativa ao mapa: mesma seleção, sem depender de leitura visual
+          nem de precisão de ponteiro. */}
+      <nav aria-label="Selecionar município" className="mt-4">
+        <ul className="flex flex-wrap gap-2">
+          {[...municipios]
+            .sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+            .map((municipio) => {
+              const ativo = selecionado?.id === municipio.id;
+              return (
+                <li key={municipio.id}>
+                  <button
+                    type="button"
+                    aria-pressed={ativo}
+                    onClick={() => setSelecionado(municipio)}
+                    className={`min-h-11 rounded-md border px-3 text-sm font-medium transition-colors ${
+                      ativo
+                        ? 'border-brand-blue-600 bg-brand-blue-600 text-white'
+                        : 'border-neutral-300 bg-white text-neutral-700 hover:border-brand-blue-400 hover:text-brand-blue-700'
+                    }`}
+                  >
+                    {municipio.nome}
+                  </button>
+                </li>
+              );
+            })}
+        </ul>
+      </nav>
 
       <Card className="mt-6">
         <div role="tablist" aria-label="Métrica do gráfico" className="mb-4 inline-flex rounded-lg border border-neutral-200 bg-neutral-50 p-1">

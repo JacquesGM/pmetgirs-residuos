@@ -21,6 +21,12 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
 
+      # O emulador do Firestore roda sobre a JVM.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
       # Alinha a versão do npm com a usada para gerar o package-lock.json
       # localmente (npm 10, do Node 20 da imagem do runner, resolve
       # dependências opcionais do esbuild de forma diferente do npm 11 e
@@ -36,5 +42,54 @@ jobs:
       - name: Testes (vitest)
         run: npm run test -- --run
 
+      # Sobe o emulador, roda a matriz de papéis e derruba o emulador.
+      # Inclui os casos de escalada de privilégio: se a fronteira de governança
+      # for afrouxada, o CI barra antes do merge.
+      - name: Testes das Security Rules (Emulator)
+        run: npm run test:rules
+
       - name: Build de produção
         run: npm run build
+
+      - name: Relatório de tamanho do bundle
+        run: |
+          echo "### Bundle" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          du -h dist/assets/*.js | sort -h >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Rede de segurança contra o erro mais caro possível: commitar uma chave.
+      # Procura por padrões de credencial nos arquivos versionados.
+      #
+      # Exclusões e o motivo de cada uma:
+      #   .env.example — só contém nomes de variável, sem valores;
+      #   README       — explica o que NÃO commitar e cita os padrões;
+      #   este arquivo — define os padrões e casaria consigo mesmo.
+      - name: Procurar credenciais nos arquivos versionados
+        run: |
+          set +e
+          PADROES='BEGIN [A-Z ]*PRIVATE KEY|"private_key"|"type": *"service_account"|AIza[0-9A-Za-z_-]{35}'
+          ACHADOS=$(git ls-files -z \
+            | grep -zZv -E '\.env\.example$|^README\.md$|^\.github/workflows/ci\.yml$' \
+            | xargs -0 grep -InE "$PADROES" 2>/dev/null)
+          if [ -n "$ACHADOS" ]; then
+            echo "::error::Possível credencial em arquivo versionado:"
+            echo "$ACHADOS"
+            exit 1
+          fi
+          echo "Nenhuma credencial encontrada nos arquivos versionados."
+
+      - name: Confirmar que nenhum .env real está versionado
+        run: |
+          set +e
+          ENVS=$(git ls-files | grep -E '(^|/)\.env' | grep -v '\.env\.example$')
+          if [ -n "$ENVS" ]; then
+            echo "::error::Arquivo .env versionado: $ENVS"
+            exit 1
+          fi
+          echo "Nenhum .env versionado."

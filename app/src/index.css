@@ -11,11 +11,6 @@
   html {
     scroll-behavior: smooth;
   }
-
-  p {
-    text-align: justify;
-    text-justify: inter-word;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

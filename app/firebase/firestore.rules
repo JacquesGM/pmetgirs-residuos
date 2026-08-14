@@ -1,0 +1,325 @@
+rules_version = '2';
+
+// PMetGIRS — Security Rules
+//
+// Princípios:
+//  1. Negação por padrão. Nada é legível ou gravável sem regra explícita.
+//  2. Autenticar não é autorizar. Entrar com Google cria um usuário no Firebase
+//     Auth e nada mais; o acesso depende de members/{uid} com status 'active'.
+//  3. Coleções de governança (membros, convites, auditoria, configurações,
+//     publicação) NUNCA são cobertas pela regra genérica de conteúdo. Ver a
+//     nota "ESCALADA DE PRIVILÉGIO" mais abaixo.
+//  4. Toda mutação de conteúdo exige um auditEvent criado no mesmo lote.
+//  5. Exclusão física é sempre negada; o domínio usa arquivamento.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------- helpers
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function memberPath(wid) {
+      return /databases/$(database)/documents/workspaces/$(wid)/members/$(request.auth.uid);
+    }
+
+    function memberData(wid) {
+      return get(memberPath(wid)).data;
+    }
+
+    function isActiveMember(wid) {
+      return signedIn()
+        && exists(memberPath(wid))
+        && memberData(wid).status == 'active';
+    }
+
+    function hasRole(wid, roles) {
+      return isActiveMember(wid) && memberData(wid).role in roles;
+    }
+
+    function isOwner(wid) {
+      return hasRole(wid, ['owner']);
+    }
+
+    function canEdit(wid) {
+      return hasRole(wid, ['owner', 'admin', 'editor']);
+    }
+
+    function canReview(wid) {
+      return hasRole(wid, ['owner', 'admin', 'reviewer']);
+    }
+
+    // Carimbo de servidor obrigatório: o cliente não escolhe a hora nem finge
+    // ser outro usuário.
+    function serverStamped(data) {
+      return data.updatedAt == request.time
+        && data.updatedBy == request.auth.uid;
+    }
+
+    function coreUnchanged() {
+      return request.resource.data.id == resource.data.id
+        && request.resource.data.workspaceId == resource.data.workspaceId
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.createdBy == resource.data.createdBy;
+    }
+
+    // O auditEvent referenciado precisa existir ao fim do commit, apontar para
+    // esta entidade, ter sido criado por quem escreve e casar com a versão.
+    function auditMatches(wid, collectionName, docId, data) {
+      let ev = getAfter(
+        /databases/$(database)/documents/workspaces/$(wid)/auditEvents/$(data.lastEventId)
+      ).data;
+      return ev.workspaceId == wid
+        && ev.entityCollection == collectionName
+        && ev.entityId == docId
+        && ev.actorUid == request.auth.uid
+        && ev.occurredAt == request.time
+        && ev.toVersion == data.version;
+    }
+
+    function hasAuditEnvelope(data) {
+      return data.keys().hasAll([
+          'id', 'workspaceId', 'schemaVersion',
+          'createdAt', 'createdBy', 'updatedAt', 'updatedBy',
+          'version', 'lastEventId', 'isArchived'
+        ])
+        && data.version is int
+        && data.version >= 1
+        && data.isArchived is bool;
+    }
+
+    // ------------------------------------------------- ESCALADA DE PRIVILÉGIO
+    //
+    // No Firestore, quando várias regras casam com o mesmo caminho, o acesso é
+    // concedido se QUALQUER uma permitir. Uma regra genérica
+    // `match /{collectionName}/{docId}` que conceda escrita a editores
+    // portanto NÃO é restringida pela regra específica de /members — ela a
+    // contorna, e um editor poderia criar o próprio documento de membro com
+    // role 'owner'.
+    //
+    // Por isso a regra genérica de conteúdo abaixo é fechada por uma lista
+    // explícita, e nenhuma coleção de governança aparece nela.
+
+    function isContentCollection(name) {
+      return name in [
+        'plans', 'axes', 'programs', 'projects', 'actions', 'milestones',
+        'assessments', 'costEstimates', 'evidence', 'dependencies',
+        'resources', 'resourceAllocations', 'stakeholders',
+        'challenges', 'opportunities', 'fundingSources',
+        'documents', 'inconsistencies', 'indicators', 'goals',
+        'infrastructures', 'municipalities', 'imports'
+      ];
+    }
+
+    // ----------------------------------------------------- projeções públicas
+
+    match /publicWorkspaces/{wid} {
+      allow read: if true;
+      allow create, update: if isOwner(wid);
+      allow delete: if false;
+
+      match /{publicCollection}/{docId} {
+        allow read: if true;
+        allow create, update: if isOwner(wid)
+          && request.resource.data.sourceEntityId == docId
+          && request.resource.data.publishedAt == request.time
+          && request.resource.data.publishedBy == request.auth.uid;
+        allow delete: if false;
+      }
+    }
+
+    // ------------------------------------------------------ área privada
+
+    match /workspaces/{wid} {
+      allow read: if isActiveMember(wid);
+      allow create, delete: if false;
+      allow update: if isOwner(wid) && coreUnchanged() && serverStamped(request.resource.data);
+
+      // ---- governança: membros ------------------------------------------
+      //
+      // Leitura: o próprio registro ou qualquer um, se for owner.
+      // Criação: só o fluxo de aceite de convite, com o papel vindo do convite.
+      // Alteração e remoção: só o owner, e nunca sobre si mesmo — isso impede
+      // tanto autopromoção quanto o owner se trancar para fora.
+
+      match /members/{uid} {
+        allow get: if isActiveMember(wid) && (request.auth.uid == uid || isOwner(wid));
+        allow list: if isOwner(wid);
+
+        allow create: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid
+          && request.resource.data.email == request.auth.token.email
+          && request.resource.data.status == 'active'
+          && request.resource.data.role in ['admin', 'editor', 'reviewer', 'viewer', 'external_partner']
+          && request.resource.data.createdAt == request.time
+          && exists(/databases/$(database)/documents/workspaces/$(wid)/invitations/$(request.resource.data.invitationId))
+          && get(/databases/$(database)/documents/workspaces/$(wid)/invitations/$(request.resource.data.invitationId)).data.email == request.auth.token.email
+          && get(/databases/$(database)/documents/workspaces/$(wid)/invitations/$(request.resource.data.invitationId)).data.role == request.resource.data.role
+          && get(/databases/$(database)/documents/workspaces/$(wid)/invitations/$(request.resource.data.invitationId)).data.status == 'pending'
+          && get(/databases/$(database)/documents/workspaces/$(wid)/invitations/$(request.resource.data.invitationId)).data.expiresAt > request.time;
+
+        allow update: if isOwner(wid)
+          && uid != request.auth.uid
+          && request.resource.data.uid == resource.data.uid
+          && serverStamped(request.resource.data);
+
+        allow delete: if isOwner(wid) && uid != request.auth.uid;
+      }
+
+      // ---- governança: convites -------------------------------------------
+
+      match /invitations/{invitationId} {
+        allow get: if isOwner(wid)
+          || (signedIn() && resource.data.email == request.auth.token.email);
+        allow list: if isOwner(wid);
+        allow create, delete: if isOwner(wid);
+
+        // O convidado só pode marcar o próprio convite como aceito, e nada mais.
+        allow update: if isOwner(wid)
+          || (signedIn()
+            && resource.data.email == request.auth.token.email
+            && resource.data.status == 'pending'
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['status', 'acceptedAt', 'acceptedByUid'])
+            && request.resource.data.status == 'accepted'
+            && request.resource.data.acceptedByUid == request.auth.uid
+            && request.resource.data.acceptedAt == request.time
+            && request.resource.data.role == resource.data.role
+            && request.resource.data.email == resource.data.email);
+      }
+
+      // ---- governança: pedidos de acesso ----------------------------------
+
+      match /accessRequests/{uid} {
+        allow get: if signedIn() && (request.auth.uid == uid || isOwner(wid));
+        allow list: if isOwner(wid);
+        allow create: if signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.uid == uid
+          && request.resource.data.email == request.auth.token.email
+          && request.resource.data.createdAt == request.time;
+        allow update, delete: if isOwner(wid);
+      }
+
+      // ---- governança: auditoria -------------------------------------------
+      //
+      // Append-only. Sem update e sem delete, para ninguém — nem para o owner.
+
+      match /auditEvents/{eventId} {
+        allow read: if isActiveMember(wid);
+        allow create: if isActiveMember(wid)
+          && request.resource.data.id == eventId
+          && request.resource.data.workspaceId == wid
+          && request.resource.data.actorUid == request.auth.uid
+          && request.resource.data.occurredAt == request.time
+          && request.resource.data.reason is string
+          && request.resource.data.reason.size() > 0;
+        allow update, delete: if false;
+      }
+
+      // ---- governança: aprovações -----------------------------------------
+
+      match /approvalRequests/{approvalId} {
+        allow read: if isActiveMember(wid);
+        allow create: if canEdit(wid)
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.status == 'pending';
+        allow update: if canReview(wid)
+          && request.resource.data.reviewedBy == request.auth.uid
+          && request.resource.data.reviewedAt == request.time
+          && request.resource.data.status in ['approved', 'changes_requested', 'rejected'];
+        allow delete: if false;
+      }
+
+      // ---- governança: publicação ------------------------------------------
+
+      match /publicationReleases/{releaseId} {
+        allow read: if isActiveMember(wid);
+        allow create: if isOwner(wid)
+          && request.resource.data.publishedBy == request.auth.uid
+          && request.resource.data.publishedAt == request.time;
+        allow update, delete: if false;
+      }
+
+      // ---- governança: configurações ---------------------------------------
+
+      match /settings/{settingId} {
+        allow read: if isActiveMember(wid);
+        allow write: if isOwner(wid) && serverStamped(request.resource.data);
+      }
+
+      // ---- governança: espaços de parceria ---------------------------------
+
+      match /partnerSpaces/{spaceId} {
+        allow read: if isOwner(wid)
+          || hasRole(wid, ['admin'])
+          || (isActiveMember(wid) && request.auth.uid in resource.data.participantUids);
+        allow create, update: if hasRole(wid, ['owner', 'admin']);
+        allow delete: if false;
+
+        match /{sub}/{subId} {
+          allow read: if isOwner(wid)
+            || hasRole(wid, ['admin'])
+            || (isActiveMember(wid)
+              && request.auth.uid in get(/databases/$(database)/documents/workspaces/$(wid)/partnerSpaces/$(spaceId)).data.participantUids);
+          allow create: if isActiveMember(wid)
+            && request.resource.data.authorUid == request.auth.uid
+            && request.resource.data.createdAt == request.time;
+          allow update, delete: if false;
+        }
+      }
+
+      // ---- notificações internas -------------------------------------------
+
+      match /notifications/{notificationId} {
+        allow read: if isActiveMember(wid) && resource.data.recipientUid == request.auth.uid;
+        allow create: if isActiveMember(wid) && request.resource.data.createdAt == request.time;
+        allow update: if isActiveMember(wid)
+          && resource.data.recipientUid == request.auth.uid
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['readAt']);
+        allow delete: if false;
+      }
+
+      // ---- conteúdo do portfólio -------------------------------------------
+      //
+      // Fechada por lista explícita: nenhuma coleção de governança cai aqui.
+      // Leitura para membros ativos; escrita para editores, sempre com
+      // envelope de auditoria completo e auditEvent no mesmo lote.
+
+      match /{collectionName}/{docId} {
+        allow read: if isContentCollection(collectionName) && isActiveMember(wid);
+
+        allow create: if isContentCollection(collectionName)
+          && canEdit(wid)
+          && hasAuditEnvelope(request.resource.data)
+          && request.resource.data.id == docId
+          && request.resource.data.workspaceId == wid
+          && request.resource.data.version == 1
+          && request.resource.data.createdAt == request.time
+          && request.resource.data.createdBy == request.auth.uid
+          && serverStamped(request.resource.data)
+          && auditMatches(wid, collectionName, docId, request.resource.data);
+
+        allow update: if isContentCollection(collectionName)
+          && canEdit(wid)
+          && hasAuditEnvelope(request.resource.data)
+          && coreUnchanged()
+          && serverStamped(request.resource.data)
+          && request.resource.data.version == resource.data.version + 1
+          && auditMatches(wid, collectionName, docId, request.resource.data);
+
+        allow delete: if false;
+      }
+    }
+
+    // ------------------------------------------------------ negação final
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

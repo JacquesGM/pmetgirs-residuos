@@ -1,6 +1,7 @@
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import infraestruturasData from '../../data/infraestruturas.json';
 import type { Infraestrutura } from '../../types';
+import { ChartFigure } from '../ui/ChartFigure';
 
 const infraestruturas = infraestruturasData as Infraestrutura[];
 
@@ -45,26 +46,48 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 }
 
 export function InfrastructureCompositionChart() {
+  const resumo = chartData.map((d) => `${d.nome}: ${d.rotulo} ${d.unidade}`).join('; ');
+
   return (
-    <div>
-      <p className="text-sm font-semibold text-neutral-900">Infraestrutura planejada, por tipo</p>
-      <div className="mt-3 h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} layout="vertical" margin={{ top: 4, right: 40, left: 8, bottom: 4 }} barCategoryGap={12}>
-            <CartesianGrid horizontal={false} stroke="#e5e7eb" />
-            <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: '#69717d' }} axisLine={{ stroke: '#d7dbe0' }} tickLine={false} />
-            <YAxis type="category" dataKey="nome" width={170} tick={{ fontSize: 12, fill: '#3a3f47' }} axisLine={{ stroke: '#d7dbe0' }} tickLine={false} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(31, 84, 136, 0.06)' }} />
-            <Bar dataKey="numero" fill="#1f5488" radius={[0, 4, 4, 0]} maxBarSize={22} isAnimationActive={false}>
-              <LabelList dataKey="rotulo" position="right" style={{ fill: '#4f5560', fontSize: 11 }} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <p className="mt-2 text-xs text-neutral-500">
-        Não inclui as unidades de combustão e gaseificação, cuja divisão diverge entre os documentos (gráfico
-        acima). Fonte: Plano de Ações e Prognóstico Geral do PMetGIRS.
-      </p>
-    </div>
+    <ChartFigure
+      title="Infraestrutura planejada, por tipo"
+      description={`Gráfico de barras com a infraestrutura planejada pelo PMetGIRS — ${resumo}.`}
+      height="16rem"
+      table={{
+        columns: ['Infraestrutura', 'Quantidade', 'Unidade'],
+        rows: chartData.map((d) => [d.nome, d.rotulo, d.unidade]),
+      }}
+      note={
+        <>
+          Não inclui as unidades de combustão e gaseificação, cuja divisão diverge entre os documentos
+          (gráfico acima). Fonte: Plano de Ações e Prognóstico Geral do PMetGIRS.
+        </>
+      }
+    >
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={chartData} layout="vertical" margin={{ top: 4, right: 40, left: 8, bottom: 4 }} barCategoryGap={12}>
+          <CartesianGrid horizontal={false} stroke="#e5e7eb" />
+          <XAxis
+            type="number"
+            allowDecimals={false}
+            tick={{ fontSize: 12, fill: '#69717d' }}
+            axisLine={{ stroke: '#d7dbe0' }}
+            tickLine={false}
+          />
+          <YAxis
+            type="category"
+            dataKey="nome"
+            width={170}
+            tick={{ fontSize: 12, fill: '#3a3f47' }}
+            axisLine={{ stroke: '#d7dbe0' }}
+            tickLine={false}
+          />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(31, 84, 136, 0.06)' }} />
+          <Bar dataKey="numero" fill="#1f5488" radius={[0, 4, 4, 0]} maxBarSize={22} isAnimationActive={false}>
+            <LabelList dataKey="rotulo" position="right" style={{ fill: '#4f5560', fontSize: 11 }} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartFigure>
   );
 }

@@ -52,6 +52,7 @@ function IncidentCard({ item }: { item: Inconsistencia }) {
 export function Transparency() {
   return (
     <Section
+      headingLevel={1}
       id="transparencia"
       title="Transparência dos dados"
       subtitle="Cada dado mostra sua origem e situação de validação. Divergências entre documentos ficam sinalizadas, nunca escondidas."

@@ -16,7 +16,7 @@ function documentTitle(id: string): string {
 
 export function Axes() {
   return (
-    <Section id="eixos" title="Eixos estratégicos" subtitle="As 12 frentes de trabalho do PMetGIRS.">
+    <Section headingLevel={1} id="eixos" title="Eixos estratégicos" subtitle="As 12 frentes de trabalho do PMetGIRS.">
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {eixos.map((eixo) => {
           const Icon = iconFor(eixoIcons, eixo.id);

@@ -22,6 +22,7 @@ export function Documents() {
 
   return (
     <Section
+      headingLevel={1}
       id="documentos"
       title="Documentos oficiais"
       subtitle="Biblioteca de documentos técnicos que fundamentam o PMetGIRS."

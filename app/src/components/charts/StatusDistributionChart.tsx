@@ -1,6 +1,7 @@
 import { Bar, BarChart, CartesianGrid, Cell, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import type { StatusProjeto } from '../../types';
 import { statusColorHex, statusLabel } from '../ui/StatusBadge';
+import { ChartFigure } from '../ui/ChartFigure';
 
 interface StatusDistributionChartProps {
   title: string;
@@ -36,28 +37,54 @@ export function StatusDistributionChart({ title, statuses, source }: StatusDistr
     );
   }
 
+  const resumo = data.map((d) => `${d.label}: ${d.count}`).join('; ');
+
   return (
-    <div>
-      <p className="text-sm font-semibold text-neutral-900">{title}</p>
-      <div className="mt-3 h-56">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} layout="vertical" margin={{ top: 4, right: 32, left: 8, bottom: 4 }} barCategoryGap={10}>
-            <CartesianGrid horizontal={false} stroke="#e5e7eb" />
-            <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12, fill: '#69717d' }} axisLine={{ stroke: '#d7dbe0' }} tickLine={false} />
-            <YAxis type="category" dataKey="label" width={140} tick={{ fontSize: 12, fill: '#3a3f47' }} axisLine={{ stroke: '#d7dbe0' }} tickLine={false} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.03)' }} />
-            <Bar dataKey="count" radius={[0, 4, 4, 0]} maxBarSize={22} isAnimationActive={false}>
-              {data.map((entry) => (
-                <Cell key={entry.status} fill={entry.color} />
-              ))}
-              <LabelList dataKey="count" position="right" style={{ fill: '#4f5560', fontSize: 12, fontWeight: 600 }} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-      <p className="mt-2 text-xs text-neutral-500">
-        Fonte: {source}. Total: {total}.
-      </p>
-    </div>
+    <ChartFigure
+      title={title}
+      description={`${title}. Distribuição entre ${total} itens — ${resumo}.`}
+      height="14rem"
+      table={{
+        columns: ['Situação', 'Quantidade', '% do total'],
+        rows: data.map((d) => [
+          d.label,
+          d.count,
+          total > 0 ? `${Math.round((d.count / total) * 100)}%` : '—',
+        ]),
+      }}
+      note={
+        <>
+          Fonte: {source}. Total: {total}.
+        </>
+      }
+    >
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data} layout="vertical" margin={{ top: 4, right: 32, left: 8, bottom: 4 }} barCategoryGap={10}>
+          <CartesianGrid horizontal={false} stroke="#e5e7eb" />
+          <XAxis
+            type="number"
+            allowDecimals={false}
+            tick={{ fontSize: 12, fill: '#69717d' }}
+            axisLine={{ stroke: '#d7dbe0' }}
+            tickLine={false}
+          />
+          <YAxis
+            type="category"
+            dataKey="label"
+            width={140}
+            tick={{ fontSize: 12, fill: '#3a3f47' }}
+            axisLine={{ stroke: '#d7dbe0' }}
+            tickLine={false}
+          />
+          <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.03)' }} />
+          <Bar dataKey="count" radius={[0, 4, 4, 0]} maxBarSize={22} isAnimationActive={false}>
+            {data.map((entry) => (
+              <Cell key={entry.status} fill={entry.color} />
+            ))}
+            <LabelList dataKey="count" position="right" style={{ fill: '#4f5560', fontSize: 12, fontWeight: 600 }} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartFigure>
   );
 }
