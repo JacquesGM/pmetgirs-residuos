@@ -11,6 +11,7 @@ import { SchedulePage } from '../features/portfolio/SchedulePage';
 import { InvestmentsPage } from '../features/portfolio/InvestmentsPage';
 import { OpportunitiesPage } from '../features/portfolio/OpportunitiesPage';
 import { ChallengesPage } from '../features/portfolio/ChallengesPage';
+import { PublicationPage } from '../features/portfolio/PublicationPage';
 
 export interface PrivateRoute {
   path: string;
@@ -68,17 +69,7 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
-  {
-    path: 'publicacao',
-    title: 'Publicação',
-    element: (
-      <PlaceholderPage
-        title="Publicação"
-        phase="Fase 7"
-        description="Fluxo rascunho → revisão → aprovação → publicação, gerando a cópia pública sanitizada em lote único com registro e evento de auditoria."
-      />
-    ),
-  },
+  { path: 'publicacao', title: 'Publicação', element: <PublicationPage /> },
   { path: 'auditoria', title: 'Auditoria', element: <AuditPage /> },
   {
     path: 'usuarios',

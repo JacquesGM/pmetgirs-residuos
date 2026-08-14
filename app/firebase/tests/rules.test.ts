@@ -10,6 +10,7 @@ import {
 import { doc, getDoc, setDoc, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { buildMutation, SERVER_TIME } from '../../src/domain/mutation';
+import { sanitizeForPublication } from '../../src/domain/publication/sanitize';
 
 /**
  * Testes das Security Rules contra o Emulator.
@@ -487,6 +488,89 @@ describe('buildMutation contra as Rules', () => {
     expect(evento.data()?.actorUid).toBe(EDITOR.uid);
     expect(evento.data()?.toVersion).toBe(1);
     expect(evento.data()?.reason).toBe('Cadastro pela interface de gestão');
+  });
+});
+
+// ------------------------------------------------ fronteira da publicação
+//
+// Prova que o conteúdo interno não atravessa por acidente: mesmo o
+// proprietário, escrevendo na árvore pública, só consegue gravar o que passou
+// pela sanitização.
+
+describe('fronteira da publicação', () => {
+  const interno = {
+    name: 'Projeto interno',
+    updatedBy: 'uid-editor',
+    changeReason: 'motivo interno',
+    internalNotes: 'não divulgar',
+    contactEmail: 'servidor@irm.rj.gov.br',
+    legacyStatus: 'em_estruturacao',
+  };
+
+  it('a sanitização remove todo campo interno antes de publicar', () => {
+    const projecao = sanitizeForPublication('projects', interno, {
+      sourceEntityId: 'proj-1',
+      sourceVersion: 1,
+      releaseId: 'rel-1',
+      publishedBy: OWNER.uid,
+    });
+
+    expect(projecao.data.name).toBe('Projeto interno');
+    for (const campo of ['updatedBy', 'changeReason', 'internalNotes', 'contactEmail', 'legacyStatus']) {
+      expect(projecao.data[campo], campo).toBeUndefined();
+    }
+    expect(projecao.dropped).toContain('internalNotes');
+  });
+
+  it('o proprietário publica a projeção sanitizada', async () => {
+    const db = ctx(OWNER).firestore();
+    const projecao = sanitizeForPublication('projects', interno, {
+      sourceEntityId: 'proj-1',
+      sourceVersion: 1,
+      releaseId: 'rel-1',
+      publishedBy: OWNER.uid,
+    });
+
+    await assertSucceeds(
+      setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), {
+        ...projecao.data,
+        sourceEntityId: 'proj-1',
+        publishedAt: serverTimestamp(),
+        publishedBy: OWNER.uid,
+      }),
+    );
+  });
+
+  it('o público lê a projeção, e nela não há campo interno', async () => {
+    const db = testEnv.unauthenticatedContext().firestore();
+    const snapshot = await getDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`));
+    expect(snapshot.exists()).toBe(true);
+    for (const campo of ['updatedBy', 'changeReason', 'internalNotes', 'contactEmail']) {
+      expect(snapshot.data()?.[campo], campo).toBeUndefined();
+    }
+  });
+
+  it('o público NÃO alcança o documento interno correspondente', async () => {
+    const db = testEnv.unauthenticatedContext().firestore();
+    await assertFails(getDoc(doc(db, `workspaces/${WID}/projects/proj-1`)));
+  });
+
+  it('editor não publica, mesmo com a projeção correta', async () => {
+    const db = ctx(EDITOR).firestore();
+    const projecao = sanitizeForPublication('projects', interno, {
+      sourceEntityId: 'proj-1',
+      sourceVersion: 1,
+      releaseId: 'rel-1',
+      publishedBy: EDITOR.uid,
+    });
+    await assertFails(
+      setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), {
+        ...projecao.data,
+        sourceEntityId: 'proj-1',
+        publishedAt: serverTimestamp(),
+        publishedBy: EDITOR.uid,
+      }),
+    );
   });
 });
 
