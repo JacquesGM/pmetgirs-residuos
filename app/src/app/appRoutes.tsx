@@ -4,6 +4,8 @@ import { AuditPage } from '../features/portfolio/AuditPage';
 import { DashboardPage } from '../features/portfolio/DashboardPage';
 import { ProjectDetailPage } from '../features/portfolio/ProjectDetailPage';
 import { ProjectsPage } from '../features/portfolio/ProjectsPage';
+import { PrioritizationPage } from '../features/portfolio/PrioritizationPage';
+import { SettingsPage } from '../features/portfolio/SettingsPage';
 
 export interface PrivateRoute {
   path: string;
@@ -66,17 +68,7 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
-  {
-    path: 'priorizacao',
-    title: 'Priorização',
-    element: (
-      <PlaceholderPage
-        title="Priorização"
-        phase="Fase 4"
-        description="Matriz configurável com os sete critérios e seus pesos, dispersão impacto × esforço e quadrante de ganhos rápidos. A pontuação apoia a decisão; nunca aprova um projeto sozinha."
-      />
-    ),
-  },
+  { path: 'priorizacao', title: 'Priorização', element: <PrioritizationPage /> },
   {
     path: 'investimentos',
     title: 'Investimentos',
@@ -144,15 +136,5 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
-  {
-    path: 'configuracoes',
-    title: 'Configurações',
-    element: (
-      <PlaceholderPage
-        title="Configurações"
-        phase="Fase 4"
-        description="Pesos da priorização, limiares de custo, faixas de horizonte temporal e política de frescor dos dados — versionados, para que avaliações antigas preservem a política que as gerou."
-      />
-    ),
-  },
+  { path: 'configuracoes', title: 'Configurações', element: <SettingsPage /> },
 ];
