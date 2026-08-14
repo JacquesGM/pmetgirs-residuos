@@ -8,7 +8,8 @@ import {
   type RulesTestEnvironment,
 } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc, serverTimestamp, Timestamp, writeBatch } from 'firebase/firestore';
-import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { buildMutation, SERVER_TIME } from '../../src/domain/mutation';
 
 /**
  * Testes das Security Rules contra o Emulator.
@@ -376,6 +377,116 @@ describe('escrita de conteúdo', () => {
     const batch = writeBatch(db);
     batch.delete(doc(db, `workspaces/${WID}/projects/proj-1`));
     await assertFails(batch.commit());
+  });
+});
+
+// ------------------------------------------ caminho de escrita real do app
+//
+// Os testes acima usam cargas escritas à mão. Estes usam buildMutation — o
+// mesmo construtor que a interface chama — para provar que o caminho real da
+// aplicação satisfaz as Rules, e não uma aproximação dele.
+
+describe('buildMutation contra as Rules', () => {
+  function materialize(payload: Record<string, unknown>): Record<string, unknown> {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(payload)) out[k] = v === SERVER_TIME ? serverTimestamp() : v;
+    return out;
+  }
+
+  async function commit(
+    db: ReturnType<ReturnType<typeof testEnv.authenticatedContext>['firestore']>,
+    input: Parameters<typeof buildMutation>[0],
+    eventId: string,
+  ) {
+    const plan = buildMutation(input, eventId);
+    const batch = writeBatch(db);
+    batch.set(doc(db, plan.eventPath), materialize(plan.event));
+    batch.set(doc(db, plan.docPath), materialize(plan.doc));
+    return batch.commit();
+  }
+
+  const criar = (uid: string, role: string) => ({
+    workspaceId: WID,
+    collection: 'projects',
+    id: 'proj-app',
+    data: { name: 'Projeto criado pela interface', executionStatus: 'structuring' },
+    actorUid: uid,
+    actorRole: role as never,
+    action: 'create' as const,
+    reason: 'Cadastro pela interface de gestão',
+  });
+
+  it('editor cria projeto pelo caminho real da aplicação', async () => {
+    const db = ctx(EDITOR).firestore();
+    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-1'));
+  });
+
+  it('editor atualiza projeto pelo caminho real, com versão +1', async () => {
+    const db = ctx(EDITOR).firestore();
+    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-2'));
+
+    // Recarrega o documento inteiro antes de editar, como a interface faz.
+    // createdAt e createdBy precisam voltar idênticos: as Rules conferem.
+    const atual = (await getDoc(doc(db, `workspaces/${WID}/projects/proj-app`))).data()!;
+
+    await assertSucceeds(
+      commit(
+        db,
+        {
+          ...criar(EDITOR.uid, 'editor'),
+          action: 'update',
+          reason: 'Atualiza situação após reunião',
+          currentVersion: 1,
+          currentData: atual,
+          data: { ...atual, executionStatus: 'study' },
+        },
+        'ev-app-3',
+      ),
+    );
+
+    const depois = (await getDoc(doc(db, `workspaces/${WID}/projects/proj-app`))).data()!;
+    expect(depois.version).toBe(2);
+    expect(depois.executionStatus).toBe('study');
+    expect(depois.lastEventId).toBe('ev-app-3');
+  });
+
+  it('recusa atualização sem carregar o documento inteiro, com erro explicativo', () => {
+    expect(() =>
+      buildMutation(
+        {
+          ...criar(EDITOR.uid, 'editor'),
+          action: 'update',
+          reason: 'tentativa',
+          currentVersion: 1,
+          currentData: { name: 'sem createdAt' },
+          data: { name: 'outro' },
+        },
+        'ev-app-x',
+      ),
+    ).toThrow(/Carregue o documento inteiro/);
+  });
+
+  it('viewer NÃO consegue usar o mesmo caminho', async () => {
+    const db = ctx(VIEWER).firestore();
+    await assertFails(commit(db, criar(VIEWER.uid, 'viewer'), 'ev-app-4'));
+  });
+
+  it('usuário suspenso NÃO consegue usar o mesmo caminho', async () => {
+    const db = ctx(SUSPENSO).firestore();
+    await assertFails(commit(db, criar(SUSPENSO.uid, 'editor'), 'ev-app-5'));
+  });
+
+  it('o evento gravado casa com a entidade, o ator e a versão', async () => {
+    const db = ctx(EDITOR).firestore();
+    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-6'));
+
+    const evento = await getDoc(doc(db, `workspaces/${WID}/auditEvents/ev-app-6`));
+    expect(evento.exists()).toBe(true);
+    expect(evento.data()?.entityId).toBe('proj-app');
+    expect(evento.data()?.entityCollection).toBe('projects');
+    expect(evento.data()?.actorUid).toBe(EDITOR.uid);
+    expect(evento.data()?.toVersion).toBe(1);
+    expect(evento.data()?.reason).toBe('Cadastro pela interface de gestão');
   });
 });
 

@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react';
 import { PlaceholderPage } from './PlaceholderPage';
+import { AuditPage } from '../features/portfolio/AuditPage';
+import { DashboardPage } from '../features/portfolio/DashboardPage';
+import { ProjectDetailPage } from '../features/portfolio/ProjectDetailPage';
+import { ProjectsPage } from '../features/portfolio/ProjectsPage';
 
 export interface PrivateRoute {
   path: string;
@@ -15,17 +19,7 @@ export interface PrivateRoute {
  * roadmap aprovado na Fase 0.
  */
 export const privateRoutes: PrivateRoute[] = [
-  {
-    path: '',
-    title: 'Painel',
-    element: (
-      <PlaceholderPage
-        title="Painel executivo"
-        phase="Fase 3"
-        description="Vai reunir totais do portfólio, projetos por horizonte, aptos e bloqueados, categorias de custo e pendências de validação — calculados a partir de agregados, não varrendo todos os projetos a cada abertura."
-      />
-    ),
-  },
+  { path: '', title: 'Painel', element: <DashboardPage /> },
   {
     path: 'portfolio',
     title: 'Portfólio',
@@ -48,17 +42,8 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
-  {
-    path: 'projetos',
-    title: 'Projetos',
-    element: (
-      <PlaceholderPage
-        title="Projetos"
-        phase="Fase 3"
-        description="Ficha do projeto com abas de visão geral, planejamento, custos, impacto, dependências, cronograma, investimentos, riscos, documentos, publicação e histórico."
-      />
-    ),
-  },
+  { path: 'projetos', title: 'Projetos', element: <ProjectsPage /> },
+  { path: 'projetos/:projetoId', title: 'Projeto', element: <ProjectDetailPage /> },
   {
     path: 'cronograma',
     title: 'Cronograma',
@@ -147,17 +132,7 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
-  {
-    path: 'auditoria',
-    title: 'Auditoria',
-    element: (
-      <PlaceholderPage
-        title="Auditoria"
-        phase="Fase 3"
-        description="Quem alterou o quê, quando e por quê. Os eventos já são gravados desde a primeira escrita e não podem ser alterados nem apagados por nenhum perfil."
-      />
-    ),
-  },
+  { path: 'auditoria', title: 'Auditoria', element: <AuditPage /> },
   {
     path: 'usuarios',
     title: 'Usuários',
