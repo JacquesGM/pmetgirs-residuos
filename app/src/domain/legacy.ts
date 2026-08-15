@@ -82,6 +82,39 @@ export function mapLegacyProjectStatus(status: StatusProjeto): LegacyStatusMappi
   return EXECUTION_MAP[status];
 }
 
+/**
+ * Caminho de volta: do `executionStatus` publicado para o status legado que a
+ * interface pública exibe.
+ *
+ * Derivado do próprio EXECUTION_MAP para não haver duas tabelas divergindo. Um
+ * status novo passa a ser convertido nos dois sentidos sem ninguém lembrar de
+ * atualizar aqui.
+ *
+ * Devolve null quando a execução é indefinida — caso real: `dado_em_validacao`
+ * descreve o dado, não a execução, e a migração deixa a execução em branco de
+ * propósito. Nesses registros a interface mostra a situação de validação.
+ */
+export function legacyStatusFromExecution(execution: string | null | undefined): StatusProjeto | null {
+  if (!execution) return null;
+  for (const [legado, mapeado] of Object.entries(EXECUTION_MAP) as Array<
+    [StatusProjeto, LegacyStatusMapping]
+  >) {
+    if (mapeado.execution === execution) return legado;
+  }
+  return null;
+}
+
+/** Idem, para a família de validação. */
+export function legacyStatusFromValidation(validation: string | null | undefined): StatusValidacao | null {
+  if (!validation) return null;
+  for (const [legado, mapeado] of Object.entries(VALIDATION_MAP) as Array<
+    [StatusValidacao, LegacyStatusMapping]
+  >) {
+    if (mapeado.validation === validation) return legado;
+  }
+  return null;
+}
+
 export function mapLegacyValidationStatus(status: StatusValidacao): LegacyStatusMapping {
   return VALIDATION_MAP[status];
 }

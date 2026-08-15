@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import projetosData from '../../data/projetos.json';
+import { fetchPublishedProjects } from '../../data/published/publishedProjects';
 import eixosData from '../../data/eixos.json';
 import type { Eixo, Projeto, StatusProjeto } from '../../types';
 import { Section } from '../ui/Section';
@@ -13,11 +14,12 @@ import { InfoDisclosure } from '../ui/InfoDisclosure';
 import { eixoIcons, iconFor } from '../../lib/icons';
 import { uniqueOptions } from '../../lib/filters';
 
-const projetos = projetosData as Projeto[];
+/**
+ * Conteúdo embutido no bundle. É o que o cidadão vê imediatamente, e continua
+ * sendo o que ele vê se a projeção publicada não puder ser lida.
+ */
+const projetosEstaticos = projetosData as Projeto[];
 const eixos = eixosData as Eixo[];
-
-const statusOptions = uniqueOptions(projetos, (p) => p.status) as StatusProjeto[];
-const responsavelOptions = uniqueOptions(projetos, (p) => p.responsavel);
 
 function eixoNome(id: string): string {
   return eixos.find((eixo) => eixo.id === id)?.nome ?? id;
@@ -40,6 +42,38 @@ export function Projects() {
   const [statusFiltro, setStatusFiltro] = useState(ALL);
   const [responsavelFiltro, setResponsavelFiltro] = useState(ALL);
 
+  /**
+   * Estático primeiro, publicado depois.
+   *
+   * A página renderiza na hora com o conteúdo do bundle — sem spinner, sem
+   * salto de layout — e troca pela projeção publicada quando ela chega. Se a
+   * leitura falhar, ou se nada tiver sido publicado ainda, o cidadão continua
+   * vendo o que já via. Um portal de transparência que fica em branco porque a
+   * rede oscilou é pior que um portal com dado do último release.
+   */
+  const [projetos, setProjetos] = useState<Projeto[]>(projetosEstaticos);
+
+  useEffect(() => {
+    const controle = new AbortController();
+    fetchPublishedProjects(controle.signal)
+      .then((publicados) => {
+        if (publicados) setProjetos(publicados);
+      })
+      .catch(() => {
+        /* mantém o conteúdo embutido */
+      });
+    return () => controle.abort();
+  }, []);
+
+  const statusOptions = useMemo(
+    () => uniqueOptions(projetos, (p) => p.status) as StatusProjeto[],
+    [projetos],
+  );
+  const responsavelOptions = useMemo(
+    () => uniqueOptions(projetos, (p) => p.responsavel),
+    [projetos],
+  );
+
   const filtrados = useMemo(() => {
     return projetos.filter((projeto) => {
       if (eixoFiltro !== ALL && projeto.eixo !== eixoFiltro) return false;
@@ -47,7 +81,7 @@ export function Projects() {
       if (responsavelFiltro !== ALL && projeto.responsavel !== responsavelFiltro) return false;
       return true;
     });
-  }, [eixoFiltro, statusFiltro, responsavelFiltro]);
+  }, [projetos, eixoFiltro, statusFiltro, responsavelFiltro]);
 
   const limparFiltros = () => {
     setEixoFiltro(ALL);
