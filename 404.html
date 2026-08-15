@@ -21,8 +21,12 @@
       entrar aqui nunca veria o redirecionamento, e o endereço antigo ficaria
       indexado para sempre.
     -->
+    <!--
+      Sem `noindex` aqui, de propósito. Combinar noindex com rel=canonical
+      manda sinais conflitantes, e o noindex pode acabar aplicado ao alvo da
+      canônica — que é o portal oficial. A canônica sozinha já consolida.
+    -->
     <link rel="canonical" href="https://teste-e003c.web.app/" />
-    <meta name="robots" content="noindex, follow" />
     <meta http-equiv="refresh" content="0; url=https://teste-e003c.web.app/" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
