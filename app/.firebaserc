@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "demo-pmetgirs"
+    "default": "demo-pmetgirs",
+    "production": "teste-e003c"
   }
 }
