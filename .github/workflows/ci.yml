@@ -30,7 +30,7 @@ jobs:
       # O emulador do Firestore roda sobre a JVM. O firebase-tools 15 exige
       # JDK 21 ou superior e recusa versões anteriores com erro explícito —
       # não é preferência, é requisito do runtime.
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
