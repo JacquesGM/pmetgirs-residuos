@@ -123,13 +123,33 @@ export const NEVER_PUBLIC = [
   'workspaceId',
 ];
 
+/**
+ * Metadados de rastreabilidade que acompanham todo documento público — a lista
+ * é exaustiva.
+ *
+ * A allowlist acima protege os campos que vêm do documento interno. Ela não
+ * protege o que a camada de publicação acrescenta **depois** de sanitizar, e foi
+ * exatamente por aí que o `publishedBy` escapou: o UID do proprietário ficou
+ * legível por qualquer visitante, contradizendo a promessa de que
+ * identificadores de usuário nunca atravessam.
+ *
+ * Quem publicou fica registrado em `publicationReleases`, na área interna. O
+ * cidadão precisa saber de qual release o dado veio, não de quem apertou o
+ * botão.
+ */
+export const PUBLIC_METADATA_FIELDS = [
+  'sourceEntityId',
+  'sourceVersion',
+  'releaseId',
+  'publishedAt',
+] as const;
+
 export class SanitizationError extends Error {}
 
 export interface PublicProjection {
   sourceEntityId: string;
   sourceVersion: number;
   releaseId: string;
-  publishedBy: string;
   /** Campos aprovados, já filtrados. */
   data: Record<string, unknown>;
   /** Campos descartados — vão para o relatório do release, não para o público. */
@@ -139,7 +159,7 @@ export interface PublicProjection {
 export function sanitizeForPublication(
   collection: PublicCollection,
   internal: Record<string, unknown>,
-  context: { sourceEntityId: string; sourceVersion: number; releaseId: string; publishedBy: string },
+  context: { sourceEntityId: string; sourceVersion: number; releaseId: string },
 ): PublicProjection {
   const allowlist = PUBLIC_ALLOWLIST[collection];
   if (!allowlist) {
@@ -170,7 +190,6 @@ export function sanitizeForPublication(
     sourceEntityId: context.sourceEntityId,
     sourceVersion: context.sourceVersion,
     releaseId: context.releaseId,
-    publishedBy: context.publishedBy,
     data,
     dropped: dropped.sort(),
   };

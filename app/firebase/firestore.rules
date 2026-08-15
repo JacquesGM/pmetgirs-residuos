@@ -120,12 +120,20 @@ service cloud.firestore {
       allow create, update: if isOwner(wid);
       allow delete: if false;
 
+      // O documento público NÃO carrega quem publicou. Este bloco é lido por
+      // qualquer visitante, e exigir `publishedBy` aqui obrigava a gravar o UID
+      // do proprietário em dado aberto — o que contradiz a promessa de que
+      // identificadores de usuário não atravessam a fronteira.
+      //
+      // Nada se perde em autorização: `isOwner(wid)` já restringe quem escreve,
+      // e a autoria fica em `publicationReleases`, na área interna, onde a
+      // regra exige `publishedBy == request.auth.uid` e só membros leem.
       match /{publicCollection}/{docId} {
         allow read: if true;
         allow create, update: if isOwner(wid)
           && request.resource.data.sourceEntityId == docId
           && request.resource.data.publishedAt == request.time
-          && request.resource.data.publishedBy == request.auth.uid;
+          && !('publishedBy' in request.resource.data);
         allow delete: if false;
       }
     }

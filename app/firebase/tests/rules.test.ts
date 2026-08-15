@@ -94,7 +94,6 @@ beforeEach(async () => {
         sourceEntityId: 'proj-1',
         name: 'Projeto publicado',
         publishedAt: Timestamp.now(),
-        publishedBy: OWNER.uid,
       }),
       setDoc(doc(db, `workspaces/${WID}/invitations/inv-1`), {
         email: CONVIDADO.email,
@@ -512,7 +511,6 @@ describe('fronteira da publicação', () => {
       sourceEntityId: 'proj-1',
       sourceVersion: 1,
       releaseId: 'rel-1',
-      publishedBy: OWNER.uid,
     });
 
     expect(projecao.data.name).toBe('Projeto interno');
@@ -528,7 +526,6 @@ describe('fronteira da publicação', () => {
       sourceEntityId: 'proj-1',
       sourceVersion: 1,
       releaseId: 'rel-1',
-      publishedBy: OWNER.uid,
     });
 
     await assertSucceeds(
@@ -536,7 +533,6 @@ describe('fronteira da publicação', () => {
         ...projecao.data,
         sourceEntityId: 'proj-1',
         publishedAt: serverTimestamp(),
-        publishedBy: OWNER.uid,
       }),
     );
   });
@@ -561,14 +557,12 @@ describe('fronteira da publicação', () => {
       sourceEntityId: 'proj-1',
       sourceVersion: 1,
       releaseId: 'rel-1',
-      publishedBy: EDITOR.uid,
     });
     await assertFails(
       setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), {
         ...projecao.data,
         sourceEntityId: 'proj-1',
         publishedAt: serverTimestamp(),
-        publishedBy: EDITOR.uid,
       }),
     );
   });
@@ -607,29 +601,51 @@ describe('auditoria', () => {
 // --------------------------------------------------------------- publicação
 
 describe('publicação', () => {
-  const projecao = (uid: string) => ({
+  // A projeção pública não carrega quem publicou: o documento é lido por
+  // qualquer visitante, e a autoria fica em publicationReleases, na área
+  // interna.
+  const projecao = () => ({
     sourceEntityId: 'proj-1',
     sourceVersion: 1,
     name: 'Projeto publicado',
     publishedAt: serverTimestamp(),
-    publishedBy: uid,
   });
 
   it('somente o owner publica', async () => {
     const db = ctx(OWNER).firestore();
-    await assertSucceeds(
-      setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao(OWNER.uid)),
-    );
+    await assertSucceeds(setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao()));
   });
 
   it('admin NÃO publica', async () => {
     const db = ctx(ADMIN).firestore();
-    await assertFails(setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao(ADMIN.uid)));
+    await assertFails(setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao()));
   });
 
   it('editor NÃO publica', async () => {
     const db = ctx(EDITOR).firestore();
-    await assertFails(setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao(EDITOR.uid)));
+    await assertFails(setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), projecao()));
+  });
+
+  it('nem o owner publica documento que carrega publishedBy', async () => {
+    // Sem esta regra, bastava o cliente voltar a incluir o campo para o UID do
+    // proprietário reaparecer em dado aberto. Aconteceu em 15/08/2026.
+    const db = ctx(OWNER).firestore();
+    await assertFails(
+      setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), {
+        ...projecao(),
+        publishedBy: OWNER.uid,
+      }),
+    );
+  });
+
+  it('nem o owner publica documento com qualquer identificador de ator', async () => {
+    const db = ctx(OWNER).firestore();
+    await assertFails(
+      setDoc(doc(db, `publicWorkspaces/${WID}/projects/proj-1`), {
+        ...projecao(),
+        publishedBy: 'outro-uid-qualquer',
+      }),
+    );
   });
 });
 

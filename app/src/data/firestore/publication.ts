@@ -68,18 +68,18 @@ export async function publishBatch(
       sourceEntityId: item.id,
       sourceVersion: item.version,
       releaseId,
-      publishedBy: actor.uid,
     });
     droppedFieldsByItem[`${item.collection}/${item.id}`] = projection.dropped;
 
-    // Documento público: só os campos da allowlist, mais a rastreabilidade.
+    // Documento público: só os campos da allowlist, mais os metadados de
+    // rastreabilidade de PUBLIC_METADATA_FIELDS — que não incluem quem
+    // publicou. Esse registro fica no release, na área interna.
     batch.set(doc(db, `publicWorkspaces/${wid}/${item.collection}/${item.id}`), {
       ...projection.data,
       sourceEntityId: item.id,
       sourceVersion: item.version,
       releaseId,
       publishedAt: serverTimestamp(),
-      publishedBy: actor.uid,
     });
   }
 

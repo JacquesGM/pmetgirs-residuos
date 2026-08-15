@@ -4,6 +4,7 @@ import {
   isPubliclyVisible,
   NEVER_PUBLIC,
   PUBLIC_ALLOWLIST,
+  PUBLIC_METADATA_FIELDS,
   PublicationTransitionError,
   sanitizeForPublication,
   SanitizationError,
@@ -14,7 +15,6 @@ const contexto = {
   sourceEntityId: 'plano-negocios-pmetgirs',
   sourceVersion: 3,
   releaseId: 'rel-1',
-  publishedBy: 'uid-owner',
 };
 
 /** Documento interno completo, como sai do Firestore. */
@@ -111,6 +111,44 @@ describe('sanitização por allowlist', () => {
     const r = sanitizeForPublication('projects', comCampoNovo, contexto);
     expect(r.data.orcamentoSigiloso).toBeUndefined();
     expect(r.dropped).toContain('orcamentoSigiloso');
+  });
+});
+
+describe('metadados do documento público', () => {
+  /**
+   * A allowlist cobre os campos que vêm do documento interno. Os metadados são
+   * acrescentados depois de sanitizar, então passam por fora dela — e foi por
+   * aí que o UID do proprietário chegou a ser publicado, em 15/08/2026.
+   */
+  it('não expõe identificador de usuário', () => {
+    const identificadores = ['publishedBy', 'updatedBy', 'createdBy', 'actorUid', 'uid', 'ownerUid'];
+    const vazando = PUBLIC_METADATA_FIELDS.filter((campo) =>
+      identificadores.includes(campo as string),
+    );
+    expect(
+      vazando,
+      `metadado público expõe identificador de usuário: ${vazando.join(', ')}. ` +
+        'Quem publicou fica em publicationReleases, na área interna.',
+    ).toEqual([]);
+  });
+
+  it('não repete campo que a allowlist já proíbe', () => {
+    const conflito = PUBLIC_METADATA_FIELDS.filter((campo) =>
+      NEVER_PUBLIC.includes(campo as string),
+    );
+    expect(conflito).toEqual([]);
+  });
+
+  it('entrega ao cidadão a origem do dado, não a autoria', () => {
+    // Rastreabilidade é saber de qual release o número veio.
+    expect(PUBLIC_METADATA_FIELDS).toContain('releaseId');
+    expect(PUBLIC_METADATA_FIELDS).toContain('sourceVersion');
+    expect(PUBLIC_METADATA_FIELDS).not.toContain('publishedBy');
+  });
+
+  it('a projeção sanitizada não carrega quem publicou', () => {
+    const projecao = sanitizeForPublication('projects', { name: 'Projeto' }, contexto);
+    expect(Object.keys(projecao)).not.toContain('publishedBy');
   });
 });
 
