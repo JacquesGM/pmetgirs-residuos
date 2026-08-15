@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { routes } from '../../routes';
 
@@ -28,10 +28,19 @@ function setCanonical(href: string) {
 
 export function RouteTitle() {
   const { pathname } = useLocation();
+  /**
+   * Numa SPA a troca de rota não recarrega a página, então nenhum leitor de
+   * tela percebe que `document.title` mudou: o usuário aciona um item do menu,
+   * o conteúdo inteiro é substituído e nada é falado. Esta região anuncia o
+   * nome da nova página.
+   */
+  const [anuncio, setAnuncio] = useState('');
+  const primeiraRota = useRef(true);
 
   useEffect(() => {
     const match = routes.find((route) => route.path === pathname);
-    const title = match ? `${match.title} | ${SITE_NAME}` : `Página não encontrada | ${SITE_NAME}`;
+    const nomeDaPagina = match ? match.title : 'Página não encontrada';
+    const title = `${nomeDaPagina} | ${SITE_NAME}`;
     const description = match?.description ?? DEFAULT_DESCRIPTION;
 
     document.title = title;
@@ -39,7 +48,19 @@ export function RouteTitle() {
     setMetaByAttr('property', 'og:title', title);
     setMetaByAttr('property', 'og:description', description);
     setCanonical(`${window.location.origin}${pathname}`);
+
+    // Na primeira carga o leitor de tela já lê o título sozinho; anunciar de
+    // novo seria eco.
+    if (primeiraRota.current) {
+      primeiraRota.current = false;
+      return;
+    }
+    setAnuncio(nomeDaPagina);
   }, [pathname]);
 
-  return null;
+  return (
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+      {anuncio}
+    </div>
+  );
 }

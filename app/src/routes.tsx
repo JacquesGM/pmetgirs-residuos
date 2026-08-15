@@ -1,6 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react';
 import { Home } from './pages/Home';
-import { Indicators } from './components/sections/Indicators';
 import { Axes } from './components/sections/Axes';
 import { Projects } from './components/sections/Projects';
 import { Transparency } from './components/sections/Transparency';
@@ -8,8 +7,14 @@ import { Documents } from './components/sections/Documents';
 import { FAQ } from './components/sections/FAQ';
 import { PageLoading } from './components/layout/PageLoading';
 
+// As seções com gráfico carregam sob demanda: o recharts pesa ~150 kB gzip e a
+// home não tem gráfico algum. Manter qualquer uma delas estática arrasta a
+// biblioteca inteira para a entrada, e o cidadão paga por ela em toda visita.
 const MetropolitanMap = lazy(() =>
   import('./components/sections/MetropolitanMap').then((m) => ({ default: m.MetropolitanMap })),
+);
+const Indicators = lazy(() =>
+  import('./components/sections/Indicators').then((m) => ({ default: m.Indicators })),
 );
 const Goals = lazy(() => import('./components/sections/Goals').then((m) => ({ default: m.Goals })));
 const Infrastructure = lazy(() =>
@@ -40,7 +45,11 @@ export const routes: AppRoute[] = [
     title: 'Indicadores de destaque',
     description:
       'Números que resumem a escala do desafio metropolitano de resíduos sólidos, cada um com fonte, período e situação de validação.',
-    element: <Indicators />,
+    element: (
+      <Suspense fallback={<PageLoading />}>
+        <Indicators />
+      </Suspense>
+    ),
   },
   {
     path: '/eixos',

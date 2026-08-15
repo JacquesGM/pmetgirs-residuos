@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
 
+# Só leitura. Nenhum job aqui escreve no repositório, e o padrão da conta pode
+# ser permissivo — declarar o mínimo evita que um passo comprometido consiga
+# empurrar commit ou publicar release.
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -47,6 +53,13 @@ jobs:
       # for afrouxada, o CI barra antes do merge.
       - name: Testes das Security Rules (Emulator)
         run: npm run test:rules
+
+      # O que vai no bundle do cidadão não pode ter vulnerabilidade conhecida.
+      # A cadeia de desenvolvimento (firebase-tools, vite, jsdom) fica de fora
+      # de propósito: ela não é servida a ninguém, e falhar o CI por causa dela
+      # treinaria o time a ignorar o passo.
+      - name: Auditoria das dependências de produção
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Build de produção
         run: npm run build

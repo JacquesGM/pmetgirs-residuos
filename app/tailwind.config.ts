@@ -45,7 +45,11 @@ export default {
           900: '#181a1e',
         },
         status: {
-          amber: '#b5790a',
+          // Contraste WCAG AA para texto normal (>= 4.5:1) sobre branco e sobre
+          // amber-50, que é o fundo dos selos. O tom anterior (#b5790a) dava
+          // 3,68:1 e reprovava justamente nos selos "Dado em validação" e
+          // "Dado preliminar" — a sinalização de transparência do portal.
+          amber: '#946106',
           red: '#b3261e',
         },
       },

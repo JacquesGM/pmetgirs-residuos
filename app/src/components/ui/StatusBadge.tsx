@@ -39,14 +39,14 @@ const statusConfig: Record<StatusKey, StatusConfig> = {
   em_operacao: { label: 'Em operação', classes: 'bg-brand-green-50 text-brand-green-700 border-brand-green-300', Icon: CheckCircle2, hex: '#248049' },
   concluido: { label: 'Concluído', classes: 'bg-brand-green-50 text-brand-green-700 border-brand-green-300', Icon: CheckCircle2, hex: '#1a5f37' },
   suspenso: { label: 'Paralisado', classes: 'bg-red-50 text-status-red border-red-300', Icon: PauseCircle, hex: '#b3261e' },
-  dado_em_validacao: { label: 'Dado em validação', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: AlertTriangle, hex: '#b5790a' },
+  dado_em_validacao: { label: 'Dado em validação', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: AlertTriangle, hex: '#946106' },
   dado_oficial_validado: { label: 'Dado oficial validado', classes: 'bg-brand-green-50 text-brand-green-700 border-brand-green-300', Icon: ShieldCheck, hex: '#248049' },
   dado_municipal_declarado: { label: 'Dado municipal declarado', classes: 'bg-brand-blue-50 text-brand-blue-700 border-brand-blue-300', Icon: Building2, hex: '#1f5488' },
   estimativa_tecnica: { label: 'Estimativa técnica', classes: 'bg-neutral-100 text-neutral-700 border-neutral-300', Icon: Calculator, hex: '#4f5560' },
   dado_historico: { label: 'Dado histórico', classes: 'bg-neutral-100 text-neutral-600 border-neutral-300', Icon: History, hex: '#69717d' },
-  dado_preliminar: { label: 'Dado preliminar', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: FileClock, hex: '#b5790a' },
-  em_atualizacao: { label: 'Em atualização', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: RefreshCw, hex: '#b5790a' },
-  em_validacao: { label: 'Em validação', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: AlertTriangle, hex: '#b5790a' },
+  dado_preliminar: { label: 'Dado preliminar', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: FileClock, hex: '#946106' },
+  em_atualizacao: { label: 'Em atualização', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: RefreshCw, hex: '#946106' },
+  em_validacao: { label: 'Em validação', classes: 'bg-amber-50 text-status-amber border-amber-300', Icon: AlertTriangle, hex: '#946106' },
   informacao_divergente: { label: 'Informação divergente', classes: 'bg-red-50 text-status-red border-red-300', Icon: AlertOctagon, hex: '#b3261e' },
 };
 

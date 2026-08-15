@@ -14,7 +14,12 @@ export function RootLayout() {
       <ScrollToTop />
       <RouteTitle />
       <Header />
-      <main id="conteudo-principal">
+      {/*
+        tabIndex={-1} é o que faz o "Ir para o conteúdo" funcionar de verdade:
+        sem ele o navegador rola até aqui mas deixa o foco no cabeçalho, e o
+        próximo Tab devolve o usuário para a navegação que ele acabou de pular.
+      */}
+      <main id="conteudo-principal" tabIndex={-1} className="outline-none">
         <Outlet />
       </main>
       <Footer />
