@@ -3,6 +3,15 @@ import { useLocation } from 'react-router-dom';
 import { routes } from '../../routes';
 
 const SITE_NAME = 'PMetGIRS — Instituto Rio Metrópole';
+
+/**
+ * Endereço oficial do portal. Precisa ser fixo, e não `window.location.origin`:
+ * enquanto o mesmo conteúdo é servido também pelo GitHub Pages, uma canônica
+ * derivada do host faz cada cópia se declarar oficial, e quem decide qual
+ * indexar passa a ser o buscador. Com o valor fixo, as duas cópias apontam para
+ * a mesma URL — que é o que a tag canônica existe para fazer.
+ */
+const SITE_URL = (import.meta.env.VITE_SITE_URL ?? '').replace(/\/$/, '');
 const DEFAULT_DESCRIPTION =
   'Acompanhe as metas, projetos e resultados do Plano Metropolitano de Gestão Integrada de Resíduos Sólidos (PMetGIRS) dos 22 municípios da Região Metropolitana do Rio de Janeiro.';
 
@@ -47,7 +56,10 @@ export function RouteTitle() {
     setMetaByAttr('name', 'description', description);
     setMetaByAttr('property', 'og:title', title);
     setMetaByAttr('property', 'og:description', description);
-    setCanonical(`${window.location.origin}${pathname}`);
+
+    const url = `${SITE_URL || window.location.origin}${pathname}`;
+    setMetaByAttr('property', 'og:url', url);
+    setCanonical(url);
 
     // Na primeira carga o leitor de tela já lê o título sozinho; anunciar de
     // novo seria eco.

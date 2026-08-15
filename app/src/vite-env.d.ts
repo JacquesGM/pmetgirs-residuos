@@ -12,6 +12,8 @@ interface ImportMetaEnv {
   readonly VITE_USE_FIREBASE_EMULATOR?: string;
   readonly VITE_APPCHECK_DEBUG_TOKEN?: string;
   readonly VITE_PROTOTYPE_NOTICE?: string;
+  /** Endereço oficial do portal, usado na URL canônica e no og:url. */
+  readonly VITE_SITE_URL?: string;
 }
 
 interface ImportMeta {

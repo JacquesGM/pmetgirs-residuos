@@ -3,13 +3,14 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 // O `base` depende de onde o build será publicado:
-//  - GitHub Pages (atual): site de projeto em /pmetgirs-residuos/;
-//  - Firebase Hosting (destino): raiz do domínio.
-// Enquanto os dois convivem, DEPLOY_TARGET decide. O servidor de
-// desenvolvimento é sempre "/".
+//  - Firebase Hosting (OFICIAL desde 15/08/2026): raiz do domínio;
+//  - GitHub Pages (legado): site de projeto em /pmetgirs-residuos/.
+// O padrão é o oficial. Publicar no legado exige pedir explicitamente
+// `DEPLOY_TARGET=github-pages`, para que o destino errado nunca seja o
+// resultado de esquecer uma variável. O servidor de desenvolvimento é sempre "/".
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-  const target = env.DEPLOY_TARGET ?? 'github-pages';
+  const target = env.DEPLOY_TARGET ?? 'firebase';
   const base = command === 'build' && target === 'github-pages' ? '/pmetgirs-residuos/' : '/';
 
   return {
