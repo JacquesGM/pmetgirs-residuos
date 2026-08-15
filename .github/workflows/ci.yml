@@ -27,11 +27,13 @@ jobs:
           cache: npm
           cache-dependency-path: app/package-lock.json
 
-      # O emulador do Firestore roda sobre a JVM.
+      # O emulador do Firestore roda sobre a JVM. O firebase-tools 15 exige
+      # JDK 21 ou superior e recusa versões anteriores com erro explícito —
+      # não é preferência, é requisito do runtime.
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       # Alinha a versão do npm com a usada para gerar o package-lock.json
       # localmente (npm 10, do Node 20 da imagem do runner, resolve
