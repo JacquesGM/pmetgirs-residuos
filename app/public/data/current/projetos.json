@@ -1,0 +1,223 @@
+[
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Apoia a legalização, a organização e a capacitação das cooperativas de catadores, auxiliando na comercialização dos resíduos recuperados.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "inclusao-cooperativas",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "apoio-cooperativas-catadores",
+    "inicioPrevisto": null,
+    "nome": "Apoio à legalização e capacitação das cooperativas de catadores",
+    "participantes": [
+      "Cooperativas de catadores"
+    ],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "em_estruturacao",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro — 22 municípios",
+    "dependencias": [],
+    "descricao": "Reúne, em um só sistema mantido e atualizado continuamente, informações sobre os resíduos gerados nos 22 municípios da RMRJ e sobre os atores que participam do manejo dos RSU.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "dados-indicadores-transparencia",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "banco-dados-aplicativo-digital",
+    "inicioPrevisto": null,
+    "nome": "Banco de Dados e Aplicativo Digital do PMetGIRS",
+    "participantes": [
+      "Municípios da RMRJ"
+    ],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "nao_iniciado",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Cria uma instância técnica e administrativa para que o IRM e os municípios acompanhem juntos os projetos e ações do PMetGIRS.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "governanca-marco-legal",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "comite-metropolitano-saneamento",
+    "inicioPrevisto": null,
+    "nome": "Criação do Comitê Metropolitano de Gestão para o Saneamento",
+    "participantes": [
+      "Municípios da RMRJ"
+    ],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "nao_iniciado",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Coloca em licitação as usinas de asfalto capazes de receber as cinzas geradas pelos processos térmicos de recuperação de energia.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "recuperacao-energetica",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "licitacao-usinas-asfalto",
+    "inicioPrevisto": null,
+    "nome": "Licitação das usinas de asfalto para aproveitamento de cinzas",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "nao_iniciado",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Coloca em licitação as usinas de combustão e as usinas de gaseificação propostas no Plano de Ações para conversão de RSU em energia elétrica. A distribuição entre as duas tecnologias segue em validação (ver Infraestrutura planejada).",
+    "documentosRelacionados": [
+      "plano-de-acoes",
+      "prognostico-geral"
+    ],
+    "eixo": "recuperacao-energetica",
+    "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
+    "id": "licitacao-usinas-recuperacao-energetica",
+    "inicioPrevisto": null,
+    "nome": "Licitação das usinas de recuperação energética (combustão e gaseificação)",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [
+      "Divergência documental na distribuição tecnológica entre combustão e gaseificação"
+    ],
+    "status": "em_validacao",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Coloca em licitação as 25 usinas de triagem de resíduos sólidos urbanos propostas no Plano de Ações.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "triagem-reciclagem",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "licitacao-usinas-triagem",
+    "inicioPrevisto": null,
+    "nome": "Licitação das usinas de triagem de RSU",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "nao_iniciado",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Detalha os aspectos técnicos, financeiros, institucionais e contratuais necessários para colocar o PMetGIRS em prática.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "governanca-marco-legal",
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "plano-negocios-pmetgirs",
+    "inicioPrevisto": null,
+    "nome": "Elaboração do Plano de Negócios",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "em_estruturacao",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Região Metropolitana do Rio de Janeiro",
+    "dependencias": [],
+    "descricao": "Cria e implementa um programa de sensibilização aos 3R's (reduzir, reutilizar, reciclar) em todas as escolas municipais e para lideranças comunitárias.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "educacao-ambiental",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "programa-sensibilizacao-3rs",
+    "inicioPrevisto": null,
+    "nome": "Programa de Sensibilização aos 3R's nas escolas municipais",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM e secretarias municipais de educação",
+    "riscos": [],
+    "status": "nao_iniciado",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Municípios participantes a definir",
+    "dependencias": [],
+    "descricao": "Projeto social que busca reinserir moradores de rua no mercado de trabalho por meio da coleta seletiva e da comercialização de recicláveis, com apoio de Centrais de Reciclagem em áreas públicas cedidas por município e/ou estado.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "eixo": "inclusao-cooperativas",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo IV",
+    "id": "projeto-os-invisiveis",
+    "inicioPrevisto": null,
+    "nome": "Projeto \"Os Invisíveis\"",
+    "participantes": [],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "em_estudo",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  },
+  {
+    "abrangencia": "Até 23 áreas identificadas preliminarmente",
+    "dependencias": [],
+    "descricao": "Assessora os municípios nas atividades de remediação do passivo de lixões e aterros controlados encerrados, especificando valores e fontes de financiamento e orientando quanto à adoção de células fotovoltaicas.",
+    "documentosRelacionados": [
+      "diagnostico-geral"
+    ],
+    "eixo": "remediacao-passivos",
+    "fonte": "Plano de Ações do PMetGIRS — Anexo III (Resumo das Ações)",
+    "id": "remediacao-lixoes-aterros",
+    "inicioPrevisto": null,
+    "nome": "Assessoria para remediação de lixões e aterros controlados encerrados",
+    "participantes": [
+      "Municípios da RMRJ"
+    ],
+    "percentualAvanco": null,
+    "proximosPassos": [],
+    "responsavel": "IRM",
+    "riscos": [],
+    "status": "em_estruturacao",
+    "terminoPrevisto": null,
+    "ultimaAtualizacao": null
+  }
+]

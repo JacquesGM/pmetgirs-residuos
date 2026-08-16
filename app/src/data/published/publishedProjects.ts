@@ -1,6 +1,10 @@
 import { legacyStatusFromExecution, legacyStatusFromValidation } from '../../domain/legacy';
 import type { Projeto, StatusProjeto } from '../../types';
-import { fetchPublishedCollection, type PublishedDocument } from './firestoreRest';
+import {
+  fetchPublishedCollection,
+  type AcessoPublico,
+  type PublishedDocument,
+} from './firestoreRest';
 
 /**
  * Converte a projeção pública de um projeto para o tipo que a interface exibe.
@@ -51,9 +55,18 @@ export function toProjeto(doc: PublishedDocument): Projeto {
  * `null` é o sinal para manter o conteúdo embutido no bundle. Ver
  * `fetchPublishedCollection`.
  */
-export async function fetchPublishedProjects(sinal?: AbortSignal): Promise<Projeto[] | null> {
-  const docs = await fetchPublishedCollection('projects', sinal);
+export async function fetchPublishedProjects(
+  acesso: AcessoPublico,
+  sinal?: AbortSignal,
+): Promise<Projeto[] | null> {
+  const docs = await fetchPublishedCollection('projects', acesso, sinal);
   if (!docs) return null;
-  const projetos = docs.map(toProjeto).filter((p) => p.nome !== '');
+  const projetos = docs
+    .map(toProjeto)
+    .filter((p) => p.nome !== '')
+    // Ordem estável pelo id: o snapshot precisa ser byte-idêntico para a mesma
+    // entrada, senão o SHA-256 muda sem o conteúdo mudar e a verificação perde
+    // o sentido. A ordem em que o Firestore devolve documentos não é garantida.
+    .sort((a, b) => a.id.localeCompare(b.id, 'pt-BR'));
   return projetos.length > 0 ? projetos : null;
 }

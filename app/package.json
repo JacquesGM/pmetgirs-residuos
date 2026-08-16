@@ -14,7 +14,8 @@
     "bootstrap:owner": "tsx scripts/bootstrap-owner.ts",
     "migrate:dry-run": "tsx scripts/migrate-json.ts",
     "migrate:emulator": "tsx scripts/migrate-json.ts --emulator",
-    "migrate:prod": "tsx scripts/migrate-json.ts --production"
+    "migrate:prod": "tsx scripts/migrate-json.ts --production",
+    "snapshot": "tsx scripts/build-snapshot.ts"
   },
   "dependencies": {
     "firebase": "^12.17.1",

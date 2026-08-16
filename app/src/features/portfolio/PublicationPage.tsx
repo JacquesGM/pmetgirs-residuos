@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AlertTriangle, Eye, Globe, Lock, Send } from 'lucide-react';
-import { listProjects } from '../../data/firestore/portfolio';
+import { listProjects, readProjectsForPublication } from '../../data/firestore/portfolio';
 import { countPublic, listReleases, publishBatch } from '../../data/firestore/publication';
 import { PUBLIC_ALLOWLIST } from '../../domain/publication/sanitize';
 import { useAuth } from '../../app/AuthProvider';
@@ -48,15 +48,19 @@ export function PublicationPage() {
     setPublicando(true);
 
     try {
-      const itens = projetos.data
-        .filter((p) => selecionados.has(p.id))
-        .map((p) => ({
-          collection: 'projects' as const,
-          id: p.id,
-          version: p.version,
-          // A tela envia o documento como está; a sanitização decide o que sai.
-          data: p as unknown as Record<string, unknown>,
-        }));
+      // Lê o documento armazenado, e não o view model da listagem. A allowlist
+      // só preserva o que recebe: publicar a partir do que a tela mostra
+      // descartaria em silêncio campos que deveriam atravessar a fronteira.
+      const brutos = await readProjectsForPublication(
+        projetos.data.filter((p) => selecionados.has(p.id)).map((p) => p.id),
+      );
+
+      const itens = brutos.map((b) => ({
+        collection: 'projects' as const,
+        id: b.id,
+        version: b.version,
+        data: b.data as Record<string, unknown>,
+      }));
 
       const r = await publishBatch(itens, { uid: auth.membership.uid, role: auth.membership.role }, motivo);
 

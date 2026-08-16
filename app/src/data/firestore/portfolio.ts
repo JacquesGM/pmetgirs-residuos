@@ -114,6 +114,34 @@ export async function listProjects(filters: ProjectQuery = {}): Promise<Portfoli
   return snapshot.docs.map((d) => mapProject(d.id, d.data()));
 }
 
+/**
+ * Documentos armazenados dos projetos indicados, sem passar por `mapProject`.
+ *
+ * A publicação PRECISA do documento como está no banco. `mapProject` monta um
+ * view model para a listagem, com os 15 campos que aquela tela usa — e a
+ * allowlist da publicação só consegue preservar o que recebe. Publicar a partir
+ * do view model descartava em silêncio seis campos autorizados
+ * (`territorialScale`, `participants`, `nextSteps`, `risks`,
+ * `relatedDocumentIds`, `sourceLabel`), e o cidadão via registros incompletos
+ * sem que nada falhasse. Aconteceu em 15/08/2026.
+ *
+ * Uma leitura por item selecionado; publicação é rara e correção vale mais que
+ * economia de leitura.
+ */
+export async function readProjectsForPublication(
+  ids: string[],
+): Promise<Array<{ id: string; version: number; data: DocumentData }>> {
+  const lidos = await Promise.all(
+    ids.map(async (id) => {
+      const snapshot = await getDoc(doc(getDb(), `${base()}/projects/${id}`));
+      if (!snapshot.exists()) return null;
+      const data = snapshot.data();
+      return { id: snapshot.id, version: num(data.version) ?? 1, data };
+    }),
+  );
+  return lidos.filter((x): x is { id: string; version: number; data: DocumentData } => x !== null);
+}
+
 export async function getProject(id: string): Promise<{
   project: PortfolioProject;
   raw: DocumentData;

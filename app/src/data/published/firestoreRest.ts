@@ -81,16 +81,19 @@ export interface PublishedDocument {
  * bundle. Uma lista vazia devolvida por engano esvaziaria o portal, e um erro
  * de rede não deve apagar o que o cidadão já estava vendo.
  */
+export interface AcessoPublico {
+  projectId: string;
+  apiKey: string;
+  workspaceId: string;
+}
+
 export async function fetchPublishedCollection(
   collection: string,
+  acesso: AcessoPublico,
   sinal?: AbortSignal,
 ): Promise<PublishedDocument[] | null> {
-  const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
-  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
-  const workspaceId = import.meta.env.VITE_WORKSPACE_ID;
-  const usandoEmulador = import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true';
-
-  if (!projectId || !apiKey || !workspaceId || usandoEmulador) return null;
+  const { projectId, apiKey, workspaceId } = acesso;
+  if (!projectId || !apiKey || !workspaceId) return null;
 
   const url =
     `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents` +
