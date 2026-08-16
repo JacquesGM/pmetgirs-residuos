@@ -514,9 +514,13 @@ describe('fronteira da publicação', () => {
     });
 
     expect(projecao.data.name).toBe('Projeto interno');
-    for (const campo of ['updatedBy', 'changeReason', 'internalNotes', 'contactEmail', 'legacyStatus']) {
+    for (const campo of ['updatedBy', 'changeReason', 'internalNotes', 'contactEmail']) {
       expect(projecao.data[campo], campo).toBeUndefined();
     }
+    // `legacyStatus` atravessa por exceção declarada em
+    // EXCECOES_AO_NEVER_PUBLIC: é o único valor exato da coluna de situação
+    // que o portal exibe, e reconstruí-lo produzia rótulos falsos.
+    expect(projecao.data.legacyStatus).toBeDefined();
     expect(projecao.dropped).toContain('internalNotes');
   });
 
