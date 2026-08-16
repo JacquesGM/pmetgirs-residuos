@@ -66,6 +66,23 @@ jobs:
       - name: Build de produção
         run: npm run build
 
+      # Confere que o snapshot versionado corresponde à projeção publicada.
+      # Pega os dois descuidos que ninguém nota: publicar sem regerar o
+      # snapshot, e editar um arquivo de dados à mão.
+      #
+      # Sem secret: a leitura de publicWorkspaces responde 200 sem chave
+      # alguma — quem autoriza é a Security Rule `allow read: if true`. O ID do
+      # projeto não é segredo e já aparece no bundle público.
+      #
+      # Falha apenas quando há divergência de verdade. Se a projeção não puder
+      # ser lida — rede fora, projeto indisponível —, o passo informa que a
+      # verificação foi inconclusiva e passa: um CI que fica vermelho por
+      # motivo alheio ao commit ensina o time a ignorá-lo.
+      - name: Conferir o snapshot público
+        env:
+          FIREBASE_PROJECT_ID: teste-e003c
+        run: npm run snapshot -- --check
+
       - name: Relatório de tamanho do bundle
         run: |
           echo "### Bundle" >> "$GITHUB_STEP_SUMMARY"

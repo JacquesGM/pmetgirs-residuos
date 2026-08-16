@@ -15,7 +15,8 @@
  * autenticação — garantia da regra `allow read: if true` em `publicWorkspaces` —,
  * então um GET basta, sem dependência pesada nem credencial.
  *
- * A chave de API é pública por natureza; identifica o projeto e não autoriza nada.
+ * Nenhuma credencial é usada. Verificado em 15/08/2026: a leitura responde 200
+ * sem chave alguma — o CI confere o snapshot sem precisar de secret.
  */
 
 /** Valor no formato REST do Firestore: `{ stringValue: 'x' }` e afins. */
@@ -73,6 +74,20 @@ export interface PublishedDocument {
   data: Record<string, unknown>;
 }
 
+export interface AcessoPublico {
+  projectId: string;
+  workspaceId: string;
+  /**
+   * Opcional, e normalmente ausente.
+   *
+   * A leitura de `publicWorkspaces` responde 200 **sem chave nenhuma** — quem
+   * autoriza é a Security Rule `allow read: if true`, não a chave. Ela existe
+   * aqui só para o caso de o projeto passar a exigir identificação de cliente
+   * em algum contexto; o gerador roda sem ela.
+   */
+  apiKey?: string;
+}
+
 /**
  * Busca uma coleção publicada. Devolve `null` — e não uma lista vazia — quando
  * a leitura não é possível ou nada foi publicado.
@@ -81,23 +96,18 @@ export interface PublishedDocument {
  * bundle. Uma lista vazia devolvida por engano esvaziaria o portal, e um erro
  * de rede não deve apagar o que o cidadão já estava vendo.
  */
-export interface AcessoPublico {
-  projectId: string;
-  apiKey: string;
-  workspaceId: string;
-}
-
 export async function fetchPublishedCollection(
   collection: string,
   acesso: AcessoPublico,
   sinal?: AbortSignal,
 ): Promise<PublishedDocument[] | null> {
   const { projectId, apiKey, workspaceId } = acesso;
-  if (!projectId || !apiKey || !workspaceId) return null;
+  if (!projectId || !workspaceId) return null;
 
   const url =
     `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents` +
-    `/publicWorkspaces/${workspaceId}/${collection}?pageSize=300&key=${apiKey}`;
+    `/publicWorkspaces/${workspaceId}/${collection}?pageSize=300` +
+    (apiKey ? `&key=${apiKey}` : '');
 
   try {
     const resposta = await fetch(url, { signal: sinal });

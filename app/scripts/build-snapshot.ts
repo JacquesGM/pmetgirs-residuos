@@ -13,11 +13,13 @@
  *
  * Ambiente:
  *   FIREBASE_PROJECT_ID   obrigatório
- *   FIREBASE_API_KEY      obrigatório — pública por natureza, identifica o projeto
  *   WORKSPACE_ID          opcional, padrão pmetgirs-rmrj
+ *   FIREBASE_API_KEY      desnecessário — ver abaixo
  *
- * Nenhuma credencial privada é usada: a projeção pública é legível sem
- * autenticação, por decisão registrada nas Security Rules.
+ * Nenhuma credencial é usada, nem pública nem privada. A leitura de
+ * `publicWorkspaces` responde 200 sem chave alguma: quem autoriza é a Security
+ * Rule `allow read: if true`. Isso significa que o CI não precisa de secret
+ * nenhum para conferir o snapshot.
  */
 
 import { createHash } from 'node:crypto';
@@ -76,15 +78,12 @@ function abortar(mensagem: string): never {
 async function main() {
   const acesso: AcessoPublico = {
     projectId: process.env.FIREBASE_PROJECT_ID ?? '',
-    apiKey: process.env.FIREBASE_API_KEY ?? '',
     workspaceId: process.env.WORKSPACE_ID ?? 'pmetgirs-rmrj',
+    apiKey: process.env.FIREBASE_API_KEY || undefined,
   };
 
-  if (!acesso.projectId || !acesso.apiKey) {
-    abortar(
-      'Defina FIREBASE_PROJECT_ID e FIREBASE_API_KEY no ambiente.\n' +
-        '  A chave de API é pública; mesmo assim não deve ser commitada.',
-    );
+  if (!acesso.projectId) {
+    abortar('Defina FIREBASE_PROJECT_ID no ambiente.');
   }
 
   console.log(`\n  Projeto: ${acesso.projectId}   Workspace: ${acesso.workspaceId}`);
@@ -94,6 +93,7 @@ async function main() {
   const conteudos = new Map<string, string>();
   const achadosPii: AchadoPii[] = [];
   const releaseIds: string[] = [];
+  let leuAlgo = false;
 
   // As alegações de valor são lidas primeiro e não viram arquivo: elas
   // enriquecem infraestruturas e inconsistências, que exibem a divergência
@@ -117,6 +117,8 @@ async function main() {
       console.log(`  ${colecao.padEnd(16)} nada publicado — arquivo não gerado`);
       continue;
     }
+
+    leuAlgo = true;
 
     for (const doc of docs) {
       const rid = doc.data.releaseId;
@@ -148,7 +150,9 @@ async function main() {
 
   // ---------------------------------------------------------------- validação
 
-  const problemas = validarSnapshot(arquivos, achadosPii);
+  // Em --check sem leitura, sair antes da validação: "nenhum arquivo gerado"
+  // seria um bloqueio sobre algo que nem chegou a ser tentado.
+  const problemas = check && !leuAlgo ? [] : validarSnapshot(arquivos, achadosPii);
   const bloqueios = problemas.filter((p) => p.gravidade === 'bloqueia');
 
   console.log('');
@@ -172,6 +176,17 @@ async function main() {
   });
 
   // ------------------------------------------------------------------- modos
+
+  if (check && !leuAlgo) {
+    // Rede fora, cota estourada, projeto indisponível: nenhuma coleção foi
+    // lida. Isso NÃO é divergência, e falhar aqui treinaria o time a ignorar
+    // um passo que fica vermelho por motivo alheio ao commit.
+    console.log(
+      '\n  Não foi possível ler a projeção publicada — verificação inconclusiva.' +
+        '\n  O snapshot em disco não foi contestado; apenas não pôde ser conferido.\n',
+    );
+    return;
+  }
 
   if (check) {
     // Confere se o disco corresponde ao que seria gerado agora. Detecta arquivo
