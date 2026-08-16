@@ -6,18 +6,20 @@ import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { EmptyState } from '../ui/EmptyState';
 import { uniqueOptions } from '../../lib/filters';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const documentos = documentosData as Documento[];
-const categoriaOptions = uniqueOptions(documentos, (d) => d.categoria);
+const documentosEmbutidos = documentosData as Documento[];
 
 const ALL = 'todas';
 
 export function Documents() {
   const [categoriaFiltro, setCategoriaFiltro] = useState(ALL);
+  const documentos = useColecaoPublicada<Documento>('documentos', documentosEmbutidos);
+  const categoriaOptions = useMemo(() => uniqueOptions(documentos, (d) => d.categoria), [documentos]);
 
   const filtrados = useMemo(
     () => documentos.filter((doc) => categoriaFiltro === ALL || doc.categoria === categoriaFiltro),
-    [categoriaFiltro],
+    [documentos, categoriaFiltro],
   );
 
   return (
@@ -58,7 +60,8 @@ export function Documents() {
               </div>
               <p className="mt-3 text-sm text-neutral-600">{doc.descricao}</p>
               <p className="mt-4 text-xs text-neutral-500">
-                {doc.orgao} · {doc.formato} {doc.tamanho ?? ''} · v.{doc.versao}
+                {doc.orgao} · {doc.formato} {doc.tamanho ?? ''}
+                {doc.versao ? ` · v.${doc.versao}` : ''}
               </p>
               <p className="mt-2 text-xs italic text-neutral-500">Link do PDF em breve.</p>
             </Card>

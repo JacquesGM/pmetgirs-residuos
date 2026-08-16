@@ -44,7 +44,16 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'sourceLabel',
     'dataDate',
   ],
-  axes: ['name', 'description', 'objective', 'accountable', 'executionStatus', 'relatedDocumentIds'],
+  axes: [
+    'name',
+    'description',
+    'objective',
+    'accountable',
+    'executionStatus',
+    'relatedDocumentIds',
+    // Quais indicadores medem este eixo. Já é público no portal desde sempre.
+    'relatedIndicatorIds',
+  ],
   indicators: [
     'name',
     'value',
@@ -70,6 +79,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'lng',
     'sourceLabel',
     'validationStatus',
+    // Observação do município — conteúdo editorial, não nota interna.
+    'note',
   ],
   goals: [
     'name',
@@ -81,6 +92,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'executionStatus',
     'methodology',
     'sourceLabel',
+    // Data de referência: sem ela o cidadão não distingue meta revisada de meta antiga.
+    'dataDate',
   ],
   infrastructures: [
     'name',
@@ -91,7 +104,22 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'hasDivergentSources',
     'note',
   ],
-  documents: ['title', 'description', 'category', 'year', 'organization', 'format', 'size', 'url', 'linkStatus', 'version'],
+  documents: [
+    'title',
+    'description',
+    'category',
+    'year',
+    'organization',
+    'format',
+    'size',
+    'url',
+    'linkStatus',
+    // 'version' NÃO entra: o campo de domínio "versão do documento" colidiu com
+    // o `version` do envelope — o contador de concorrência otimista — e o
+    // envelope venceu na migração. Publicá-lo mostraria ao cidadão "v.1"
+    // significando "editado uma vez". Ver runbook: exige renomear o campo de
+    // domínio e remigrar a coleção.
+  ],
   inconsistencies: [
     'title',
     'category',
@@ -101,6 +129,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'accountableArea',
     'nextStep',
     'hasDivergentSources',
+    // Idem. Uma inconsistência sem data não diz se ainda vale.
+    'dataDate',
   ],
 };
 

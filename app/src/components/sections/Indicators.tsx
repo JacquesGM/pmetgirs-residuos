@@ -11,8 +11,9 @@ import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
 import { indicadorIcons, iconFor } from '../../lib/icons';
 import { StatusDistributionChart } from '../charts/StatusDistributionChart';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const indicadores = indicadoresData as Indicador[];
+const indicadoresEmbutidos = indicadoresData as Indicador[];
 const projetos = projetosData as Projeto[];
 const eixos = eixosData as Eixo[];
 
@@ -38,6 +39,8 @@ function splitValorExibicao(valor: string): { prefixo: string | null; valor: str
 }
 
 export function Indicators() {
+  const indicadores = useColecaoPublicada<Indicador>('indicadores', indicadoresEmbutidos);
+
   return (
     <Section headingLevel={1} id="indicadores" title="Indicadores de destaque" subtitle="Os principais números do desafio metropolitano de resíduos sólidos.">
       <div className="mb-6">

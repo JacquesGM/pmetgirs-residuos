@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AlertTriangle, Eye, Globe, Lock, Send } from 'lucide-react';
-import { listProjects, readProjectsForPublication } from '../../data/firestore/portfolio';
+import { listForPublication, readDocsForPublication } from '../../data/firestore/portfolio';
+import { COLECOES_PUBLICAVEIS } from '../../data/published/publishedCollections';
 import { countPublic, listReleases, publishBatch } from '../../data/firestore/publication';
 import { PUBLIC_ALLOWLIST } from '../../domain/publication/sanitize';
 import { useAuth } from '../../app/AuthProvider';
@@ -20,9 +21,28 @@ export function PublicationPage() {
   const { state: auth, hasRole } = useAuth();
   const ehProprietario = hasRole(['owner']);
 
-  const projetos = useAsync(() => listProjects({ limit: 200 }), []);
+  // Carrega todas as coleções publicáveis de uma vez. O registro é o mesmo que
+  // o gerador de snapshot usa, para que a tela e o arquivo nunca discordem
+  // sobre o que pode ir ao ar.
+  const grupos = useAsync(
+    () =>
+      Promise.all(
+        COLECOES_PUBLICAVEIS.map(async (c) => ({
+          ...c,
+          itens: await listForPublication(c.colecao),
+        })),
+      ),
+    [],
+  );
   const releases = useAsync(() => listReleases(), []);
-  const publicados = useAsync(() => countPublic('projects'), []);
+  const publicados = useAsync(
+    async () =>
+      (await Promise.all(COLECOES_PUBLICAVEIS.map((c) => countPublic(c.colecao)))).reduce(
+        (a, b) => a + b,
+        0,
+      ),
+    [],
+  );
 
   const [selecionados, setSelecionados] = useState<Set<string>>(new Set());
   const [motivo, setMotivo] = useState('');
@@ -30,18 +50,19 @@ export function PublicationPage() {
   const [erro, setErro] = useState<string | null>(null);
   const [resultado, setResultado] = useState<string | null>(null);
 
-  function alternar(id: string) {
+  /** A chave é `colecao/id`: dois registros de coleções diferentes podem ter o mesmo id. */
+  function alternar(chave: string) {
     setSelecionados((atual) => {
       const proximo = new Set(atual);
-      if (proximo.has(id)) proximo.delete(id);
-      else proximo.add(id);
+      if (proximo.has(chave)) proximo.delete(chave);
+      else proximo.add(chave);
       return proximo;
     });
   }
 
   async function publicar(event: React.FormEvent) {
     event.preventDefault();
-    if (auth.status !== 'active' || projetos.status !== 'ready') return;
+    if (auth.status !== 'active' || grupos.status !== 'ready') return;
 
     setErro(null);
     setResultado(null);
@@ -51,16 +72,23 @@ export function PublicationPage() {
       // Lê o documento armazenado, e não o view model da listagem. A allowlist
       // só preserva o que recebe: publicar a partir do que a tela mostra
       // descartaria em silêncio campos que deveriam atravessar a fronteira.
-      const brutos = await readProjectsForPublication(
-        projetos.data.filter((p) => selecionados.has(p.id)).map((p) => p.id),
+      const porColecao = await Promise.all(
+        grupos.data.map(async (g) => {
+          const ids = g.itens
+            .filter((i) => selecionados.has(`${g.colecao}/${i.id}`))
+            .map((i) => i.id);
+          if (ids.length === 0) return [];
+          const brutos = await readDocsForPublication(g.colecao, ids);
+          return brutos.map((b) => ({
+            collection: g.colecao,
+            id: b.id,
+            version: b.version,
+            data: b.data as Record<string, unknown>,
+          }));
+        }),
       );
 
-      const itens = brutos.map((b) => ({
-        collection: 'projects' as const,
-        id: b.id,
-        version: b.version,
-        data: b.data as Record<string, unknown>,
-      }));
+      const itens = porColecao.flat();
 
       const r = await publishBatch(itens, { uid: auth.membership.uid, role: auth.membership.role }, motivo);
 
@@ -95,9 +123,11 @@ export function PublicationPage() {
             Na área interna
           </p>
           <p className="mt-0.5 text-2xl font-bold tabular-nums text-neutral-900">
-            {projetos.status === 'ready' ? projetos.data.length : '—'}
+            {grupos.status === 'ready'
+              ? grupos.data.reduce((total, g) => total + g.itens.length, 0)
+              : '—'}
           </p>
-          <p className="text-xs text-neutral-500">projetos, visíveis só para membros</p>
+          <p className="text-xs text-neutral-500">registros, visíveis só para membros</p>
         </div>
         <div className="rounded-lg border border-brand-green-300 bg-brand-green-50 p-4">
           <p className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-brand-green-800">
@@ -107,7 +137,7 @@ export function PublicationPage() {
           <p className="mt-0.5 text-2xl font-bold tabular-nums text-brand-green-800">
             {publicados.status === 'ready' ? publicados.data : '—'}
           </p>
-          <p className="text-xs text-neutral-600">projetos publicados</p>
+          <p className="text-xs text-neutral-600">registros publicados</p>
         </div>
       </div>
 
@@ -149,7 +179,7 @@ export function PublicationPage() {
         </div>
       </section>
 
-      {ehProprietario && projetos.status === 'ready' && (
+      {ehProprietario && grupos.status === 'ready' && (
         <form onSubmit={publicar} className="mt-8 rounded-lg border border-neutral-200 bg-white p-5">
           <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
             <Send aria-hidden="true" className="h-4 w-4" />
@@ -165,22 +195,36 @@ export function PublicationPage() {
               Selecione o que vai ao ar ({selecionados.size} selecionado
               {selecionados.size === 1 ? '' : 's'})
             </legend>
-            <ul className="mt-2 max-h-64 space-y-1 overflow-y-auto rounded-md border border-neutral-200 p-2">
-              {projetos.data.map((p) => (
-                <li key={p.id}>
-                  <label className="flex min-h-11 items-center gap-2.5 rounded px-2 text-sm hover:bg-neutral-50">
-                    <input
-                      type="checkbox"
-                      checked={selecionados.has(p.id)}
-                      onChange={() => alternar(p.id)}
-                      className="h-4 w-4"
-                    />
-                    <span className="text-neutral-800">{p.name}</span>
-                    <span className="ml-auto shrink-0 text-xs text-neutral-500">v{p.version}</span>
-                  </label>
-                </li>
+            <div className="mt-2 max-h-80 space-y-3 overflow-y-auto rounded-md border border-neutral-200 p-2">
+              {grupos.data.map((g) => (
+                <div key={g.colecao}>
+                  <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                    {g.rotulo} <span className="font-normal tabular-nums">({g.itens.length})</span>
+                  </p>
+                  <ul className="space-y-1">
+                    {g.itens.map((i) => {
+                      const chave = `${g.colecao}/${i.id}`;
+                      return (
+                        <li key={chave}>
+                          <label className="flex min-h-11 items-center gap-2.5 rounded px-2 text-sm hover:bg-neutral-50">
+                            <input
+                              type="checkbox"
+                              checked={selecionados.has(chave)}
+                              onChange={() => alternar(chave)}
+                              className="h-4 w-4"
+                            />
+                            <span className="text-neutral-800">{i.rotulo}</span>
+                            <span className="ml-auto shrink-0 text-xs text-neutral-500">
+                              v{i.version}
+                            </span>
+                          </label>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            </div>
           </fieldset>
 
           <label className="mt-4 block text-sm">

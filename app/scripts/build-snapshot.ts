@@ -25,7 +25,7 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchPublishedCollection, type AcessoPublico } from '../src/data/published/firestoreRest';
-import { toProjeto } from '../src/data/published/publishedProjects';
+import { COLECOES_PUBLICAVEIS } from '../src/data/published/publishedCollections';
 import {
   montarManifesto,
   serializarDeterministico,
@@ -43,14 +43,11 @@ const dryRun = args.includes('--dry-run');
 const check = args.includes('--check');
 
 /**
- * Coleções publicadas e o nome do arquivo de cada uma.
- *
- * Só `projects` está publicada hoje. As demais entram aqui conforme forem
- * publicadas — o portal continua servindo o JSON embutido para as que faltam.
+ * O registro de coleções publicáveis vive no domínio, não aqui: a tela de
+ * publicação e o gerador precisam concordar sobre o que pode ir ao ar, e duas
+ * listas divergiriam no primeiro descuido.
  */
-const COLECOES: Array<{ colecao: string; arquivo: string; mapear: (doc: never) => unknown }> = [
-  { colecao: 'projects', arquivo: 'projetos.json', mapear: toProjeto as never },
-];
+const COLECOES = COLECOES_PUBLICAVEIS;
 
 function sha256(texto: string): string {
   return createHash('sha256').update(texto, 'utf8').digest('hex');
@@ -110,13 +107,13 @@ async function main() {
     }
 
     const registros = docs
-      .map((d) => mapear(d as never))
-      .filter((r) => (r as { nome?: string }).nome !== '')
+      .map((d) => mapear(d))
+      .filter((r) => Object.keys(r).length > 1)
       .sort((a, b) =>
-        String((a as { id: string }).id).localeCompare(String((b as { id: string }).id), 'pt-BR'),
+        String(a.id).localeCompare(String(b.id), 'pt-BR'),
       );
 
-    const caminho = `current/${arquivo}`;
+    const caminho = `current/${arquivo}.json`;
     const conteudo = serializarDeterministico(registros);
     const bytes = Buffer.byteLength(conteudo, 'utf8');
     const hash = sha256(conteudo);

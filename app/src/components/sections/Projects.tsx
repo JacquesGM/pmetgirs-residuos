@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import projetosData from '../../data/projetos.json';
 import eixosData from '../../data/eixos.json';
-import { carregarColecaoPublicada } from '../../data/snapshot/loadSnapshot';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 import type { Eixo, Projeto, StatusProjeto } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
@@ -42,28 +42,7 @@ export function Projects() {
   const [statusFiltro, setStatusFiltro] = useState(ALL);
   const [responsavelFiltro, setResponsavelFiltro] = useState(ALL);
 
-  /**
-   * Embutido primeiro, publicado depois.
-   *
-   * A página renderiza na hora com o bundle — sem spinner e sem salto de
-   * layout — e troca pelo snapshot quando ele chega. Se a leitura falhar, ou
-   * se a contagem não bater com o manifesto, o cidadão segue vendo o que já
-   * via. Um portal de transparência em branco porque a rede oscilou é pior que
-   * um portal mostrando o release anterior.
-   */
-  const [projetos, setProjetos] = useState<Projeto[]>(projetosEmbutidos);
-
-  useEffect(() => {
-    const controle = new AbortController();
-    carregarColecaoPublicada<Projeto>('projetos', controle.signal)
-      .then((publicados) => {
-        if (publicados) setProjetos(publicados);
-      })
-      .catch(() => {
-        /* mantém o conteúdo embutido */
-      });
-    return () => controle.abort();
-  }, []);
+  const projetos = useColecaoPublicada<Projeto>('projetos', projetosEmbutidos);
 
   const statusOptions = useMemo(
     () => uniqueOptions(projetos, (p) => p.status) as StatusProjeto[],

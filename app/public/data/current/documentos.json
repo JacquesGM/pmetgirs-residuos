@@ -1,0 +1,38 @@
+[
+  {
+    "ano": 2024,
+    "categoria": "Diagnóstico",
+    "descricao": "Situação atual da gestão de resíduos nos 22 municípios: aspectos demográficos, econômicos, institucionais e ambientais.",
+    "formato": "PDF",
+    "id": "diagnostico-geral",
+    "link": null,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "tamanho": "20,8 MB",
+    "titulo": "Diagnóstico Geral",
+    "versao": ""
+  },
+  {
+    "ano": 2024,
+    "categoria": "Plano de Ações",
+    "descricao": "Metodologia, metas, indicadores, cronograma e resumo das ações do PMetGIRS.",
+    "formato": "PDF",
+    "id": "plano-de-acoes",
+    "link": null,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "tamanho": "19,8 MB",
+    "titulo": "Plano de Ações",
+    "versao": ""
+  },
+  {
+    "ano": 2024,
+    "categoria": "Prognóstico",
+    "descricao": "Projeções de geração de resíduos e viabilidade técnica e econômica (EVTE) das soluções de tratamento propostas.",
+    "formato": "PDF",
+    "id": "prognostico-geral",
+    "link": null,
+    "orgao": "Instituto Rio Metrópole (IRM) — elaboração ENGECONSULT",
+    "tamanho": "19,1 MB",
+    "titulo": "Prognóstico Geral",
+    "versao": ""
+  }
+]

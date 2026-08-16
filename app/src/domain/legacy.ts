@@ -104,6 +104,22 @@ export function legacyStatusFromExecution(execution: string | null | undefined):
   return null;
 }
 
+/**
+ * Do `sourceType` publicado para o status legado de origem do dado.
+ *
+ * Este é 1:1 — cada origem vem de exatamente um valor legado —, ao contrário do
+ * inverso de validação, onde dois valores diferentes colapsam em `not_assessed`.
+ */
+export function legacyStatusFromSourceType(sourceType: string | null | undefined): StatusValidacao | null {
+  if (!sourceType) return null;
+  for (const [legado, mapeado] of Object.entries(VALIDATION_MAP) as Array<
+    [StatusValidacao, LegacyStatusMapping]
+  >) {
+    if (mapeado.sourceType === sourceType) return legado;
+  }
+  return null;
+}
+
 /** Idem, para a família de validação. */
 export function legacyStatusFromValidation(validation: string | null | undefined): StatusValidacao | null {
   if (!validation) return null;

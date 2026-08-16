@@ -114,6 +114,61 @@ export async function listProjects(filters: ProjectQuery = {}): Promise<Portfoli
   return snapshot.docs.map((d) => mapProject(d.id, d.data()));
 }
 
+/** Item publicável, como a tela de publicação precisa listar. */
+export interface PublishableItem {
+  id: string;
+  rotulo: string;
+  version: number;
+}
+
+/**
+ * Lista qualquer coleção publicável para a tela de publicação.
+ *
+ * Devolve apenas id, rótulo e versão — o suficiente para escolher o que vai ao
+ * ar. O documento completo só é lido na hora de publicar, por
+ * `readDocsForPublication`.
+ */
+export async function listForPublication(
+  collection_: string,
+  max = 200,
+): Promise<PublishableItem[]> {
+  const snapshot = await getDocs(
+    query(collection(getDb(), `${base()}/${collection_}`), fsLimit(max)),
+  );
+  return snapshot.docs
+    .map((d) => {
+      const data = d.data();
+      return {
+        id: d.id,
+        // Projetos e indicadores usam `name`; documentos usam `title`.
+        rotulo: str(data.name) ?? str(data.title) ?? d.id,
+        version: num(data.version) ?? 1,
+      };
+    })
+    .sort((a, b) => a.rotulo.localeCompare(b.rotulo, 'pt-BR'));
+}
+
+/**
+ * Documentos armazenados de qualquer coleção, para publicar.
+ *
+ * Mesma razão de `readProjectsForPublication`: a allowlist só preserva o que
+ * recebe, e um view model de listagem não serve como entrada.
+ */
+export async function readDocsForPublication(
+  collection_: string,
+  ids: string[],
+): Promise<Array<{ id: string; version: number; data: DocumentData }>> {
+  const lidos = await Promise.all(
+    ids.map(async (id) => {
+      const snapshot = await getDoc(doc(getDb(), `${base()}/${collection_}/${id}`));
+      if (!snapshot.exists()) return null;
+      const data = snapshot.data();
+      return { id: snapshot.id, version: num(data.version) ?? 1, data };
+    }),
+  );
+  return lidos.filter((x): x is { id: string; version: number; data: DocumentData } => x !== null);
+}
+
 /**
  * Documentos armazenados dos projetos indicados, sem passar por `mapProject`.
  *

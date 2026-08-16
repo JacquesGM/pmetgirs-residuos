@@ -1,19 +1,33 @@
 {
   "files": [
     {
+      "bytes": 1243,
+      "path": "current/documentos.json",
+      "registros": 3,
+      "sha256": "b67368d61fe5b0c280c47ad1ead71e79bf9deac4fe5e682eee336f8d2c691b74"
+    },
+    {
+      "bytes": 4544,
+      "path": "current/indicadores.json",
+      "registros": 8,
+      "sha256": "408848026178824ac0169ca06e89b6592de6d6bf8c96a8ea7ad98cbb6ba636c9"
+    },
+    {
       "bytes": 8441,
       "path": "current/projetos.json",
       "registros": 10,
       "sha256": "5ae4fee0a84408e791aa5283eb76587a2f44b3a1aa3b0999590b31b2e5affb03"
     }
   ],
-  "generatedAt": "2026-08-16T00:32:53.879Z",
+  "generatedAt": "2026-08-16T01:03:37.793Z",
   "recordCounts": {
+    "documentos": 3,
+    "indicadores": 8,
     "projetos": 10
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
-    "AZ77KWyMXmnPuJAgxtZA"
+    "DGUFJrNpnSuerxB7cGVQ"
   ],
   "workspaceId": "pmetgirs-rmrj"
 }
