@@ -1,16 +1,19 @@
+import { useMemo } from 'react';
 import { CartesianGrid, Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import metasData from '../../data/metas.json';
 import type { Meta } from '../../types';
 import { ChartFigure } from '../ui/ChartFigure';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const metas = metasData as Meta[];
+const metasEmbutidos = metasData as Meta[];
 
 function parseLeadingNumber(text: string): number {
   const match = text.match(/\d+/);
   return match ? Number(match[0]) : 0;
 }
 
-const chartData = ['coleta-seletiva-50', 'coleta-seletiva-75', 'coleta-seletiva-100']
+function montarDados(metas: Meta[]) {
+  return ['coleta-seletiva-50', 'coleta-seletiva-75', 'coleta-seletiva-100']
   .map((id) => metas.find((m) => m.id === id))
   .filter((m): m is Meta => Boolean(m))
   .map((meta) => ({
@@ -19,8 +22,9 @@ const chartData = ['coleta-seletiva-50', 'coleta-seletiva-75', 'coleta-seletiva-
     nome: meta.nome,
     resultadoAtual: meta.resultadoAtual,
   }));
+}
 
-function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: (typeof chartData)[number] }> }) {
+function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: ReturnType<typeof montarDados>[number] }> }) {
   if (!active || !payload?.length) return null;
   const ponto = payload[0].payload;
   return (
@@ -34,6 +38,9 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 }
 
 export function GoalsTargetChart() {
+  const metas = useColecaoPublicada<Meta>('metas', metasEmbutidos);
+  const chartData = useMemo(() => montarDados(metas), [metas]);
+
   const trajetoria = chartData.map((d) => `${d.percentual}% em até ${d.ano} anos`).join(', ');
 
   return (

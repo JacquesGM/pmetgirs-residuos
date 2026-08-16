@@ -19,10 +19,10 @@
       "sha256": "a3d8d46b68c8fe8f1ce09f6609b7866a3a98709f04840e4fd97de8399efa837b"
     },
     {
-      "bytes": 7600,
+      "bytes": 7611,
       "path": "current/inconsistencias.json",
       "registros": 9,
-      "sha256": "2e471feda455025c135bd6d2c14a1c7f8f45bbe11db95cdbc751b03b2bd741d3"
+      "sha256": "f91da16252e8919285692f9a1488c5685e279c83fb0bf1fbe41690b5210aa75f"
     },
     {
       "bytes": 4544,
@@ -31,10 +31,10 @@
       "sha256": "408848026178824ac0169ca06e89b6592de6d6bf8c96a8ea7ad98cbb6ba636c9"
     },
     {
-      "bytes": 3122,
+      "bytes": 3070,
       "path": "current/infraestruturas.json",
       "registros": 7,
-      "sha256": "984f0eeed6ea75651e3a5b03c70888264f091b87221b473c1f619a3a1bfe0749"
+      "sha256": "da69891d29bc980b9d5305742ac21f0a6649a7e012c7271d3585f31be29ae5f1"
     },
     {
       "bytes": 2107,
@@ -55,7 +55,7 @@
       "sha256": "5ae4fee0a84408e791aa5283eb76587a2f44b3a1aa3b0999590b31b2e5affb03"
     }
   ],
-  "generatedAt": "2026-08-16T01:31:01.080Z",
+  "generatedAt": "2026-08-16T01:37:22.462Z",
   "recordCounts": {
     "documentos": 3,
     "eixos": 12,
@@ -69,7 +69,7 @@
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
-    "96TlJKFWQWoCNlGAaLfG"
+    "R7ZOdZVZlzdnLWkQt5dT"
   ],
   "workspaceId": "pmetgirs-rmrj"
 }

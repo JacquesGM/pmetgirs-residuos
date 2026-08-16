@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   assertPublicationTransition,
   isPubliclyVisible,
+  EXCECOES_AO_NEVER_PUBLIC,
   NEVER_PUBLIC,
   PUBLIC_ALLOWLIST,
   PUBLIC_METADATA_FIELDS,
@@ -75,21 +76,59 @@ describe('sanitização por allowlist', () => {
     expect(resultado.dropped).toContain('contactEmail');
   });
 
-  it('nenhum campo proibido sobrevive, em nenhuma coleção', () => {
+  it('nenhum campo proibido sobrevive, salvo exceção declarada', () => {
     // Varre todas as coleções com um documento que contém todos os campos
-    // proibidos: se algum atravessar, o teste falha.
+    // proibidos: só pode atravessar o que estiver em EXCECOES_AO_NEVER_PUBLIC.
     const suspeito = Object.fromEntries(NEVER_PUBLIC.map((f) => [f, 'VAZOU']));
     for (const collection of Object.keys(PUBLIC_ALLOWLIST) as PublicCollection[]) {
       const r = sanitizeForPublication(collection, suspeito, contexto);
-      expect(Object.values(r.data)).not.toContain('VAZOU');
+      const permitidos = EXCECOES_AO_NEVER_PUBLIC[collection] ?? [];
+      const vazados = Object.keys(r.data).filter((k) => r.data[k] === 'VAZOU');
+      expect(vazados.sort(), `coleção ${collection}`).toEqual([...permitidos].sort());
     }
   });
 
-  it('nenhuma allowlist inclui campo interno', () => {
+  it('nenhuma allowlist inclui campo interno sem exceção', () => {
     for (const [collection, campos] of Object.entries(PUBLIC_ALLOWLIST)) {
-      const intersecao = campos.filter((c) => NEVER_PUBLIC.includes(c));
+      const permitidos = EXCECOES_AO_NEVER_PUBLIC[collection as PublicCollection] ?? [];
+      const intersecao = campos.filter((c) => NEVER_PUBLIC.includes(c) && !permitidos.includes(c));
       expect(intersecao, `allowlist de ${collection}`).toEqual([]);
     }
+  });
+
+  describe('as exceções são poucas e reais', () => {
+    /**
+     * Uma exceção que ninguém revisita vira regra por esquecimento. Estes
+     * testes mantêm a lista pequena, verdadeira e visível.
+     */
+    it('toda exceção nomeia um campo que de fato é proibido', () => {
+      for (const [collection, campos] of Object.entries(EXCECOES_AO_NEVER_PUBLIC)) {
+        for (const campo of campos ?? []) {
+          expect(NEVER_PUBLIC, `${collection}.${campo}`).toContain(campo);
+        }
+      }
+    });
+
+    it('toda exceção aparece na allowlist da coleção', () => {
+      // Exceção sem uso é resíduo: autoriza um vazamento que ninguém pediu.
+      for (const [collection, campos] of Object.entries(EXCECOES_AO_NEVER_PUBLIC)) {
+        for (const campo of campos ?? []) {
+          expect(
+            PUBLIC_ALLOWLIST[collection as PublicCollection],
+            `${collection}.${campo}`,
+          ).toContain(campo);
+        }
+      }
+    });
+
+    it('nenhuma exceção libera identificador de usuário', () => {
+      const identificadores = ['updatedBy', 'createdBy', 'ownerUid', 'teamUids', 'contactEmail'];
+      for (const [collection, campos] of Object.entries(EXCECOES_AO_NEVER_PUBLIC)) {
+        for (const campo of campos ?? []) {
+          expect(identificadores, `${collection}.${campo}`).not.toContain(campo);
+        }
+      }
+    });
   });
 
   it('coleção sem allowlist não é publicada', () => {

@@ -8,8 +8,9 @@ import { InfrastructureDivergenceChart } from '../charts/InfrastructureDivergenc
 import { InfrastructureCompositionChart } from '../charts/InfrastructureCompositionChart';
 import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const infraestruturas = infraestruturasData as Infraestrutura[];
+const infraestruturasEmbutidas = infraestruturasData as Infraestrutura[];
 
 const colunasInfraestruturas: DownloadColumn<Infraestrutura>[] = [
   { key: 'nome', label: 'Infraestrutura' },
@@ -26,6 +27,8 @@ const colunasInfraestruturas: DownloadColumn<Infraestrutura>[] = [
 ];
 
 export function Infrastructure() {
+  const infraestruturas = useColecaoPublicada<Infraestrutura>('infraestruturas', infraestruturasEmbutidas);
+
   return (
     <Section
       headingLevel={1}

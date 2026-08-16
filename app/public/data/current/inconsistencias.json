@@ -7,7 +7,7 @@
     "fontes": null,
     "id": "atualizacao-municipal-pendente",
     "impacto": "Pode reduzir a precisão de indicadores municipais específicos até a atualização dos dados.",
-    "situacao": "em_validacao",
+    "situacao": "em_atualizacao",
     "titulo": "Atualização de dados municipais pendente",
     "ultimaAtualizacao": null
   },
@@ -19,7 +19,7 @@
     "fontes": null,
     "id": "cronograma-iniciado-2024",
     "impacto": "Pode gerar diferença entre o cronograma original e o ritmo real de execução das ações.",
-    "situacao": "em_validacao",
+    "situacao": "em_atualizacao",
     "titulo": "Cronograma original iniciado em 2024",
     "ultimaAtualizacao": null
   },
@@ -94,7 +94,7 @@
     "fontes": null,
     "id": "estudos-locacionais-ambientais",
     "impacto": "As localizações apresentadas neste momento são preliminares e podem ser alteradas.",
-    "situacao": "em_validacao",
+    "situacao": "em_atualizacao",
     "titulo": "Estudos locacionais e ambientais pendentes",
     "ultimaAtualizacao": null
   },
@@ -106,7 +106,7 @@
     "fontes": null,
     "id": "indicadores-incompletos",
     "impacto": "Limita, por ora, o acompanhamento público de alguns resultados por município.",
-    "situacao": "em_validacao",
+    "situacao": "em_atualizacao",
     "titulo": "Indicadores de desempenho ainda incompletos",
     "ultimaAtualizacao": null
   },
@@ -118,7 +118,7 @@
     "fontes": null,
     "id": "responsabilidades-difusas",
     "impacto": "Pode atrasar a contratação e execução de algumas ações até a definição formal de responsabilidades.",
-    "situacao": "em_validacao",
+    "situacao": "em_estruturacao",
     "titulo": "Responsabilidades entre IRM e municípios ainda em definição",
     "ultimaAtualizacao": null
   },

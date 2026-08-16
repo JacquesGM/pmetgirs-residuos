@@ -290,10 +290,13 @@ export function toInfraestrutura(
     quantidade: texto(d, 'quantityLabel'),
     unidade: texto(d, 'unit'),
     fonte: texto(d, 'sourceLabel'),
-    statusValidacao: statusDeValidacaoLegado(
-      d.validationStatus as string | null,
-      d.actualityStatus as string | null,
-    ),
+    // O valor original vem publicado por exceção declarada. A reconstrução
+    // continua como reserva, para registros antigos que ainda não o carreguem.
+    statusValidacao: (textoOuNulo(d, 'legacyStatus') as StatusValidacao | null) ??
+      statusDeValidacaoLegado(
+        d.validationStatus as string | null,
+        d.actualityStatus as string | null,
+      ),
     valoresDivergentes: divergencias(ctx?.evidencias, 'infrastructures', doc.id),
     observacao: textoOuNulo(d, 'note'),
   };
@@ -313,10 +316,11 @@ export function toInconsistencia(
     titulo: texto(d, 'title'),
     descricao: texto(d, 'description'),
     impacto: texto(d, 'impact'),
-    situacao: statusDeValidacaoLegado(
-      d.validationStatus as string | null,
-      d.actualityStatus as string | null,
-    ),
+    situacao: (textoOuNulo(d, 'legacyStatus') as StatusValidacao | null) ??
+      statusDeValidacaoLegado(
+        d.validationStatus as string | null,
+        d.actualityStatus as string | null,
+      ),
     areaResponsavel: texto(d, 'accountableArea'),
     encaminhamento: textoOuNulo(d, 'nextStep'),
     ultimaAtualizacao: textoOuNulo(d, 'dataDate'),

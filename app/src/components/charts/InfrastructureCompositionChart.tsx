@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import infraestruturasData from '../../data/infraestruturas.json';
 import type { Infraestrutura } from '../../types';
 import { ChartFigure } from '../ui/ChartFigure';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const infraestruturas = infraestruturasData as Infraestrutura[];
+const infraestruturasEmbutidos = infraestruturasData as Infraestrutura[];
 
 const ITENS_COMPOSICAO = [
   'usinas-triagem',
@@ -19,7 +21,8 @@ export function parseQuantidade(valor: string): { numero: number; aproximado: bo
   return { numero: match ? Number(match[0]) : 0, aproximado };
 }
 
-const chartData = ITENS_COMPOSICAO.map((id) => infraestruturas.find((item) => item.id === id))
+function montarDados(infraestruturas: Infraestrutura[]) {
+  return ITENS_COMPOSICAO.map((id) => infraestruturas.find((item) => item.id === id))
   .filter((item): item is Infraestrutura => Boolean(item))
   .map((item) => {
     const { numero, aproximado } = parseQuantidade(item.quantidade);
@@ -31,8 +34,9 @@ const chartData = ITENS_COMPOSICAO.map((id) => infraestruturas.find((item) => it
       rotulo: aproximado ? `até ${numero}` : `${numero}`,
     };
   });
+}
 
-function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: (typeof chartData)[number] }> }) {
+function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<{ payload: ReturnType<typeof montarDados>[number] }> }) {
   if (!active || !payload?.length) return null;
   const item = payload[0].payload;
   return (
@@ -46,6 +50,9 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 }
 
 export function InfrastructureCompositionChart() {
+  const infraestruturas = useColecaoPublicada<Infraestrutura>('infraestruturas', infraestruturasEmbutidos);
+  const chartData = useMemo(() => montarDados(infraestruturas), [infraestruturas]);
+
   const resumo = chartData.map((d) => `${d.nome}: ${d.rotulo} ${d.unidade}`).join('; ');
 
   return (

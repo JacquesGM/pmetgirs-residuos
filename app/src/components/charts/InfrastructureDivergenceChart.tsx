@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import infraestruturasData from '../../data/infraestruturas.json';
 import type { Infraestrutura } from '../../types';
 import { ChartFigure } from '../ui/ChartFigure';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const infraestruturas = infraestruturasData as Infraestrutura[];
+const infraestruturasEmbutidos = infraestruturasData as Infraestrutura[];
 
 const PLANO_ACOES = 'Plano de Ações';
 const PROGNOSTICO = 'Prognóstico Geral';
@@ -13,7 +15,7 @@ function parseQuantidade(valor: string): number {
   return match ? Number(match[0]) : 0;
 }
 
-function buildSerie(id: string) {
+function buildSerie(infraestruturas: Infraestrutura[], id: string) {
   const item = infraestruturas.find((i) => i.id === id);
   const divergentes = item?.valoresDivergentes ?? [];
   const planoAcoes = divergentes.find((v) => v.fonte.startsWith('Plano de Ações'));
@@ -24,10 +26,15 @@ function buildSerie(id: string) {
   };
 }
 
-const chartData = [
-  { categoria: 'Usinas de combustão', ...buildSerie('unidades-combustao') },
-  { categoria: 'Gaseificação / termodegradação', ...buildSerie('gaseificacao-termodegradacao') },
-];
+function montarDados(infraestruturas: Infraestrutura[]) {
+  return [
+    { categoria: 'Usinas de combustão', ...buildSerie(infraestruturas, 'unidades-combustao') },
+    {
+      categoria: 'Gaseificação / termodegradação',
+      ...buildSerie(infraestruturas, 'gaseificacao-termodegradacao'),
+    },
+  ];
+}
 
 function CustomTooltip({
   active,
@@ -52,6 +59,9 @@ function CustomTooltip({
 }
 
 export function InfrastructureDivergenceChart() {
+  const infraestruturas = useColecaoPublicada<Infraestrutura>('infraestruturas', infraestruturasEmbutidos);
+  const chartData = useMemo(() => montarDados(infraestruturas), [infraestruturas]);
+
   const resumo = chartData
     .map((d) => `${d.categoria} — ${PLANO_ACOES}: ${d[PLANO_ACOES] ?? 'não informado'}, ${PROGNOSTICO}: ${d[PROGNOSTICO] ?? 'não informado'}`)
     .join('; ');

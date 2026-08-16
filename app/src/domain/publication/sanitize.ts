@@ -105,6 +105,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'validationStatus',
     'hasDivergentSources',
     'note',
+    // Exceção documentada em EXCECOES_AO_NEVER_PUBLIC.
+    'legacyStatus',
   ],
   documents: [
     'title',
@@ -153,6 +155,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'hasDivergentSources',
     // Idem. Uma inconsistência sem data não diz se ainda vale.
     'dataDate',
+    // Exceção documentada em EXCECOES_AO_NEVER_PUBLIC.
+    'legacyStatus',
   ],
 };
 
@@ -196,6 +200,35 @@ export const PUBLIC_METADATA_FIELDS = [
   'publishedAt',
 ] as const;
 
+/**
+ * Exceções deliberadas a NEVER_PUBLIC, por coleção.
+ *
+ * A proibição global continua valendo em todo o resto: um campo listado aqui
+ * atravessa **apenas** na coleção nomeada, e apenas porque alguém decidiu.
+ * Remover a entrada de NEVER_PUBLIC seria mais simples e muito pior — o campo
+ * passaria a poder vazar em qualquer coleção, por descuido, sem decisão.
+ *
+ * `legacyStatus` guarda o valor original da coluna de situação. Foi proibido
+ * por ser artefato de migração, mas o conteúdo dele é o texto que o portal
+ * exibe publicamente desde sempre.
+ *
+ * A alternativa era reconstruí-lo a partir dos campos publicados, e ela tem um
+ * piso: a coluna legada é um valor único sorteado de três famílias — execução,
+ * validação e atualidade —, e a migração a espalhou em quatro campos
+ * preenchendo defaults. Pior, em infraestruturas com divergência o
+ * `validationStatus` é sobrescrito para 'divergent', apagando o original.
+ * Quatro tentativas de reconstrução produziram rótulos falsos, entre eles
+ * "dado municipal declarado" para dados que ninguém declarou.
+ *
+ * Decidido em 15/08/2026: num portal de transparência, publicar o valor real
+ * vale mais que preservar a pureza de uma lista contra um campo cujo conteúdo
+ * já é público.
+ */
+export const EXCECOES_AO_NEVER_PUBLIC: Partial<Record<PublicCollection, string[]>> = {
+  infrastructures: ['legacyStatus'],
+  inconsistencies: ['legacyStatus'],
+};
+
 export class SanitizationError extends Error {}
 
 export interface PublicProjection {
@@ -220,7 +253,10 @@ export function sanitizeForPublication(
     );
   }
 
-  const vazamento = allowlist.filter((field) => NEVER_PUBLIC.includes(field));
+  const excecoes = EXCECOES_AO_NEVER_PUBLIC[collection] ?? [];
+  const vazamento = allowlist.filter(
+    (field) => NEVER_PUBLIC.includes(field) && !excecoes.includes(field),
+  );
   if (vazamento.length > 0) {
     throw new SanitizationError(
       `A allowlist de "${collection}" inclui campo interno: ${vazamento.join(', ')}.`,

@@ -5,9 +5,11 @@ import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
+import { useMemo } from 'react';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const inconsistencias = inconsistenciasData as Inconsistencia[];
-const glossario = glossarioData as TermoGlossario[];
+const inconsistenciasEmbutidas = inconsistenciasData as Inconsistencia[];
+const glossarioEmbutido = glossarioData as TermoGlossario[];
 
 const selos: { status: StatusValidacao; descricao: string }[] = [
   { status: 'dado_oficial_validado', descricao: 'Confirmado por fonte oficial (ex.: IBGE) ou pelo IRM.' },
@@ -20,8 +22,7 @@ const selos: { status: StatusValidacao; descricao: string }[] = [
   { status: 'informacao_divergente', descricao: 'Divergência confirmada entre fontes.' },
 ];
 
-const divergencias = inconsistencias.filter((i) => i.categoria === 'divergencia_de_dados');
-const pontosEmRevisao = inconsistencias.filter((i) => i.categoria === 'ponto_em_revisao');
+
 
 function IncidentCard({ item }: { item: Inconsistencia }) {
   return (
@@ -50,6 +51,18 @@ function IncidentCard({ item }: { item: Inconsistencia }) {
 }
 
 export function Transparency() {
+  const inconsistencias = useColecaoPublicada<Inconsistencia>('inconsistencias', inconsistenciasEmbutidas);
+  const glossario = useColecaoPublicada<TermoGlossario>('glossario', glossarioEmbutido);
+
+  const divergencias = useMemo(
+    () => inconsistencias.filter((i) => i.categoria === 'divergencia_de_dados'),
+    [inconsistencias],
+  );
+  const pontosEmRevisao = useMemo(
+    () => inconsistencias.filter((i) => i.categoria === 'ponto_em_revisao'),
+    [inconsistencias],
+  );
+
   return (
     <Section
       headingLevel={1}
