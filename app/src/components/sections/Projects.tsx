@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import projetosData from '../../data/projetos.json';
 import eixosData from '../../data/eixos.json';
+import { carregarColecaoPublicada } from '../../data/snapshot/loadSnapshot';
 import type { Eixo, Projeto, StatusProjeto } from '../../types';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
@@ -14,22 +15,11 @@ import { eixoIcons, iconFor } from '../../lib/icons';
 import { uniqueOptions } from '../../lib/filters';
 
 /**
- * O portal público lê arquivo, nunca o banco.
- *
- * Uma versão anterior buscava a projeção publicada direto do Firestore pela API
- * REST. Funcionava, mas cada visita consumia a cota diária de leituras do plano
- * Spark — e estourá-la interrompe o serviço. A publicação passa a gerar um
- * snapshot estático servido pelo CDN, então tráfego público não toca o banco,
- * não há superfície pública de ataque e o portal sobrevive a uma indisponibilidade
- * do Firestore.
- *
- * Enquanto o gerador de snapshot não existe, a fonte é o JSON embutido.
+ * Conteúdo embutido no bundle — o que o cidadão vê no primeiro quadro, e o que
+ * ele continua vendo se o snapshot não puder ser lido.
  */
-const projetos = projetosData as Projeto[];
+const projetosEmbutidos = projetosData as Projeto[];
 const eixos = eixosData as Eixo[];
-
-const statusOptions = uniqueOptions(projetos, (p) => p.status) as StatusProjeto[];
-const responsavelOptions = uniqueOptions(projetos, (p) => p.responsavel);
 
 function eixoNome(id: string): string {
   return eixos.find((eixo) => eixo.id === id)?.nome ?? id;
@@ -52,6 +42,38 @@ export function Projects() {
   const [statusFiltro, setStatusFiltro] = useState(ALL);
   const [responsavelFiltro, setResponsavelFiltro] = useState(ALL);
 
+  /**
+   * Embutido primeiro, publicado depois.
+   *
+   * A página renderiza na hora com o bundle — sem spinner e sem salto de
+   * layout — e troca pelo snapshot quando ele chega. Se a leitura falhar, ou
+   * se a contagem não bater com o manifesto, o cidadão segue vendo o que já
+   * via. Um portal de transparência em branco porque a rede oscilou é pior que
+   * um portal mostrando o release anterior.
+   */
+  const [projetos, setProjetos] = useState<Projeto[]>(projetosEmbutidos);
+
+  useEffect(() => {
+    const controle = new AbortController();
+    carregarColecaoPublicada<Projeto>('projetos', controle.signal)
+      .then((publicados) => {
+        if (publicados) setProjetos(publicados);
+      })
+      .catch(() => {
+        /* mantém o conteúdo embutido */
+      });
+    return () => controle.abort();
+  }, []);
+
+  const statusOptions = useMemo(
+    () => uniqueOptions(projetos, (p) => p.status) as StatusProjeto[],
+    [projetos],
+  );
+  const responsavelOptions = useMemo(
+    () => uniqueOptions(projetos, (p) => p.responsavel),
+    [projetos],
+  );
+
   const filtrados = useMemo(() => {
     return projetos.filter((projeto) => {
       if (eixoFiltro !== ALL && projeto.eixo !== eixoFiltro) return false;
@@ -59,7 +81,7 @@ export function Projects() {
       if (responsavelFiltro !== ALL && projeto.responsavel !== responsavelFiltro) return false;
       return true;
     });
-  }, [eixoFiltro, statusFiltro, responsavelFiltro]);
+  }, [projetos, eixoFiltro, statusFiltro, responsavelFiltro]);
 
   const limparFiltros = () => {
     setEixoFiltro(ALL);

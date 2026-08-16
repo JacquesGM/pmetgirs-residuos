@@ -19,6 +19,16 @@
         "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
       },
       {
+        "//": "O manifesto é o ponteiro do release: precisa ser revalidado sempre, senão uma publicação levaria até uma hora para aparecer.",
+        "source": "/data/manifest.json",
+        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      },
+      {
+        "//": "Os arquivos de dados são buscados com ?v=<hash> vindo do manifesto, então cada versão tem URL própria e pode ser imutável.",
+        "source": "/data/current/**",
+        "headers": [{ "key": "Cache-Control", "value": "public,max-age=31536000,immutable" }]
+      },
+      {
         "source": "**",
         "headers": [
           { "key": "X-Content-Type-Options", "value": "nosniff" },
