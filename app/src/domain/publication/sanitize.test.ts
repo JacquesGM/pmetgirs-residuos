@@ -65,9 +65,18 @@ describe('sanitização por allowlist', () => {
   });
 
   it('não deixa passar campos de controle', () => {
-    for (const campo of ['lastEventId', 'version', 'schemaVersion', 'workspaceId', 'legacyStatus']) {
+    for (const campo of ['lastEventId', 'version', 'schemaVersion', 'workspaceId']) {
       expect(resultado.data[campo]).toBeUndefined();
     }
+  });
+
+  it('deixa passar legacyStatus em projetos, por exceção declarada', () => {
+    // Este teste existe para que a exceção seja visível. Até 15/08/2026
+    // `legacyStatus` era barrado aqui junto com os campos de controle; passou a
+    // atravessar porque é o único valor exato da coluna de situação que o
+    // portal exibe, e reconstruí-lo produzia rótulos falsos.
+    expect(resultado.data.legacyStatus).toBe('em_estruturacao');
+    expect(EXCECOES_AO_NEVER_PUBLIC.projects).toContain('legacyStatus');
   });
 
   it('registra o que foi descartado, para o relatório do release', () => {

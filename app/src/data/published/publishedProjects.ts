@@ -20,10 +20,15 @@ export function toProjeto(doc: PublishedDocument): Projeto {
   const lista = (chave: string): string[] =>
     Array.isArray(d[chave]) ? (d[chave] as unknown[]).filter((x): x is string => typeof x === 'string') : [];
 
-  // A execução vem primeiro; quando indefinida, a interface mostra a situação
-  // de validação. É o caso de `dado_em_validacao`, que descreve o dado e não a
-  // execução — a migração deixa a execução em branco de propósito.
+  // O valor original da coluna de situação vem publicado por exceção
+  // declarada — é o único exato. A reconstrução fica como reserva, para
+  // registros de releases antigos que ainda não o carreguem.
+  //
+  // Sem ele, `dado_em_validacao` voltava como `em_validacao`: os dois mapeiam
+  // para a mesma validação interna, e o desempatador era justamente este campo.
+  const legado = typeof d.legacyStatus === 'string' ? (d.legacyStatus as StatusProjeto) : null;
   const status: StatusProjeto | null =
+    legado ??
     legacyStatusFromExecution(d.executionStatus as string | null) ??
     (legacyStatusFromValidation(d.validationStatus as string | null) as StatusProjeto | null);
 

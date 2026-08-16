@@ -45,6 +45,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'relatedDocumentIds',
     'sourceLabel',
     'dataDate',
+    // Exceção documentada em EXCECOES_AO_NEVER_PUBLIC.
+    'legacyStatus',
   ],
   axes: [
     'name',
@@ -225,6 +227,7 @@ export const PUBLIC_METADATA_FIELDS = [
  * já é público.
  */
 export const EXCECOES_AO_NEVER_PUBLIC: Partial<Record<PublicCollection, string[]>> = {
+  projects: ['legacyStatus'],
   infrastructures: ['legacyStatus'],
   inconsistencies: ['legacyStatus'],
 };
