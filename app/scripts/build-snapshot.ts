@@ -25,7 +25,12 @@ import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fetchPublishedCollection, type AcessoPublico } from '../src/data/published/firestoreRest';
-import { COLECOES_PUBLICAVEIS } from '../src/data/published/publishedCollections';
+import {
+  COLECAO_DE_EVIDENCIAS,
+  COLECOES_PUBLICAVEIS,
+  indexarEvidencias,
+  type ContextoDeMapeamento,
+} from '../src/data/published/publishedCollections';
 import {
   montarManifesto,
   serializarDeterministico,
@@ -90,7 +95,19 @@ async function main() {
   const achadosPii: AchadoPii[] = [];
   const releaseIds: string[] = [];
 
-  for (const { colecao, arquivo, mapear } of COLECOES) {
+  // As alegações de valor são lidas primeiro e não viram arquivo: elas
+  // enriquecem infraestruturas e inconsistências, que exibem a divergência
+  // dentro do próprio registro.
+  const docsDeEvidencia = await fetchPublishedCollection(COLECAO_DE_EVIDENCIAS, acesso);
+  const contexto: ContextoDeMapeamento = { evidencias: indexarEvidencias(docsDeEvidencia ?? []) };
+  console.log(
+    `  ${'evidence'.padEnd(16)} ${String(docsDeEvidencia?.length ?? 0).padStart(4)} alegações   ` +
+      `(junta aos registros, não vira arquivo)`,
+  );
+
+  for (const { colecao, arquivo, mapear, chaveDeOrdenacao, emiteArquivo } of COLECOES) {
+    if (emiteArquivo === false) continue;
+
     const docs = await fetchPublishedCollection(colecao, acesso);
 
     if (!docs) {
@@ -106,11 +123,12 @@ async function main() {
       if (typeof rid === 'string') releaseIds.push(rid);
     }
 
+    const chave = chaveDeOrdenacao ?? 'id';
     const registros = docs
-      .map((d) => mapear(d))
+      .map((d) => mapear(d, contexto) as Record<string, unknown>)
       .filter((r) => Object.keys(r).length > 1)
       .sort((a, b) =>
-        String(a.id).localeCompare(String(b.id), 'pt-BR'),
+        String(a[chave] ?? '').localeCompare(String(b[chave] ?? ''), 'pt-BR'),
       );
 
     const caminho = `current/${arquivo}.json`;

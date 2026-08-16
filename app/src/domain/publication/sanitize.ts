@@ -22,7 +22,9 @@ export type PublicCollection =
   | 'goals'
   | 'infrastructures'
   | 'documents'
-  | 'inconsistencies';
+  | 'inconsistencies'
+  | 'glossary'
+  | 'evidence';
 
 /** Campos que podem ser vistos pelo cidadão, por tipo de entidade. */
 export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
@@ -120,6 +122,26 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /**
+   * Glossário: sigla e significado. Não há o que proteger — é vocabulário.
+   */
+  glossary: ['acronym', 'meaning'],
+
+  /**
+   * Alegações de valor — o que cada fonte afirma sobre um mesmo campo.
+   *
+   * A lista é deliberadamente curta. Ela reconstrói exatamente o par
+   * "fonte: valor" que o portal já exibe hoje a partir do bundle, mais a
+   * ligação com a entidade de origem. Publicar isto é **paridade**, não
+   * divulgação nova.
+   *
+   * Ficam de fora `confidenceScore` e `notes`: hoje são nulos em todos os
+   * registros migrados, mas são campos de avaliação interna. Se um dia
+   * receberem conteúdo, não devem atravessar por inércia de uma decisão
+   * tomada quando estavam vazios.
+   */
+  evidence: ['entityType', 'entityId', 'fieldPath', 'value', 'unit', 'sourceDocumentId'],
+
   inconsistencies: [
     'title',
     'category',

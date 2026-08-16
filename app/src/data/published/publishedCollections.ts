@@ -6,6 +6,10 @@ import {
 import type { PublicCollection } from '../../domain/publication/sanitize';
 import type {
   Documento,
+  Inconsistencia,
+  Infraestrutura,
+  TermoGlossario,
+  ValorDivergente,
   Eixo,
   Indicador,
   Meta,
@@ -214,7 +218,125 @@ export function toMeta(doc: PublishedDocument): Meta {
   };
 }
 
+
+// ------------------------------------------------- alegações de valor
+
+/**
+ * Índice de alegações por entidade: `infrastructures/usinas-triagem` → as
+ * fontes que afirmam quantidades diferentes para aquele item.
+ *
+ * O portal exibe a divergência dentro do próprio registro, então o gerador
+ * junta as alegações ao pai antes de escrever o arquivo. O cidadão recebe
+ * "cada fonte diz X", que é o que ele já via.
+ */
+export type IndiceDeEvidencias = Map<string, ValorDivergente[]>;
+
+export function indexarEvidencias(docs: PublishedDocument[]): IndiceDeEvidencias {
+  const indice = new Map<string, Array<ValorDivergente & { ordem: string }>>();
+  for (const doc of docs) {
+    const d = doc.data;
+    const tipo = texto(d, 'entityType');
+    const entidade = texto(d, 'entityId');
+    if (!tipo || !entidade) continue;
+
+    const chave = `${tipo}/${entidade}`;
+    const lista = indice.get(chave) ?? [];
+    lista.push({
+      ordem: doc.id,
+      fonte: texto(d, 'sourceDocumentId'),
+      valor: String(d.value ?? ''),
+    });
+    indice.set(chave, lista);
+  }
+
+  // Ordena pelo id da alegação, que a migração gerou como `<entidade>--claim-N`
+  // seguindo a ordem do documento original. Ordenar pelo nome da fonte também
+  // daria determinismo, mas trocaria a ordem que o autor escolheu por uma
+  // alfabética — e em divergência de dados a sequência das fontes é parte da
+  // leitura.
+  for (const lista of indice.values()) {
+    lista.sort((a, b) => a.ordem.localeCompare(b.ordem, 'pt-BR', { numeric: true }));
+  }
+
+  return new Map(
+    [...indice].map(([chave, lista]) => [
+      chave,
+      lista.map(({ fonte, valor }) => ({ fonte, valor })),
+    ]),
+  );
+}
+
+function divergencias(
+  indice: IndiceDeEvidencias | undefined,
+  tipo: string,
+  id: string,
+): ValorDivergente[] | null {
+  const lista = indice?.get(`${tipo}/${id}`);
+  // Uma alegação sozinha não é divergência. O portal só mostra o bloco quando
+  // há mais de uma fonte, e o campo nulo é o que sinaliza isso.
+  return lista && lista.length > 1 ? lista : null;
+}
+
+// ------------------------------------------------------------------ infraestruturas
+
+export function toInfraestrutura(
+  doc: PublishedDocument,
+  ctx?: ContextoDeMapeamento,
+): Infraestrutura {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    quantidade: texto(d, 'quantityLabel'),
+    unidade: texto(d, 'unit'),
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: statusDeValidacaoLegado(
+      d.validationStatus as string | null,
+      d.actualityStatus as string | null,
+    ),
+    valoresDivergentes: divergencias(ctx?.evidencias, 'infrastructures', doc.id),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ------------------------------------------------------------------ inconsistências
+
+export function toInconsistencia(
+  doc: PublishedDocument,
+  ctx?: ContextoDeMapeamento,
+): Inconsistencia {
+  const d = doc.data;
+  const categoria = texto(d, 'category');
+  return {
+    id: doc.id,
+    categoria: categoria === 'ponto_em_revisao' ? 'ponto_em_revisao' : 'divergencia_de_dados',
+    titulo: texto(d, 'title'),
+    descricao: texto(d, 'description'),
+    impacto: texto(d, 'impact'),
+    situacao: statusDeValidacaoLegado(
+      d.validationStatus as string | null,
+      d.actualityStatus as string | null,
+    ),
+    areaResponsavel: texto(d, 'accountableArea'),
+    encaminhamento: textoOuNulo(d, 'nextStep'),
+    ultimaAtualizacao: textoOuNulo(d, 'dataDate'),
+    fontes: divergencias(ctx?.evidencias, 'inconsistencies', doc.id),
+  };
+}
+
+// ------------------------------------------------------------------ glossário
+
+export function toTermoGlossario(doc: PublishedDocument): TermoGlossario {
+  const d = doc.data;
+  return { sigla: texto(d, 'acronym'), significado: texto(d, 'meaning') };
+}
+
 // ------------------------------------------------------------------ registro
+
+/** Dados de outras coleções de que um mapeador precisa. */
+export interface ContextoDeMapeamento {
+  evidencias: IndiceDeEvidencias;
+}
 
 export interface ColecaoPublicavel {
   /**
@@ -229,7 +351,20 @@ export interface ColecaoPublicavel {
   arquivo: string;
   /** Rótulo para a tela de publicação. */
   rotulo: string;
-  mapear: (doc: PublishedDocument) => { id: string };
+  mapear: (doc: PublishedDocument, ctx?: ContextoDeMapeamento) => object;
+  /**
+   * Campo usado para ordenar, garantindo arquivo byte-idêntico entre
+   * execuções. O padrão é `id`; o glossário não tem id e ordena por `sigla`.
+   */
+  chaveDeOrdenacao?: string;
+  /**
+   * Se falso, a coleção é publicada e lida, mas não vira arquivo próprio.
+   *
+   * É o caso das alegações de valor: o portal não tem tela de alegações
+   * soltas — mostra a divergência dentro do registro que diverge. Emitir um
+   * arquivo que ninguém lê só aumentaria a superfície publicada.
+   */
+  emiteArquivo?: boolean;
 }
 
 /**
@@ -247,4 +382,32 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
   { colecao: 'axes', arquivo: 'eixos', rotulo: 'Eixos', mapear: toEixo },
   { colecao: 'municipalities', arquivo: 'municipios', rotulo: 'Municípios', mapear: toMunicipio },
   { colecao: 'goals', arquivo: 'metas', rotulo: 'Metas', mapear: toMeta },
+  {
+    colecao: 'infrastructures',
+    arquivo: 'infraestruturas',
+    rotulo: 'Infraestruturas',
+    mapear: toInfraestrutura,
+  },
+  {
+    colecao: 'inconsistencies',
+    arquivo: 'inconsistencias',
+    rotulo: 'Inconsistências',
+    mapear: toInconsistencia,
+  },
+  {
+    colecao: 'evidence',
+    arquivo: 'evidencias',
+    rotulo: 'Alegações de valor',
+    mapear: () => ({}),
+    emiteArquivo: false,
+  },
+  {
+    colecao: 'glossary',
+    arquivo: 'glossario',
+    rotulo: 'Glossário',
+    mapear: toTermoGlossario,
+    chaveDeOrdenacao: 'sigla',
+  },
 ];
+
+export const COLECAO_DE_EVIDENCIAS = 'evidence' as const;

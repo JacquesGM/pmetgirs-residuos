@@ -13,10 +13,28 @@
       "sha256": "05eeb8ac8c84046b3351c2ace2dd37afbfb46d7b05e4d1df872f112d9a10e7d6"
     },
     {
+      "bytes": 1358,
+      "path": "current/glossario.json",
+      "registros": 10,
+      "sha256": "a3d8d46b68c8fe8f1ce09f6609b7866a3a98709f04840e4fd97de8399efa837b"
+    },
+    {
+      "bytes": 7600,
+      "path": "current/inconsistencias.json",
+      "registros": 9,
+      "sha256": "2e471feda455025c135bd6d2c14a1c7f8f45bbe11db95cdbc751b03b2bd741d3"
+    },
+    {
       "bytes": 4544,
       "path": "current/indicadores.json",
       "registros": 8,
       "sha256": "408848026178824ac0169ca06e89b6592de6d6bf8c96a8ea7ad98cbb6ba636c9"
+    },
+    {
+      "bytes": 3122,
+      "path": "current/infraestruturas.json",
+      "registros": 7,
+      "sha256": "984f0eeed6ea75651e3a5b03c70888264f091b87221b473c1f619a3a1bfe0749"
     },
     {
       "bytes": 2107,
@@ -37,18 +55,21 @@
       "sha256": "5ae4fee0a84408e791aa5283eb76587a2f44b3a1aa3b0999590b31b2e5affb03"
     }
   ],
-  "generatedAt": "2026-08-16T01:13:07.657Z",
+  "generatedAt": "2026-08-16T01:31:01.080Z",
   "recordCounts": {
     "documentos": 3,
     "eixos": 12,
+    "glossario": 10,
+    "inconsistencias": 9,
     "indicadores": 8,
+    "infraestruturas": 7,
     "metas": 5,
     "municipios": 22,
     "projetos": 10
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
-    "LkGbmzW2fR09lCAEUxGl"
+    "96TlJKFWQWoCNlGAaLfG"
   ],
   "workspaceId": "pmetgirs-rmrj"
 }

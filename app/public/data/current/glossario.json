@@ -1,0 +1,42 @@
+[
+  {
+    "sigla": "CAPEX",
+    "significado": "Capital Expenditure — investimento inicial necessário para implantar uma infraestrutura (ex.: construção de uma usina)."
+  },
+  {
+    "sigla": "EVTE",
+    "significado": "Estudo de Viabilidade Técnica e Econômica."
+  },
+  {
+    "sigla": "IRM",
+    "significado": "Instituto Rio Metrópole — autoridade executiva da Região Metropolitana do Rio de Janeiro, criada pela Lei Complementar nº 184/2018."
+  },
+  {
+    "sigla": "Lei Complementar nº 184/2018",
+    "significado": "Lei que define os 22 municípios da Região Metropolitana do Rio de Janeiro e cria o Instituto Rio Metrópole (IRM)."
+  },
+  {
+    "sigla": "OPEX",
+    "significado": "Operational Expenditure — custo de operação e manutenção de uma infraestrutura já implantada."
+  },
+  {
+    "sigla": "PMetGIRS",
+    "significado": "Plano Metropolitano de Gestão Integrada de Resíduos Sólidos."
+  },
+  {
+    "sigla": "RCC",
+    "significado": "Resíduos da Construção Civil."
+  },
+  {
+    "sigla": "RMRJ",
+    "significado": "Região Metropolitana do Rio de Janeiro — os 22 municípios abrangidos pelo PMetGIRS."
+  },
+  {
+    "sigla": "RSS",
+    "significado": "Resíduos de Serviços de Saúde."
+  },
+  {
+    "sigla": "RSU",
+    "significado": "Resíduos Sólidos Urbanos — resíduos domiciliares e de limpeza urbana."
+  }
+]
