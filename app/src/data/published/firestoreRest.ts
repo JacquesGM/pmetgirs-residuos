@@ -1,16 +1,21 @@
 /**
  * Leitura da projeção pública pela API REST do Firestore, sem o SDK.
  *
- * Por que não usar `firebase/firestore` aqui: o SDK pesa ~170 kB gzip e o
- * portal público não precisa de nada que ele oferece — nem autenticação, nem
- * escrita, nem tempo real. Importá-lo triplicaria a carga inicial da home, que
- * hoje é de ~89 kB, e reduziria a folga da franquia gratuita do Hosting de
- * ~113 mil para ~39 mil visitas por mês.
+ * NÃO É USADO PELO PORTAL. Este módulo está fora do caminho de execução do site
+ * desde 15/08/2026, e nenhum componente o importa — o portal público lê arquivo,
+ * nunca o banco. Tráfego público consumindo a cota diária de leituras do Spark
+ * é risco de interrupção do serviço, e a arquitetura resolve isso publicando um
+ * snapshot estático servido pelo CDN.
  *
- * A projeção pública é legível sem autenticação — é o que a Security Rule
- * `allow read: if true` em `publicWorkspaces` garante —, então uma requisição
- * GET basta. A chave de API é pública por natureza e vai embutida no bundle de
- * qualquer forma; ela identifica o projeto, não autoriza nada.
+ * O que ele existe para atender é o **gerador de snapshot**: um job que lê
+ * `publicWorkspaces` uma vez por release, monta os arquivos com manifesto e
+ * SHA-256 e publica. Nesse contexto a leitura é única e não escala com visitas.
+ *
+ * Por que REST e não o SDK, mesmo no gerador: a projeção é legível sem
+ * autenticação — garantia da regra `allow read: if true` em `publicWorkspaces` —,
+ * então um GET basta, sem dependência pesada nem credencial.
+ *
+ * A chave de API é pública por natureza; identifica o projeto e não autoriza nada.
  */
 
 /** Valor no formato REST do Firestore: `{ stringValue: 'x' }` e afins. */
