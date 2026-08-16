@@ -3,8 +3,9 @@ import { CircleMarker, MapContainer, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import municipiosData from '../../data/municipios.json';
 import type { Municipio } from '../../types';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const municipios = municipiosData as Municipio[];
+const municipiosEmbutidos = municipiosData as Municipio[];
 
 function radius(populacao: number): number {
   return Math.max(4, Math.min(16, Math.sqrt(populacao) / 200));
@@ -17,6 +18,8 @@ function radius(populacao: number): number {
  * do que o estilo padrão do OpenStreetMap.
  */
 export function HeroMapPreview() {
+  const municipios = useColecaoPublicada<Municipio>('municipios', municipiosEmbutidos);
+
   const center = useMemo<[number, number]>(() => [-22.75, -43.25], []);
 
   return (

@@ -7,10 +7,28 @@
       "sha256": "b67368d61fe5b0c280c47ad1ead71e79bf9deac4fe5e682eee336f8d2c691b74"
     },
     {
+      "bytes": 9143,
+      "path": "current/eixos.json",
+      "registros": 12,
+      "sha256": "05eeb8ac8c84046b3351c2ace2dd37afbfb46d7b05e4d1df872f112d9a10e7d6"
+    },
+    {
       "bytes": 4544,
       "path": "current/indicadores.json",
       "registros": 8,
       "sha256": "408848026178824ac0169ca06e89b6592de6d6bf8c96a8ea7ad98cbb6ba636c9"
+    },
+    {
+      "bytes": 2107,
+      "path": "current/metas.json",
+      "registros": 5,
+      "sha256": "dea56322475866d46013bcb3086deb6ecd21f5c71899fcf5ec319ebf67fa8618"
+    },
+    {
+      "bytes": 9535,
+      "path": "current/municipios.json",
+      "registros": 22,
+      "sha256": "f29ad768c15dc1e1756f6e60059a68464031c0196690636b5928460be85e9ed9"
     },
     {
       "bytes": 8441,
@@ -19,15 +37,18 @@
       "sha256": "5ae4fee0a84408e791aa5283eb76587a2f44b3a1aa3b0999590b31b2e5affb03"
     }
   ],
-  "generatedAt": "2026-08-16T01:03:37.793Z",
+  "generatedAt": "2026-08-16T01:13:07.657Z",
   "recordCounts": {
     "documentos": 3,
+    "eixos": 12,
     "indicadores": 8,
+    "metas": 5,
+    "municipios": 22,
     "projetos": 10
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
-    "DGUFJrNpnSuerxB7cGVQ"
+    "LkGbmzW2fR09lCAEUxGl"
   ],
   "workspaceId": "pmetgirs-rmrj"
 }

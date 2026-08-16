@@ -1,11 +1,11 @@
+import { useMemo } from 'react';
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import municipiosData from '../../data/municipios.json';
 import type { Municipio } from '../../types';
 import { ChartFigure } from '../ui/ChartFigure';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const municipios = (municipiosData as Municipio[])
-  .slice()
-  .sort((a, b) => b.densidadeDemografica - a.densidadeDemografica);
+const municipiosEmbutidos = municipiosData as Municipio[];
 
 const numberFormatter = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 0 });
 
@@ -23,6 +23,9 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 }
 
 export function DensityChart() {
+  const publicados = useColecaoPublicada<Municipio>('municipios', municipiosEmbutidos);
+  const municipios = useMemo(() => publicados.slice().sort((a, b) => b.densidadeDemografica - a.densidadeDemografica), [publicados]);
+
   const chartHeight = 40 + municipios.length * 26;
   const ano = municipios[0].densidadeAno;
   const maior = municipios[0];

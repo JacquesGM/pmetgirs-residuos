@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import municipiosData from '../../data/municipios.json';
 import type { Municipio } from '../../types';
 import { Card } from '../ui/Card';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const municipios = (municipiosData as Municipio[]).slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+const municipiosEmbutidos = municipiosData as Municipio[];
 
 const MAX_SELECIONADOS = 4;
 
@@ -22,6 +23,12 @@ const linhas: { rotulo: string; valor: (m: Municipio) => string }[] = [
 ];
 
 export function MunicipalityComparator() {
+  const publicados = useColecaoPublicada<Municipio>('municipios', municipiosEmbutidos);
+  const municipios = useMemo(
+    () => publicados.slice().sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR')),
+    [publicados],
+  );
+
   const [selecionados, setSelecionados] = useState<string[]>([]);
 
   const noLimite = selecionados.length >= MAX_SELECIONADOS;

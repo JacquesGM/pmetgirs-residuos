@@ -7,10 +7,13 @@ import { DataValue } from '../ui/DataValue';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
 import { GoalsTargetChart } from '../charts/GoalsTargetChart';
 import { metaIcons, iconFor } from '../../lib/icons';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const metas = metasData as Meta[];
+const metasEmbutidos = metasData as Meta[];
 
 export function Goals() {
+  const metas = useColecaoPublicada<Meta>('metas', metasEmbutidos);
+
   return (
     <Section
       headingLevel={1}

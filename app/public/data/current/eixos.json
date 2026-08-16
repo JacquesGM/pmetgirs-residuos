@@ -1,0 +1,157 @@
+[
+  {
+    "descricao": "Define diretrizes, estratégias e metas para universalizar a coleta domiciliar e ampliar progressivamente a coleta seletiva nos 22 municípios, com atenção às áreas de difícil acesso. Parte de uma cobertura domiciliar média de 85,96% e de apenas 11 dos 22 municípios com coleta seletiva institucionalizada, hoje responsável por cerca de 1% do total de resíduos coletados (SNIS, 2021).",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "coleta-domiciliar-seletiva",
+    "indicadoresRelacionados": [],
+    "nome": "Coleta domiciliar e seletiva",
+    "objetivo": "Universalizar a coleta domiciliar e alcançar 100% de coleta seletiva no horizonte de 20 anos.",
+    "responsavel": "Municípios da RMRJ, com apoio técnico do IRM",
+    "situacao": "nao_iniciado"
+  },
+  {
+    "descricao": "Reúne a criação de um Banco de Dados e Aplicativo Digital com informações dos 22 municípios da RMRJ e dos atores responsáveis pelo manejo de resíduos, além de indicadores de desempenho acompanhados periodicamente.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "dados-indicadores-transparencia",
+    "indicadoresRelacionados": [],
+    "nome": "Dados, indicadores e transparência",
+    "objetivo": "Garantir informação pública, atualizada e rastreável sobre a execução do plano.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao"
+  },
+  {
+    "descricao": "Reúne programas de sensibilização aos 3R's em escolas municipais e para lideranças comunitárias, capacitação técnica com apoio de universidades (UFRJ, UFRRJ e UERJ) e distribuição de material didático e composteiras domésticas.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "educacao-ambiental",
+    "indicadoresRelacionados": [],
+    "nome": "Educação ambiental",
+    "objetivo": "Fortalecer a cultura de redução, reuso e reciclagem na população metropolitana.",
+    "responsavel": "IRM e secretarias municipais de educação",
+    "situacao": "em_estruturacao"
+  },
+  {
+    "descricao": "Orienta os municípios sobre a instalação de células fotovoltaicas em áreas remediadas. O Prognóstico Geral aprofundou o estudo técnico em 7 dessas áreas, somando um potencial de 21,32 MWp — do Jardim Gramacho (11 MWp, o maior) à Seropédica (0,5 MWp) —, com as demais áreas remediadas ainda pendentes de avaliação individual de aptidão técnica, jurídica e econômica.",
+    "documentosRelacionados": [
+      "prognostico-geral"
+    ],
+    "id": "energia-solar",
+    "indicadoresRelacionados": [
+      "areas-remediacao"
+    ],
+    "nome": "Energia solar",
+    "objetivo": "Viabilizar o reaproveitamento energético de áreas remediadas.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estudo"
+  },
+  {
+    "descricao": "Propõe a criação do Comitê Metropolitano de Gestão para o Saneamento — com Presidente, Diretor Técnico, Diretor Financeiro e Secretário Executivo, reuniões trimestrais e prazo de constituição de até 6 meses após a aprovação do PMetGIRS — além de ajustes na legislação municipal e metropolitana necessários para viabilizar a execução do plano, incluindo o regramento dos planos de gerenciamento obrigatórios.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "governanca-marco-legal",
+    "indicadoresRelacionados": [
+      "municipios-abrangidos"
+    ],
+    "nome": "Governança e marco legal",
+    "objetivo": "Criar as bases institucionais e legais para a governança compartilhada da gestão de resíduos entre os 22 municípios e o IRM.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao"
+  },
+  {
+    "descricao": "Apoia a legalização, a organização e a capacitação de cooperativas e catadores individuais — hoje 1.759 catadores organizados em 95 empreendimentos de economia solidária, incluindo 49 cooperativas na Região Metropolitana (MESC, 2019-2020) — e inclui o projeto social \"Os Invisíveis\", voltado à reinserção de moradores de rua na coleta seletiva.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "inclusao-cooperativas",
+    "indicadoresRelacionados": [],
+    "nome": "Inclusão e fortalecimento das cooperativas",
+    "objetivo": "Fortalecer a cadeia de reciclagem com inclusão social e geração de renda.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estruturacao"
+  },
+  {
+    "descricao": "Estabelece diretrizes, estratégias e metas específicas para o lixo flutuante, organizadas em programas de produção e gestão do conhecimento, medidas de mitigação e governança institucional entre os órgãos envolvidos. A Baía de Guanabara recebe uma estimativa de 90 toneladas de lixo flutuante por dia, das quais cerca de 71% são plásticos — um dos fatores associados à redução de 90% da pesca artesanal na baía nas últimas décadas.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "lixo-flutuante-corpos-hidricos",
+    "indicadoresRelacionados": [],
+    "nome": "Lixo flutuante e proteção dos corpos hídricos",
+    "objetivo": "Reduzir o descarte inadequado de resíduos em corpos hídricos e proteger os recursos aquáticos da Região Metropolitana.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo"
+  },
+  {
+    "descricao": "Prevê a implantação de estações de transferência sempre que a distância entre o centro de coleta e a área de disposição final ultrapassar 30 km, reduzindo os custos logísticos de transporte. Hoje a coleta metropolitana já percorre cerca de 54.000 km por dia com aproximadamente 1.100 caminhões.",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "logistica-estacoes-transferencia",
+    "indicadoresRelacionados": [],
+    "nome": "Logística e estações de transferência",
+    "objetivo": "Otimizar a logística de transporte de resíduos na Região Metropolitana.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "nao_iniciado"
+  },
+  {
+    "descricao": "Reúne o estudo e a licitação de 28 unidades térmicas de conversão de resíduos em energia, entre usinas de combustão e usinas de gaseificação (termodegradação), além de usinas de asfalto para o aproveitamento das cinzas geradas nos processos térmicos.",
+    "documentosRelacionados": [
+      "plano-de-acoes",
+      "prognostico-geral"
+    ],
+    "id": "recuperacao-energetica",
+    "indicadoresRelacionados": [
+      "unidades-termicas"
+    ],
+    "nome": "Recuperação energética",
+    "objetivo": "Reduzir o volume de resíduos enterrados por meio de recuperação energética condicionada à viabilidade técnica e financeira.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo"
+  },
+  {
+    "descricao": "Assessora os municípios na remediação de lixões e aterros controlados encerrados, especificando valores e fontes de financiamento para até 23 áreas identificadas preliminarmente. Os casos mais críticos, pela proximidade com a Baía de Guanabara, são o Jardim Gramacho, em Duque de Caxias — por décadas o maior lixão da América Latina, encerrado em 2012 — e o Itaoca, em São Gonçalo, encerrado no mesmo ano.",
+    "documentosRelacionados": [
+      "diagnostico-geral"
+    ],
+    "id": "remediacao-passivos",
+    "indicadoresRelacionados": [
+      "areas-remediacao"
+    ],
+    "nome": "Remediação de passivos ambientais",
+    "objetivo": "Eliminar passivos ambientais herdados da disposição inadequada de resíduos.",
+    "responsavel": "IRM e municípios da RMRJ",
+    "situacao": "em_estruturacao"
+  },
+  {
+    "descricao": "Contempla a implantação de uma unidade de biodigestão da fração orgânica dos resíduos, a compostagem de resíduos rurais e a avaliação da incorporação do lodo de estações de tratamento de esgoto (ETE) aos sistemas de biodigestão. A fração orgânica responde por cerca de 51% do resíduo sólido urbano metropolitano (COMLURB, 2020).",
+    "documentosRelacionados": [
+      "prognostico-geral"
+    ],
+    "id": "tratamento-fracao-organica",
+    "indicadoresRelacionados": [],
+    "nome": "Tratamento da fração orgânica",
+    "objetivo": "Reduzir a fração orgânica destinada a aterro e viabilizar geração de energia e composto orgânico.",
+    "responsavel": "IRM",
+    "situacao": "em_estudo"
+  },
+  {
+    "descricao": "Envolve a licitação e a implantação das 25 usinas de triagem de resíduos sólidos urbanos previstas no Plano de Ações, com destinação dos recicláveis recuperados para comercialização. Hoje menos de 1% do resíduo metropolitano é reciclado, mesmo com uma composição estimada em quase 39% de material potencialmente reciclável (COMLURB, 2020).",
+    "documentosRelacionados": [
+      "plano-de-acoes"
+    ],
+    "id": "triagem-reciclagem",
+    "indicadoresRelacionados": [
+      "usinas-triagem"
+    ],
+    "nome": "Triagem e reciclagem",
+    "objetivo": "Ampliar a recuperação de materiais recicláveis e reduzir o volume de resíduos encaminhado a aterros.",
+    "responsavel": "IRM",
+    "situacao": "em_estruturacao"
+  }
+]

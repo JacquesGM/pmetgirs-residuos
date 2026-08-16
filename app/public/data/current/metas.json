@@ -1,0 +1,67 @@
+[
+  {
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "areas-dificil-acesso",
+    "linhaBase": null,
+    "metodologia": null,
+    "municipios": "22 municípios da RMRJ",
+    "nome": "Universalização em áreas de difícil acesso",
+    "prazo": "Até 10 anos",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Cobertura universalizada em áreas de difícil acesso",
+    "situacao": "nao_iniciado",
+    "ultimaAtualizacao": null
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "coleta-domiciliar-universal",
+    "linhaBase": null,
+    "metodologia": null,
+    "municipios": "22 municípios da RMRJ",
+    "nome": "Universalização da coleta domiciliar",
+    "prazo": "Até 2 anos",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Coleta domiciliar universalizada em todos os 22 municípios",
+    "situacao": "nao_iniciado",
+    "ultimaAtualizacao": null
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "coleta-seletiva-100",
+    "linhaBase": null,
+    "metodologia": null,
+    "municipios": "22 municípios da RMRJ",
+    "nome": "Coleta seletiva — meta final",
+    "prazo": "20 anos",
+    "resultadoAtual": null,
+    "resultadoEsperado": "100% de cobertura de coleta seletiva",
+    "situacao": "nao_iniciado",
+    "ultimaAtualizacao": null
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "coleta-seletiva-50",
+    "linhaBase": null,
+    "metodologia": null,
+    "municipios": "22 municípios da RMRJ",
+    "nome": "Coleta seletiva — primeira etapa",
+    "prazo": "2 anos",
+    "resultadoAtual": null,
+    "resultadoEsperado": "50% de cobertura de coleta seletiva",
+    "situacao": "nao_iniciado",
+    "ultimaAtualizacao": null
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS",
+    "id": "coleta-seletiva-75",
+    "linhaBase": null,
+    "metodologia": null,
+    "municipios": "22 municípios da RMRJ",
+    "nome": "Coleta seletiva — segunda etapa",
+    "prazo": "10 anos",
+    "resultadoAtual": null,
+    "resultadoEsperado": "75% de cobertura de coleta seletiva",
+    "situacao": "nao_iniciado",
+    "ultimaAtualizacao": null
+  }
+]

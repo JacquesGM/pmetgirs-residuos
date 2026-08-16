@@ -6,8 +6,9 @@ import { Card } from '../ui/Card';
 import { StatusBadge } from '../ui/StatusBadge';
 import { InfoDisclosure } from '../ui/InfoDisclosure';
 import { eixoIcons, iconFor } from '../../lib/icons';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const eixos = eixosData as Eixo[];
+const eixosEmbutidos = eixosData as Eixo[];
 const documentos = documentosData as Documento[];
 
 function documentTitle(id: string): string {
@@ -15,6 +16,8 @@ function documentTitle(id: string): string {
 }
 
 export function Axes() {
+  const eixos = useColecaoPublicada<Eixo>('eixos', eixosEmbutidos);
+
   return (
     <Section headingLevel={1} id="eixos" title="Eixos estratégicos" subtitle="As 12 frentes de trabalho do PMetGIRS.">
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

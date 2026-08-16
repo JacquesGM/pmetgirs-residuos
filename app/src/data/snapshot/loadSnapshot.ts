@@ -43,9 +43,20 @@ export function carregarManifesto(sinal?: AbortSignal): Promise<Manifesto | null
   return manifestoEmVoo;
 }
 
-/** Só para os testes: descarta o manifesto memorizado. */
+/**
+ * Cada coleção é buscada uma vez por carregamento da página.
+ *
+ * Cinco componentes leem `municipios` na mesma tela — mapa, dois gráficos,
+ * comparador e prévia. Sem memorizar, seriam cinco requisições e, pior, cinco
+ * resultados que poderiam divergir se uma delas falhasse: a página mostraria o
+ * snapshot num gráfico e o bundle no outro.
+ */
+const colecoesEmVoo = new Map<string, Promise<unknown[] | null>>();
+
+/** Só para os testes: descarta manifesto e coleções memorizados. */
 export function limparCacheDoManifesto(): void {
   manifestoEmVoo = null;
+  colecoesEmVoo.clear();
 }
 
 /**
@@ -55,10 +66,19 @@ export function limparCacheDoManifesto(): void {
  * `colecao` é o nome do arquivo sem extensão — `projetos` para
  * `current/projetos.json`.
  */
-export async function carregarColecaoPublicada<T>(
+export function carregarColecaoPublicada<T>(
   colecao: string,
   sinal?: AbortSignal,
 ): Promise<T[] | null> {
+  const memorizada = colecoesEmVoo.get(colecao);
+  if (memorizada) return memorizada as Promise<T[] | null>;
+
+  const promessa = buscarColecao<T>(colecao, sinal);
+  colecoesEmVoo.set(colecao, promessa as Promise<unknown[] | null>);
+  return promessa;
+}
+
+async function buscarColecao<T>(colecao: string, sinal?: AbortSignal): Promise<T[] | null> {
   const manifesto = await carregarManifesto(sinal);
   if (!manifesto) return null;
 

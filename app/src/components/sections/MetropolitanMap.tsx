@@ -11,8 +11,9 @@ import { DensityChart } from '../charts/DensityChart';
 import { MunicipalityComparator } from './MunicipalityComparator';
 import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const municipios = municipiosData as Municipio[];
+const municipiosEmbutidos = municipiosData as Municipio[];
 
 const colunasMunicipios: DownloadColumn<Municipio>[] = [
   { key: 'nome', label: 'Município' },
@@ -38,6 +39,8 @@ function radiusForPopulation(populacao: number): number {
 }
 
 export function MetropolitanMap() {
+  const municipios = useColecaoPublicada<Municipio>('municipios', municipiosEmbutidos);
+
   const [selecionado, setSelecionado] = useState<Municipio | null>(null);
   const [metrica, setMetrica] = useState<Metrica>('populacao');
 

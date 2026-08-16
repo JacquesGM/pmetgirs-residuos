@@ -1,11 +1,11 @@
+import { useMemo } from 'react';
 import { Bar, BarChart, CartesianGrid, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import municipiosData from '../../data/municipios.json';
 import type { Municipio } from '../../types';
 import { ChartFigure } from '../ui/ChartFigure';
+import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
-const municipios = (municipiosData as Municipio[])
-  .slice()
-  .sort((a, b) => b.populacao - a.populacao);
+const municipiosEmbutidos = municipiosData as Municipio[];
 
 const compactFormatter = new Intl.NumberFormat('pt-BR', { notation: 'compact', maximumFractionDigits: 1 });
 const fullFormatter = new Intl.NumberFormat('pt-BR');
@@ -24,6 +24,9 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 }
 
 export function PopulationChart() {
+  const publicados = useColecaoPublicada<Municipio>('municipios', municipiosEmbutidos);
+  const municipios = useMemo(() => publicados.slice().sort((a, b) => b.populacao - a.populacao), [publicados]);
+
   const chartHeight = 40 + municipios.length * 26;
   const ano = municipios[0].populacaoAno;
   const maior = municipios[0];

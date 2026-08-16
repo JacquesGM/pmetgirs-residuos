@@ -1,6 +1,18 @@
-import { legacyStatusFromSourceType, legacyStatusFromValidation } from '../../domain/legacy';
+import {
+  legacyStatusFromExecution,
+  legacyStatusFromSourceType,
+  legacyStatusFromValidation,
+} from '../../domain/legacy';
 import type { PublicCollection } from '../../domain/publication/sanitize';
-import type { Documento, Indicador, StatusValidacao } from '../../types';
+import type {
+  Documento,
+  Eixo,
+  Indicador,
+  Meta,
+  Municipio,
+  StatusProjeto,
+  StatusValidacao,
+} from '../../types';
 import type { PublishedDocument } from './firestoreRest';
 import { toProjeto } from './publishedProjects';
 
@@ -57,26 +69,45 @@ export function toDocumento(doc: PublishedDocument): Documento {
 /**
  * Reconstrói a coluna legada de situação do dado.
  *
- * A atualidade vem antes da validação, e a ordem não é arbitrária. Valores como
- * `em_atualizacao` e `dado_historico` só carregam atualidade — nenhum valor de
- * validação —, então na migração viraram `validationStatus: 'not_assessed'`.
- * Reconstruir só a partir da validação faria `em_atualizacao` voltar como
- * `dado_municipal_declarado`, que é o primeiro valor com essa validação.
+ * O legado tem uma coluna só; a migração a espalhou em validação e atualidade,
+ * preenchendo com defaults o que o valor original não dizia. Voltar exige saber
+ * qual dos dois campos carrega informação real e qual é apenas default — e a
+ * resposta muda por coleção.
  *
- * Isso não seria só impreciso: seria **falso**. O portal passaria a afirmar que
- * o número veio de declaração municipal quando ninguém declarou nada. Num
- * portal de transparência, errar a procedência de um dado é pior que não
- * informá-la. Aconteceu em 15/08/2026, com quatro indicadores.
+ * Dois erros concretos, ambos de 15/08/2026, definem a regra:
+ *
+ *  - Reconstruir só pela validação fazia `em_atualizacao` voltar como
+ *    `dado_municipal_declarado`, o primeiro valor com validação `not_assessed`.
+ *    Não é impreciso, é **falso**: afirma uma procedência que ninguém declarou.
+ *  - Reconstruir pela atualidade primeiro fazia os 22 municípios virarem
+ *    `dado_historico`, porque a migração default `actualityStatus` para
+ *    `'historical'` mesmo em dado oficial validado.
+ *
+ * Daí a ordem: validação específica vence; `not_assessed` não é resposta; e só
+ * então a atualidade decide.
  */
-function statusDeValidacaoLegado(
+export function statusDeValidacaoLegado(
   validationStatus: string | null,
   actualityStatus: string | null,
 ): StatusValidacao {
+  // Uma validação específica sempre vence. `not_assessed` não conta: é o valor
+  // que a migração usa quando o status legado não falava de validação, e
+  // tratá-lo como resposta faria o inverso escolher o primeiro casamento —
+  // `dado_municipal_declarado`, uma afirmação de procedência que ninguém fez.
+  const porValidacao = legacyStatusFromValidation(validationStatus) as StatusValidacao | null;
+  if (porValidacao && validationStatus !== 'not_assessed') return porValidacao;
+
+  // Sem validação específica, a atualidade é o sinal que restou.
+  //
+  // A ordem importa nos dois sentidos. Municípios recebem
+  // `actualityStatus: 'historical'` por default da migração, mesmo sendo dado
+  // oficial validado; se a atualidade viesse primeiro, os 22 apareceriam como
+  // "dado histórico". Indicadores `em_atualizacao`, ao contrário, só carregam
+  // atualidade — e é ela que descreve o registro.
   if (actualityStatus === 'updating') return 'em_atualizacao';
   if (actualityStatus === 'historical') return 'dado_historico';
-  return (
-    (legacyStatusFromValidation(validationStatus) as StatusValidacao | null) ?? 'estimativa_tecnica'
-  );
+
+  return porValidacao ?? 'estimativa_tecnica';
 }
 
 /**
@@ -111,6 +142,78 @@ export function toIndicador(doc: PublishedDocument): Indicador {
   };
 }
 
+
+// ------------------------------------------------------------------ eixos
+
+/** Situação de execução, com o mesmo cuidado do inverso dos projetos. */
+function situacaoLegada(executionStatus: unknown): StatusProjeto {
+  return (legacyStatusFromExecution(executionStatus as string | null) ?? 'nao_iniciado') as StatusProjeto;
+}
+
+function lista(d: Record<string, unknown>, chave: string): string[] {
+  return Array.isArray(d[chave])
+    ? (d[chave] as unknown[]).filter((x): x is string => typeof x === 'string')
+    : [];
+}
+
+export function toEixo(doc: PublishedDocument): Eixo {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    descricao: texto(d, 'description'),
+    objetivo: texto(d, 'objective'),
+    responsavel: texto(d, 'accountable'),
+    situacao: situacaoLegada(d.executionStatus),
+    indicadoresRelacionados: lista(d, 'relatedIndicatorIds'),
+    documentosRelacionados: lista(d, 'relatedDocumentIds'),
+  };
+}
+
+// ------------------------------------------------------------------ municípios
+
+export function toMunicipio(doc: PublishedDocument): Municipio {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    areaTerritorialKm2: numero(d, 'territorialAreaKm2') ?? 0,
+    areaUrbanizadaKm2: numero(d, 'urbanizedAreaKm2') ?? 0,
+    populacao: numero(d, 'population') ?? 0,
+    populacaoAno: numero(d, 'populationYear') ?? 0,
+    densidadeDemografica: numero(d, 'populationDensity') ?? 0,
+    // Anos diferentes convivem porque a fonte é assim.
+    densidadeAno: numero(d, 'densityYear') ?? 0,
+    lat: numero(d, 'lat') ?? 0,
+    lng: numero(d, 'lng') ?? 0,
+    fonte: texto(d, 'sourceLabel'),
+    statusDados: statusDeValidacaoLegado(
+      d.validationStatus as string | null,
+      d.actualityStatus as string | null,
+    ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ------------------------------------------------------------------ metas
+
+export function toMeta(doc: PublishedDocument): Meta {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    linhaBase: textoOuNulo(d, 'baseline'),
+    resultadoAtual: textoOuNulo(d, 'currentResult'),
+    resultadoEsperado: texto(d, 'expectedResult'),
+    prazo: texto(d, 'deadline'),
+    municipios: texto(d, 'scope'),
+    situacao: situacaoLegada(d.executionStatus),
+    metodologia: textoOuNulo(d, 'methodology'),
+    fonte: texto(d, 'sourceLabel'),
+    ultimaAtualizacao: textoOuNulo(d, 'dataDate'),
+  };
+}
+
 // ------------------------------------------------------------------ registro
 
 export interface ColecaoPublicavel {
@@ -141,4 +244,7 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
   { colecao: 'projects', arquivo: 'projetos', rotulo: 'Projetos', mapear: toProjeto },
   { colecao: 'documents', arquivo: 'documentos', rotulo: 'Documentos', mapear: toDocumento },
   { colecao: 'indicators', arquivo: 'indicadores', rotulo: 'Indicadores', mapear: toIndicador },
+  { colecao: 'axes', arquivo: 'eixos', rotulo: 'Eixos', mapear: toEixo },
+  { colecao: 'municipalities', arquivo: 'municipios', rotulo: 'Municípios', mapear: toMunicipio },
+  { colecao: 'goals', arquivo: 'metas', rotulo: 'Metas', mapear: toMeta },
 ];
