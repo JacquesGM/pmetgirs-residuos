@@ -38,12 +38,12 @@ const plan = buildMigrationPlan(sources, 'pmetgirs-rmrj');
 const errors = plan.issues.filter((i) => i.severity === 'error');
 
 describe('reconciliação dos registros', () => {
-  it('a origem tem 457 registros', () => {
-    expect(plan.totalSourceRecords).toBe(457);
+  it('a origem tem 633 registros', () => {
+    expect(plan.totalSourceRecords).toBe(633);
   });
 
   it('o plano produz exatamente um registro por registro de origem', () => {
-    expect(plan.records).toHaveLength(457);
+    expect(plan.records).toHaveLength(633);
   });
 
   it('não perde nem duplica nenhuma coleção', () => {
@@ -60,7 +60,7 @@ describe('reconciliação dos registros', () => {
       infrastructures: 7,
       documents: 3,
       inconsistencies: 13,
-      municipalIndicators: 242,
+      municipalIndicators: 418,
       costEstimates: 10,
       gutPriorities: 16,
       // Derivadas do campo `dependencias` dos projetos, uma aresta por id.

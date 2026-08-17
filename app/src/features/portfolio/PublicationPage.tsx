@@ -242,10 +242,33 @@ export function PublicationPage() {
               {selecionados.size === 1 ? '' : 's'})
             </legend>
             <div className="mt-2 max-h-80 space-y-3 overflow-y-auto rounded-md border border-neutral-200 p-2">
-              {grupos.data.map((g) => (
+              {grupos.data.map((g) => {
+                const chaves = g.itens.map((i) => `${g.colecao}/${i.id}`);
+                const todosMarcados = chaves.length > 0 && chaves.every((c) => selecionados.has(c));
+                return (
                 <div key={g.colecao}>
-                  <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                  <p className="flex items-baseline gap-2 px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
                     {g.rotulo} <span className="font-normal tabular-nums">({g.itens.length})</span>
+                    {/* Sem isto, publicar uma coleção inteira custa centenas de
+                        cliques — e 242 indicadores municipais viraram 418 numa
+                        única transcrição. O trabalho manual não escala com o
+                        dado, e o que não escala acaba não sendo feito. */}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setSelecionados((atual) => {
+                          const proximo = new Set(atual);
+                          for (const c of chaves) {
+                            if (todosMarcados) proximo.delete(c);
+                            else proximo.add(c);
+                          }
+                          return proximo;
+                        })
+                      }
+                      className="ml-auto text-xs font-medium normal-case tracking-normal text-brand-blue-700 hover:underline"
+                    >
+                      {todosMarcados ? 'desmarcar todos' : 'marcar todos'}
+                    </button>
                   </p>
                   <ul className="space-y-1">
                     {g.itens.map((i) => {
@@ -269,7 +292,8 @@ export function PublicationPage() {
                     })}
                   </ul>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </fieldset>
 

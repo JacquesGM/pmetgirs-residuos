@@ -96,6 +96,12 @@ export interface AcessoPublico {
  * bundle. Uma lista vazia devolvida por engano esvaziaria o portal, e um erro
  * de rede não deve apagar o que o cidadão já estava vendo.
  */
+/** Máximo que a API do Firestore aceita por página. */
+const PAGINA = 300;
+
+/** Teto de páginas: 6.000 documentos. Protege contra laço infinito, não contra volume. */
+const MAX_PAGINAS = 20;
+
 export async function fetchPublishedCollection(
   collection: string,
   acesso: AcessoPublico,
@@ -104,21 +110,45 @@ export async function fetchPublishedCollection(
   const { projectId, apiKey, workspaceId } = acesso;
   if (!projectId || !workspaceId) return null;
 
-  const url =
+  const base =
     `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents` +
-    `/publicWorkspaces/${workspaceId}/${collection}?pageSize=300` +
+    `/publicWorkspaces/${workspaceId}/${collection}?pageSize=${PAGINA}` +
     (apiKey ? `&key=${apiKey}` : '');
 
+  const documentos: FirestoreDocument[] = [];
+  let token: string | undefined;
+
   try {
-    const resposta = await fetch(url, { signal: sinal });
-    if (!resposta.ok) return null;
-    const corpo = (await resposta.json()) as { documents?: FirestoreDocument[] };
-    const documentos = corpo.documents ?? [];
-    if (documentos.length === 0) return null;
-    return documentos.map((doc) => ({
-      id: documentId(doc),
-      data: decodeFields(doc.fields ?? {}),
-    }));
+    // Segue o nextPageToken até o fim.
+    //
+    // Sem isto, a leitura parava na primeira página e devolvia o pedaço como se
+    // fosse o todo. Em 17/08/2026 os indicadores municipais passaram de 242
+    // para 418 e o portal exibiu 300 — sem erro, sem aviso, sem nada que
+    // indicasse que faltavam 118. Truncar em silêncio é pior que falhar: o
+    // portal continua parecendo completo.
+    for (let pagina = 0; pagina < MAX_PAGINAS; pagina += 1) {
+      const url = token ? `${base}&pageToken=${encodeURIComponent(token)}` : base;
+      const resposta = await fetch(url, { signal: sinal });
+      if (!resposta.ok) return null;
+      const corpo = (await resposta.json()) as {
+        documents?: FirestoreDocument[];
+        nextPageToken?: string;
+      };
+      documentos.push(...(corpo.documents ?? []));
+      token = corpo.nextPageToken;
+      if (!token) {
+        if (documentos.length === 0) return null;
+        return documentos.map((doc) => ({
+          id: documentId(doc),
+          data: decodeFields(doc.fields ?? {}),
+        }));
+      }
+    }
+
+    // Ainda havia token depois do teto. Devolver o que foi lido seria afirmar
+    // que a coleção acabou; devolver nulo faz o portal cair no dado embutido,
+    // que é incompleto mas honesto sobre a sua origem.
+    return null;
   } catch {
     // Rede fora, CSP, offline: o portal segue com o conteúdo embutido.
     return null;
