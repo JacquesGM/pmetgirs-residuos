@@ -11,6 +11,7 @@ import type {
   CentralDeTratamento,
   ViabilidadeEconomica,
   Vazadouro,
+  ComponenteRsu,
   Infraestrutura,
   Meta,
   Municipio,
@@ -33,6 +34,7 @@ import {
   transformTreatmentCentral,
   transformEconomicViability,
   transformDumpsite,
+  transformWasteComponent,
   transformInfrastructure,
   transformMilestone,
   transformMunicipality,
@@ -103,6 +105,9 @@ export function buildMigrationPlan(sources: MigrationSources, workspaceId: strin
     records.push(transformEconomicViability(item));
   }
   for (const item of sources.vazadouros as Vazadouro[]) records.push(transformDumpsite(item));
+  for (const item of sources.composicaoRsu as ComponenteRsu[]) {
+    records.push(transformWasteComponent(item));
+  }
   for (const item of sources.atualizacoes as Atualizacao[]) records.push(transformImport(item));
 
   for (const item of sources.infraestruturas as Infraestrutura[]) {
@@ -150,6 +155,7 @@ export function buildMigrationPlan(sources: MigrationSources, workspaceId: strin
     centraisDeTratamento: sources.centraisDeTratamento.length,
     viabilidadeEconomica: sources.viabilidadeEconomica.length,
     vazadouros: sources.vazadouros.length,
+    composicaoRsu: sources.composicaoRsu.length,
     atualizacoes: sources.atualizacoes.length,
     // Cada id em `dependencias` vira exatamente uma aresta. Contá-los aqui
     // mantém a invariante de `checkRecordCount` — nem um a mais, nem a menos —

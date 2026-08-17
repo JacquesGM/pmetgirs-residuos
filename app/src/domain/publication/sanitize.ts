@@ -27,6 +27,7 @@ export type PublicCollection =
   | 'treatmentCentrals'
   | 'economicViability'
   | 'dumpsites'
+  | 'wasteComposition'
   | 'glossary'
   | 'evidence';
 
@@ -143,6 +144,24 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /**
+   * Composição gravimétrica do RSU. Percentuais de estudo, nada sensível.
+   * `percentageBase` é obrigatório na projeção: sem ele o número muda de
+   * significado.
+   */
+  wasteComposition: [
+    'name',
+    'group',
+    'groupLabel',
+    'percentage',
+    'percentageBase',
+    'dailyTonnes',
+    'displayOrder',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /**
    * Vazadouros encerrados e o estágio da remediação de cada um.
    *

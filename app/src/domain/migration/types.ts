@@ -23,6 +23,7 @@ export type TargetCollection =
   | 'treatmentCentrals'
   | 'economicViability'
   | 'dumpsites'
+  | 'wasteComposition'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -95,6 +96,7 @@ export interface MigrationSources {
   centraisDeTratamento: unknown[];
   viabilidadeEconomica: unknown[];
   vazadouros: unknown[];
+  composicaoRsu: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

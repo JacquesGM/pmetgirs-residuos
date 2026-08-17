@@ -11,6 +11,7 @@ import type {
   CentralDeTratamento,
   ViabilidadeEconomica,
   Vazadouro,
+  ComponenteRsu,
   Infraestrutura,
   Meta,
   Municipio,
@@ -434,6 +435,30 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ------------------------------------------- composição gravimétrica do RSU
+
+export function transformWasteComponent(c: ComponenteRsu): MigrationRecord {
+  return {
+    collection: 'wasteComposition',
+    id: c.id,
+    legacyId: c.id,
+    data: {
+      name: c.nome,
+      nameNormalized: normalizeName(c.nome),
+      group: c.grupo,
+      groupLabel: c.grupoRotulo,
+      percentage: c.percentual,
+      percentageBase: c.baseDoPercentual,
+      dailyTonnes: c.toneladasDia,
+      displayOrder: c.ordem,
+      sourceLabel: c.fonte,
+      validationStatus: mapLegacyValidationStatus(c.statusValidacao).validation ?? 'estimated',
+      note: c.observacao,
+    },
+    gaps: [],
   };
 }
 

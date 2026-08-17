@@ -7,6 +7,12 @@
       "sha256": "0dd842477b39804a7a3a70e416bb022f3ee88b2ce84105bf4cc4e4be7de10d1e"
     },
     {
+      "bytes": 10797,
+      "path": "current/composicao-rsu.json",
+      "registros": 18,
+      "sha256": "679ff3e842400ab1fc427f13bb6af9cdbd75d57cce411dd3be0193c4b341e0e4"
+    },
+    {
       "bytes": 1550,
       "path": "current/documentos.json",
       "registros": 3,
@@ -79,9 +85,10 @@
       "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T19:06:14.001Z",
+  "generatedAt": "2026-08-17T19:24:51.971Z",
   "recordCounts": {
     "centrais-de-tratamento": 4,
+    "composicao-rsu": 18,
     "documentos": 3,
     "eixos": 12,
     "glossario": 10,
@@ -100,6 +107,7 @@
     "836bwERNCXB56n5JF8kn",
     "FOfKFrYqNfGKXeDwyilh",
     "Ovk1jztc0LrIz2CbwQu2",
+    "SfEvnIPKunSgquGCSsYk",
     "Xrhb0NxrtaVVeiZBWLcb",
     "axBf0SBVhSkgjAYvFkJ6",
     "u22VKqyMyLa4NhVQpbGd"

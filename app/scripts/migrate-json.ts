@@ -68,6 +68,7 @@ function loadSources(): MigrationSources {
     centraisDeTratamento: readJson('centraisDeTratamento'),
     viabilidadeEconomica: readJson('viabilidadeEconomica'),
     vazadouros: readJson('vazadouros'),
+    composicaoRsu: readJson('composicaoRsu'),
     evolucao: readJson('evolucao'),
     glossario: readJson('glossario'),
     atualizacoes: readJson('atualizacoes'),

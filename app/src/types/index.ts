@@ -387,3 +387,25 @@ export interface Vazadouro {
   statusValidacao: StatusValidacao;
   observacao: string | null;
 }
+
+/**
+ * Um componente da composição gravimétrica do RSU metropolitano.
+ *
+ * `baseDoPercentual` existe porque a fonte usa bases diferentes na mesma
+ * tabela: o grupo principal é percentual do RSU total, e os dois grupos
+ * discriminados são percentuais das suas próprias frações. Sem o campo, 18,76%
+ * de plástico seria lido como 18,76% do lixo, que é quase o dobro do real.
+ */
+export interface ComponenteRsu {
+  id: string;
+  grupo: string;
+  grupoRotulo: string;
+  nome: string;
+  percentual: number;
+  baseDoPercentual: string;
+  toneladasDia: number;
+  ordem: number;
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

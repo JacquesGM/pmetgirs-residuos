@@ -16,6 +16,7 @@ import type {
   CentralDeTratamento,
   ViabilidadeEconomica,
   Vazadouro,
+  ComponenteRsu,
   Meta,
   Municipio,
   StatusProjeto,
@@ -175,6 +176,25 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ------------------------------------------- composição gravimétrica do RSU
+
+export function toComponenteRsu(doc: PublishedDocument): ComponenteRsu {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    grupo: texto(d, 'group'),
+    grupoRotulo: texto(d, 'groupLabel'),
+    nome: texto(d, 'name'),
+    percentual: numero(d, 'percentage') ?? 0,
+    baseDoPercentual: texto(d, 'percentageBase'),
+    toneladasDia: numero(d, 'dailyTonnes') ?? 0,
+    ordem: numero(d, 'displayOrder') ?? 0,
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: 'estimativa_tecnica',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -536,6 +556,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'wasteComposition',
+    arquivo: 'composicao-rsu',
+    rotulo: 'Composição do RSU',
+    mapear: toComponenteRsu,
   },
   {
     colecao: 'dumpsites',
