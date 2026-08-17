@@ -5,7 +5,8 @@ import municipiosData from '../../data/municipios.json';
 import indicadoresMunicipaisData from '../../data/indicadoresMunicipais.json';
 import projetosData from '../../data/projetos.json';
 import vazadourosData from '../../data/vazadouros.json';
-import type { IndicadorMunicipal, Municipio, Projeto, Vazadouro } from '../../types';
+import arranjosData from '../../data/arranjosDeTratamento.json';
+import type { ArranjoDeTratamento, IndicadorMunicipal, Municipio, Projeto, Vazadouro } from '../../types';
 import { municipiosDoProjeto } from '../../domain/abrangencia';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
@@ -23,6 +24,7 @@ const municipiosEmbutidos = municipiosData as Municipio[];
 const indicadoresMunicipaisEmbutidos = indicadoresMunicipaisData as IndicadorMunicipal[];
 const projetosEmbutidos = projetosData as Projeto[];
 const vazadourosEmbutidos = vazadourosData as Vazadouro[];
+const arranjosEmbutidos = arranjosData as ArranjoDeTratamento[];
 
 const colunasMunicipios: DownloadColumn<Municipio>[] = [
   { key: 'nome', label: 'Município' },
@@ -64,6 +66,20 @@ export function MetropolitanMap() {
 
   const projetos = useColecaoPublicada<Projeto>('projetos', projetosEmbutidos);
   const vazadouros = useColecaoPublicada<Vazadouro>('vazadouros', vazadourosEmbutidos);
+
+  const arranjos = useColecaoPublicada<ArranjoDeTratamento>(
+    'arranjos-de-tratamento',
+    arranjosEmbutidos,
+  );
+
+  /** O arranjo de tratamento a que o município pertence, se houver. */
+  const arranjoDoMunicipio = useMemo(
+    () =>
+      selecionado
+        ? (arranjos.find((a) => a.municipiosAtendidos.includes(selecionado.id)) ?? null)
+        : null,
+    [arranjos, selecionado],
+  );
 
   /** Vazadouros encerrados no município selecionado. */
   const vazadourosDoMunicipio = useMemo(
@@ -233,6 +249,51 @@ export function MetropolitanMap() {
                   </dl>
                 </div>
               )}
+              {arranjoDoMunicipio && (
+                <div className="mt-4 border-t border-neutral-200 pt-3">
+                  <h3 className="text-sm font-semibold text-neutral-900">
+                    Usinas previstas para este município
+                  </h3>
+                  {/* O plano agrupa municípios que dividem as mesmas usinas.
+                      Dizer "1 usina de triagem" sem dizer com quem ela é
+                      dividida faria o leitor supor uma usina só sua. */}
+                  {arranjoDoMunicipio.municipiosAtendidos.length > 1 ? (
+                    <p className="mt-1 text-sm text-neutral-600">
+                      Compartilhadas com{' '}
+                      {arranjoDoMunicipio.municipiosAtendidos
+                        .filter((m) => m !== selecionado.id)
+                        .map((m) => municipios.find((x) => x.id === m)?.nome ?? m)
+                        .join(', ')}
+                      .
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-sm text-neutral-600">
+                      Não compartilhadas: o plano trata este município sozinho.
+                    </p>
+                  )}
+                  <ul className="mt-2 space-y-1 text-sm text-neutral-700">
+                    {[
+                      ['triagem', arranjoDoMunicipio.usinasTriagem],
+                      ['de combustão', arranjoDoMunicipio.usinasCombustao],
+                      ['de termodegradação', arranjoDoMunicipio.usinasTermodegradacao],
+                      ['de asfalto', arranjoDoMunicipio.usinasAsfalto],
+                      ['de biodigestão', arranjoDoMunicipio.usinasBiodigestao],
+                    ]
+                      .filter(([, n]) => (n as number) > 0)
+                      .map(([rotulo, n]) => (
+                        <li key={rotulo as string}>
+                          {n as number} usina{(n as number) > 1 ? 's' : ''} {rotulo as string}
+                        </li>
+                      ))}
+                  </ul>
+                  {arranjoDoMunicipio.observacao && (
+                    <InfoDisclosure label="Ressalva da fonte">
+                      {arranjoDoMunicipio.observacao}
+                    </InfoDisclosure>
+                  )}
+                </div>
+              )}
+
               {/* Passivo ambiental antes das ações: é o que já existe no
                   território, e o tema tem 125 pontos na matriz GUT — 2º de 16. */}
               <div className="mt-4 border-t border-neutral-200 pt-3">

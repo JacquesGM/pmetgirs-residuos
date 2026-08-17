@@ -424,3 +424,28 @@ export interface EtapaCronograma {
   statusValidacao: StatusValidacao;
   observacao: string | null;
 }
+
+/**
+ * Arranjo de tratamento: um ou mais municípios compartilhando as mesmas usinas.
+ *
+ * `rsuAssociadoTdia` é o que a fonte declara para o arranjo; `rsuSomadoTdia` é
+ * a soma do RSU dos seus municípios. Os dois convivem porque num dos dez
+ * arranjos eles não batem, e guardar só um esconderia a divergência.
+ */
+export interface ArranjoDeTratamento {
+  id: string;
+  nome: string;
+  ordem: number;
+  municipiosAtendidos: string[];
+  rsuAssociadoTdia: number;
+  rsuSomadoTdia: number;
+  usinasTriagem: number;
+  usinasCombustao: number;
+  usinasTermodegradacao: number;
+  usinasAsfalto: number;
+  usinasBiodigestao: number;
+  totalUsinas: number;
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

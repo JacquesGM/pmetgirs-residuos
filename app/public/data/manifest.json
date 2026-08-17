@@ -1,6 +1,12 @@
 {
   "files": [
     {
+      "bytes": 5819,
+      "path": "current/arranjos-de-tratamento.json",
+      "registros": 10,
+      "sha256": "1c6aeecdc41ed4ae77d72c5a233c4d100d682c38194ef9e3b4fb00501bd9a4b5"
+    },
+    {
       "bytes": 5484,
       "path": "current/centrais-de-tratamento.json",
       "registros": 4,
@@ -91,8 +97,9 @@
       "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T19:41:50.293Z",
+  "generatedAt": "2026-08-17T19:57:12.939Z",
   "recordCounts": {
+    "arranjos-de-tratamento": 10,
     "centrais-de-tratamento": 4,
     "composicao-rsu": 18,
     "cronograma-instalacao": 5,
@@ -113,6 +120,7 @@
   "sourceReleaseIds": [
     "836bwERNCXB56n5JF8kn",
     "FOfKFrYqNfGKXeDwyilh",
+    "IFjBwmvEYwBYI2g2LDRE",
     "Ovk1jztc0LrIz2CbwQu2",
     "SfEvnIPKunSgquGCSsYk",
     "Xrhb0NxrtaVVeiZBWLcb",

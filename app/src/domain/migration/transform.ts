@@ -13,6 +13,7 @@ import type {
   Vazadouro,
   ComponenteRsu,
   EtapaCronograma,
+  ArranjoDeTratamento,
   Infraestrutura,
   Meta,
   Municipio,
@@ -436,6 +437,34 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ------------------------------------------- arranjos de tratamento
+
+export function transformTreatmentArrangement(a: ArranjoDeTratamento): MigrationRecord {
+  return {
+    collection: 'treatmentArrangements',
+    id: a.id,
+    legacyId: a.id,
+    data: {
+      name: a.nome,
+      nameNormalized: normalizeName(a.nome),
+      displayOrder: a.ordem,
+      municipalityIds: a.municipiosAtendidos,
+      declaredMswTonnes: a.rsuAssociadoTdia,
+      summedMswTonnes: a.rsuSomadoTdia,
+      sortingPlants: a.usinasTriagem,
+      combustionPlants: a.usinasCombustao,
+      thermalDegradationPlants: a.usinasTermodegradacao,
+      asphaltPlants: a.usinasAsfalto,
+      biodigestionPlants: a.usinasBiodigestao,
+      totalPlants: a.totalUsinas,
+      sourceLabel: a.fonte,
+      validationStatus: mapLegacyValidationStatus(a.statusValidacao).validation ?? 'estimated',
+      note: a.observacao,
+    },
+    gaps: [],
   };
 }
 

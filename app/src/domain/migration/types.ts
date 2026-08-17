@@ -25,6 +25,7 @@ export type TargetCollection =
   | 'dumpsites'
   | 'wasteComposition'
   | 'installationSchedule'
+  | 'treatmentArrangements'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -99,6 +100,7 @@ export interface MigrationSources {
   vazadouros: unknown[];
   composicaoRsu: unknown[];
   cronogramaInstalacao: unknown[];
+  arranjosDeTratamento: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

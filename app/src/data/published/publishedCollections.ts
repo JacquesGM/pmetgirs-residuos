@@ -18,6 +18,7 @@ import type {
   Vazadouro,
   ComponenteRsu,
   EtapaCronograma,
+  ArranjoDeTratamento,
   Meta,
   Municipio,
   StatusProjeto,
@@ -177,6 +178,31 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ------------------------------------------- arranjos de tratamento
+
+export function toArranjoDeTratamento(doc: PublishedDocument): ArranjoDeTratamento {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    ordem: numero(d, 'displayOrder') ?? 0,
+    municipiosAtendidos: Array.isArray(d.municipalityIds)
+      ? (d.municipalityIds as unknown[]).filter((x): x is string => typeof x === 'string')
+      : [],
+    rsuAssociadoTdia: numero(d, 'declaredMswTonnes') ?? 0,
+    rsuSomadoTdia: numero(d, 'summedMswTonnes') ?? 0,
+    usinasTriagem: numero(d, 'sortingPlants') ?? 0,
+    usinasCombustao: numero(d, 'combustionPlants') ?? 0,
+    usinasTermodegradacao: numero(d, 'thermalDegradationPlants') ?? 0,
+    usinasAsfalto: numero(d, 'asphaltPlants') ?? 0,
+    usinasBiodigestao: numero(d, 'biodigestionPlants') ?? 0,
+    totalUsinas: numero(d, 'totalPlants') ?? 0,
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: textoOuNulo(d, 'note') ? 'informacao_divergente' : 'estimativa_tecnica',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -575,6 +601,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'treatmentArrangements',
+    arquivo: 'arranjos-de-tratamento',
+    rotulo: 'Arranjos de tratamento',
+    mapear: toArranjoDeTratamento,
   },
   {
     colecao: 'installationSchedule',

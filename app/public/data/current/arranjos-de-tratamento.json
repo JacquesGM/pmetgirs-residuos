@@ -1,0 +1,204 @@
+[
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "duque-de-caxias",
+    "municipiosAtendidos": [
+      "duque-de-caxias"
+    ],
+    "nome": "Duque de Caxias",
+    "observacao": null,
+    "ordem": 4,
+    "rsuAssociadoTdia": 1826,
+    "rsuSomadoTdia": 1826,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 7,
+    "usinasAsfalto": 1,
+    "usinasBiodigestao": 1,
+    "usinasCombustao": 2,
+    "usinasTermodegradacao": 1,
+    "usinasTriagem": 2
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "itaborai-leste",
+    "municipiosAtendidos": [
+      "itaborai",
+      "rio-bonito",
+      "tangua",
+      "cachoeiras-de-macacu"
+    ],
+    "nome": "Itaboraí, Rio Bonito, Tanguá e Cachoeiras de Macacu",
+    "observacao": null,
+    "ordem": 3,
+    "rsuAssociadoTdia": 246,
+    "rsuSomadoTdia": 246,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 2,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 0,
+    "usinasTermodegradacao": 1,
+    "usinasTriagem": 1
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "mage-guapimirim",
+    "municipiosAtendidos": [
+      "mage",
+      "guapimirim"
+    ],
+    "nome": "Magé e Guapimirim",
+    "observacao": null,
+    "ordem": 6,
+    "rsuAssociadoTdia": 283,
+    "rsuSomadoTdia": 283,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 2,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 0,
+    "usinasTermodegradacao": 1,
+    "usinasTriagem": 1
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "meriti-mesquita-nilopolis",
+    "municipiosAtendidos": [
+      "sao-joao-de-meriti",
+      "mesquita",
+      "nilopolis"
+    ],
+    "nome": "São João de Meriti, Mesquita e Nilópolis",
+    "observacao": null,
+    "ordem": 8,
+    "rsuAssociadoTdia": 1062,
+    "rsuSomadoTdia": 1062,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 4,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 1,
+    "usinasTermodegradacao": 1,
+    "usinasTriagem": 2
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "niteroi-marica",
+    "municipiosAtendidos": [
+      "niteroi",
+      "marica"
+    ],
+    "nome": "Niterói e Maricá",
+    "observacao": null,
+    "ordem": 2,
+    "rsuAssociadoTdia": 857,
+    "rsuSomadoTdia": 857,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 4,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 0,
+    "usinasTermodegradacao": 3,
+    "usinasTriagem": 1
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "nova-iguacu-belford-roxo",
+    "municipiosAtendidos": [
+      "nova-iguacu",
+      "belford-roxo"
+    ],
+    "nome": "Nova Iguaçu e Belford Roxo",
+    "observacao": "A soma do RSU dos dois municípios dá 1.559 t/dia, e a tabela declara 1.542 como RSU associada — diferença de 17 t/dia que a fonte não explica. É o único dos seis arranjos compartilhados em que a soma não fecha.",
+    "ordem": 7,
+    "rsuAssociadoTdia": 1542,
+    "rsuSomadoTdia": 1559,
+    "statusValidacao": "informacao_divergente",
+    "totalUsinas": 6,
+    "usinasAsfalto": 1,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 1,
+    "usinasTermodegradacao": 2,
+    "usinasTriagem": 2
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "oeste",
+    "municipiosAtendidos": [
+      "queimados",
+      "itaguai",
+      "seropedica",
+      "paracambi",
+      "japeri"
+    ],
+    "nome": "Queimados, Itaguaí, Seropédica, Paracambi e Japeri",
+    "observacao": null,
+    "ordem": 9,
+    "rsuAssociadoTdia": 553,
+    "rsuSomadoTdia": 553,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 3,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 0,
+    "usinasTermodegradacao": 2,
+    "usinasTriagem": 1
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "petropolis",
+    "municipiosAtendidos": [
+      "petropolis"
+    ],
+    "nome": "Petrópolis",
+    "observacao": null,
+    "ordem": 5,
+    "rsuAssociadoTdia": 389,
+    "rsuSomadoTdia": 389,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 2,
+    "usinasAsfalto": 0,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 0,
+    "usinasTermodegradacao": 1,
+    "usinasTriagem": 1
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "rio-de-janeiro",
+    "municipiosAtendidos": [
+      "rio-de-janeiro"
+    ],
+    "nome": "Rio de Janeiro (cinco estações de transferência)",
+    "observacao": "O total desta tabela é 16.929 t/dia. O Diagnóstico e o Prognóstico usam 16.926, valor confirmado em três tabelas independentes. A diferença de 3 t/dia não é explicada.",
+    "ordem": 10,
+    "rsuAssociadoTdia": 8180,
+    "rsuSomadoTdia": 8180,
+    "statusValidacao": "informacao_divergente",
+    "totalUsinas": 25,
+    "usinasAsfalto": 3,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 7,
+    "usinasTermodegradacao": 3,
+    "usinasTriagem": 12
+  },
+  {
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 10, p. 50 (ENGECONSULT, 2023)",
+    "id": "sao-goncalo",
+    "municipiosAtendidos": [
+      "sao-goncalo"
+    ],
+    "nome": "São Gonçalo",
+    "observacao": null,
+    "ordem": 1,
+    "rsuAssociadoTdia": 1974,
+    "rsuSomadoTdia": 1974,
+    "statusValidacao": "estimativa_tecnica",
+    "totalUsinas": 5,
+    "usinasAsfalto": 1,
+    "usinasBiodigestao": 0,
+    "usinasCombustao": 2,
+    "usinasTermodegradacao": 0,
+    "usinasTriagem": 2
+  }
+]

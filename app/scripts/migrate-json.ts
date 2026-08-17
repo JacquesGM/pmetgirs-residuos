@@ -70,6 +70,7 @@ function loadSources(): MigrationSources {
     vazadouros: readJson('vazadouros'),
     composicaoRsu: readJson('composicaoRsu'),
     cronogramaInstalacao: readJson('cronogramaInstalacao'),
+    arranjosDeTratamento: readJson('arranjosDeTratamento'),
     evolucao: readJson('evolucao'),
     glossario: readJson('glossario'),
     atualizacoes: readJson('atualizacoes'),

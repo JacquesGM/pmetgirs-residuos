@@ -29,6 +29,7 @@ export type PublicCollection =
   | 'dumpsites'
   | 'wasteComposition'
   | 'installationSchedule'
+  | 'treatmentArrangements'
   | 'glossary'
   | 'evidence';
 
@@ -145,6 +146,24 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /** Arranjos de tratamento: quem compartilha usina com quem. */
+  treatmentArrangements: [
+    'name',
+    'displayOrder',
+    'municipalityIds',
+    'declaredMswTonnes',
+    'summedMswTonnes',
+    'sortingPlants',
+    'combustionPlants',
+    'thermalDegradationPlants',
+    'asphaltPlants',
+    'biodigestionPlants',
+    'totalPlants',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /** Cronograma de instalação: quantas unidades em cada horizonte. */
   installationSchedule: [
     'name',
