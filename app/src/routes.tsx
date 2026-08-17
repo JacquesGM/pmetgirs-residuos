@@ -20,6 +20,9 @@ const Goals = lazy(() => import('./components/sections/Goals').then((m) => ({ de
 const Infrastructure = lazy(() =>
   import('./components/sections/Infrastructure').then((m) => ({ default: m.Infrastructure })),
 );
+const Investments = lazy(() =>
+  import('./components/sections/Investments').then((m) => ({ default: m.Investments })),
+);
 
 export interface AppRoute {
   path: string;
@@ -94,6 +97,18 @@ export const routes: AppRoute[] = [
     element: (
       <Suspense fallback={<PageLoading />}>
         <Infrastructure />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/investimentos',
+    label: 'Investimentos',
+    title: 'Investimento previsto',
+    description:
+      'Quanto o PMetGIRS estima custar e arrecadar, por cenário e por tecnologia, segundo o Estudo de Viabilidade Técnica e Econômica do Prognóstico.',
+    element: (
+      <Suspense fallback={<PageLoading />}>
+        <Investments />
       </Suspense>
     ),
   },
