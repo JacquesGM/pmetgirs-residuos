@@ -221,6 +221,28 @@ export function PublicationPage() {
 
       {ehProprietario && <PedidosAprovados aoPublicar={() => { releases.reload(); publicados.reload(); }} />}
 
+      {/* O formulário só aparece com `grupos` prontos. Sem este ramo, uma falha
+          na leitura sumia com a tela inteira sem dizer nada — foi o que
+          aconteceu quando os indicadores municipais passaram do teto de
+          listagem: a guarda funcionou, e a página ficou em branco. */}
+      {(ehProprietario || podeSolicitar) && grupos.status === 'error' && (
+        <div className="mt-8 rounded-lg border border-status-red bg-red-50 p-5" role="alert">
+          <p className="flex items-start gap-2 font-medium text-neutral-900">
+            <AlertTriangle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-status-red" />
+            Não foi possível montar a lista do que pode ser publicado
+          </p>
+          <p className="mt-1.5 text-sm text-neutral-800">{grupos.message}</p>
+          <p className="mt-2 text-sm text-neutral-600">
+            Nada foi publicado, e nada mudou. Enquanto a leitura não funcionar, publicar por esta
+            tela deixaria registros de fora sem aviso.
+          </p>
+        </div>
+      )}
+
+      {(ehProprietario || podeSolicitar) && grupos.status === 'loading' && (
+        <div className="mt-8 h-32 animate-pulse rounded-lg bg-neutral-200" aria-label="Carregando o que pode ser publicado" />
+      )}
+
       {(ehProprietario || podeSolicitar) && grupos.status === 'ready' && (
         <form
           onSubmit={ehProprietario ? publicar : solicitar}
@@ -241,57 +263,71 @@ export function PublicationPage() {
               Selecione o que vai ao ar ({selecionados.size} selecionado
               {selecionados.size === 1 ? '' : 's'})
             </legend>
-            <div className="mt-2 max-h-80 space-y-3 overflow-y-auto rounded-md border border-neutral-200 p-2">
+            {/* Um <details> por coleção, FECHADO por padrão.
+                
+                A lista plana renderizava uma caixa por registro publicável. Com
+                242 já era pesada; com 765 o navegador congelava, e a tela de
+                publicação virou o gargalo de um sistema cujo trabalho é crescer
+                em dados. O caso comum, além disso, é publicar uma coleção
+                inteira — o detalhe item a item é a exceção, e agora custa um
+                clique para abrir. */}
+            <div className="mt-2 space-y-2">
               {grupos.data.map((g) => {
                 const chaves = g.itens.map((i) => `${g.colecao}/${i.id}`);
-                const todosMarcados = chaves.length > 0 && chaves.every((c) => selecionados.has(c));
+                const marcados = chaves.filter((c) => selecionados.has(c)).length;
+                const todosMarcados = chaves.length > 0 && marcados === chaves.length;
                 return (
-                <div key={g.colecao}>
-                  <p className="flex items-baseline gap-2 px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-500">
-                    {g.rotulo} <span className="font-normal tabular-nums">({g.itens.length})</span>
-                    {/* Sem isto, publicar uma coleção inteira custa centenas de
-                        cliques — e 242 indicadores municipais viraram 418 numa
-                        única transcrição. O trabalho manual não escala com o
-                        dado, e o que não escala acaba não sendo feito. */}
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setSelecionados((atual) => {
-                          const proximo = new Set(atual);
-                          for (const c of chaves) {
-                            if (todosMarcados) proximo.delete(c);
-                            else proximo.add(c);
-                          }
-                          return proximo;
-                        })
-                      }
-                      className="ml-auto text-xs font-medium normal-case tracking-normal text-brand-blue-700 hover:underline"
-                    >
-                      {todosMarcados ? 'desmarcar todos' : 'marcar todos'}
-                    </button>
-                  </p>
-                  <ul className="space-y-1">
-                    {g.itens.map((i) => {
-                      const chave = `${g.colecao}/${i.id}`;
-                      return (
-                        <li key={chave}>
-                          <label className="flex min-h-11 items-center gap-2.5 rounded px-2 text-sm hover:bg-neutral-50">
-                            <input
-                              type="checkbox"
-                              checked={selecionados.has(chave)}
-                              onChange={() => alternar(chave)}
-                              className="h-4 w-4"
-                            />
-                            <span className="text-neutral-800">{i.rotulo}</span>
-                            <span className="ml-auto shrink-0 text-xs text-neutral-500">
-                              v{i.version}
-                            </span>
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+                  <details key={g.colecao} className="rounded-md border border-neutral-200">
+                    <summary className="flex cursor-pointer flex-wrap items-center gap-2 px-3 py-2.5 text-sm">
+                      <span className="font-medium text-neutral-800">{g.rotulo}</span>
+                      <span className="tabular-nums text-neutral-500">({g.itens.length})</span>
+                      {marcados > 0 && (
+                        <span className="rounded-full bg-brand-blue-100 px-2 py-0.5 text-xs font-medium tabular-nums text-brand-blue-800">
+                          {marcados} selecionado{marcados === 1 ? '' : 's'}
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          // O clique no botão não deve abrir nem fechar o
+                          // <details> que o contém.
+                          e.preventDefault();
+                          setSelecionados((atual) => {
+                            const proximo = new Set(atual);
+                            for (const c of chaves) {
+                              if (todosMarcados) proximo.delete(c);
+                              else proximo.add(c);
+                            }
+                            return proximo;
+                          });
+                        }}
+                        className="ml-auto text-xs font-medium text-brand-blue-700 hover:underline"
+                      >
+                        {todosMarcados ? 'desmarcar todos' : 'marcar todos'}
+                      </button>
+                    </summary>
+                    <ul className="max-h-72 space-y-1 overflow-y-auto border-t border-neutral-200 p-2">
+                      {g.itens.map((i) => {
+                        const chave = `${g.colecao}/${i.id}`;
+                        return (
+                          <li key={chave}>
+                            <label className="flex min-h-11 items-center gap-2.5 rounded px-2 text-sm hover:bg-neutral-50">
+                              <input
+                                type="checkbox"
+                                checked={selecionados.has(chave)}
+                                onChange={() => alternar(chave)}
+                                className="h-4 w-4"
+                              />
+                              <span className="text-neutral-800">{i.rotulo}</span>
+                              <span className="ml-auto shrink-0 text-xs text-neutral-500">
+                                v{i.version}
+                              </span>
+                            </label>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </details>
                 );
               })}
             </div>

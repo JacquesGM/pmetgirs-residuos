@@ -65,10 +65,33 @@ describe('indicadores municipais', () => {
     expect(seropedica?.valor).toBeNull();
   });
 
-  it('todo valor carrega fonte e período de referência', () => {
+  it('todo valor carrega fonte com volume e número da tabela, e período', () => {
+    // O regime exigia "Diagnóstico Geral ... Tabela N". Deixou de bastar em
+    // 17/08/2026, quando o PMGIRS e o PMSB por município entraram pela Tabela
+    // 22 do Prognóstico. Alargar a expressão é o certo; o que não pode afrouxar
+    // é a exigência de nomear volume, tabela e período.
     for (const d of dados) {
-      expect(d.fonte, `${d.id} sem fonte`).toMatch(/Diagnóstico Geral do PMetGIRS, Tabela \d+/);
+      expect(d.fonte, `${d.id} sem fonte`).toMatch(
+        /(Diagnóstico Geral|Prognóstico Geral|Plano de Ações) do PMetGIRS, Tabela \d+/,
+      );
       expect(d.periodoReferencia, `${d.id} sem período`).toBeTruthy();
+    }
+  });
+
+  it('os indicadores cobrem os 22 municípios sem buraco', () => {
+    // 25 indicadores x 22 municípios. Um indicador que exista para 21 e falte
+    // para um deixa uma página de município mais pobre sem que nada acuse.
+    const porMunicipio = new Map<string, Set<string>>();
+    for (const d of dados) {
+      const s = porMunicipio.get(d.municipioId) ?? new Set<string>();
+      s.add(d.indicador);
+      porMunicipio.set(d.municipioId, s);
+    }
+    expect(porMunicipio.size).toBe(22);
+    const indicadores = new Set(dados.map((d) => d.indicador));
+    for (const [municipio, tem] of porMunicipio) {
+      const faltando = [...indicadores].filter((i) => !tem.has(i));
+      expect(faltando, `${municipio} sem: ${faltando.join(', ')}`).toEqual([]);
     }
   });
 

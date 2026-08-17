@@ -7,11 +7,13 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  startAfter,
   Timestamp,
   where,
   writeBatch,
   type DocumentData,
   type QueryConstraint,
+  type QueryDocumentSnapshot,
 } from 'firebase/firestore';
 import { getDb, workspaceId } from '../firebase/client';
 import { buildMutation, SERVER_TIME, type MutationInput } from '../../domain/mutation';
@@ -140,12 +142,17 @@ export interface PublishableItem {
  * `readDocsForPublication`.
  */
 /**
- * O teto existe para não estourar cota de leitura numa tela só. Ele era 200 e
- * truncava em silêncio: a coleção de indicadores municipais tem 242 registros,
- * e 42 deles simplesmente não apareciam para publicar. Agora o corte é
- * detectado e informado — um limite que esconde dado é pior que um erro.
+ * Tamanho da página de leitura, não teto do que existe.
+ *
+ * Nasceu como teto: 200, e truncava em silêncio — 42 dos 242 indicadores
+ * municipais não apareciam para publicar. Virou 500 com erro em vez de corte
+ * silencioso, e em 17/08/2026 os indicadores chegaram a 550 e o erro disparou.
+ * Teto ajustável é dívida com prazo; hoje  pagina até o fim.
  */
 export const LIMITE_PUBLICACAO = 500;
+
+/** Teto de páginas: 25.000 registros. Protege contra laço, não contra volume. */
+const MAX_PAGINAS_PUBLICACAO = 50;
 
 export interface EixoResumo {
   id: string;
@@ -160,20 +167,45 @@ export async function listAxes(): Promise<EixoResumo[]> {
     .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
 }
 
+/**
+ * Lista uma coleção inteira para publicação, paginando por `startAfter`.
+ *
+ * Já foi uma leitura única com teto: 200, depois 500, e a cada crescimento dos
+ * dados o teto voltava a ser alcançado. Em 17/08/2026 os indicadores
+ * municipais chegaram a 550 e a guarda disparou — corretamente, mas a tela de
+ * publicação não tinha ramo de erro e ficou em branco.
+ *
+ * Teto ajustável é dívida com prazo. Aqui a coleção é lida até o fim, em
+ * páginas, e `LIMITE_PUBLICACAO` passa a ser tamanho de página, não limite do
+ * que existe. O guarda contra laço infinito continua, mas agora protege contra
+ * defeito, não contra volume.
+ */
 export async function listForPublication(
   collection_: string,
-  max = LIMITE_PUBLICACAO,
+  pagina = LIMITE_PUBLICACAO,
 ): Promise<PublishableItem[]> {
-  const snapshot = await getDocs(
-    query(collection(getDb(), `${base()}/${collection_}`), fsLimit(max)),
-  );
-  if (snapshot.size === max) {
-    throw new Error(
-      `A coleção "${collection_}" atingiu o teto de ${max} registros na listagem para ` +
-        'publicação. Publicar com a lista truncada deixaria registros de fora sem aviso.',
+  const docs: QueryDocumentSnapshot[] = [];
+  let cursor: QueryDocumentSnapshot | undefined;
+
+  for (let i = 0; i < MAX_PAGINAS_PUBLICACAO; i += 1) {
+    const restricoes: QueryConstraint[] = [orderBy('__name__'), fsLimit(pagina)];
+    if (cursor) restricoes.push(startAfter(cursor));
+    const snapshot = await getDocs(
+      query(collection(getDb(), `${base()}/${collection_}`), ...restricoes),
     );
+    docs.push(...snapshot.docs);
+    if (snapshot.size < pagina) return mapearPublicaveis(docs);
+    cursor = snapshot.docs[snapshot.size - 1];
   }
-  return snapshot.docs
+
+  throw new Error(
+    `A coleção "${collection_}" passou de ${MAX_PAGINAS_PUBLICACAO * pagina} registros na ` +
+      'listagem para publicação. Publicar com a lista truncada deixaria registros de fora sem aviso.',
+  );
+}
+
+function mapearPublicaveis(docs: QueryDocumentSnapshot[]): PublishableItem[] {
+  return docs
     .map((d) => {
       const data = d.data();
       return {

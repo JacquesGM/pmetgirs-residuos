@@ -39,6 +39,19 @@
     "valorExibicao": "95,49"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "belford-roxo--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "belford-roxo",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "belford-roxo--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -91,6 +104,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "belford-roxo--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "belford-roxo",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 37,
+    "valorExibicao": "37º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "belford-roxo--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "belford-roxo",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 815085.08,
+    "valorExibicao": "R$ 815.085,08"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "belford-roxo--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "belford-roxo",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 2623346.35,
+    "valorExibicao": "R$ 2.623.346,35"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "belford-roxo--municipio-destino",
     "indicador": "municipio-destino",
@@ -115,6 +167,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "PMBR - Prefeitura Municipal de Belford Roxo"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "belford-roxo--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "belford-roxo",
+    "nome": "Possui PMGIRS",
+    "observacao": "PMSB-2014",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "belford-roxo--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "belford-roxo",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -286,6 +364,19 @@
     "valorExibicao": "86,50"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "cachoeiras-de-macacu--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "cachoeiras-de-macacu--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -338,6 +429,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "cachoeiras-de-macacu--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 1,
+    "valorExibicao": "1º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "cachoeiras-de-macacu--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 605546.7,
+    "valorExibicao": "R$ 605.546,70"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "cachoeiras-de-macacu--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 12658522.67,
+    "valorExibicao": "R$ 12.658.522,67"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "cachoeiras-de-macacu--municipio-destino",
     "indicador": "municipio-destino",
@@ -362,6 +492,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "AMAE - Autarquia Municipal de Água e Esgoto de Cachoeiras de Macacu"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "cachoeiras-de-macacu--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei 2515/21 PMGIRS · Limpeza urbana e manejo de RSU",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "cachoeiras-de-macacu--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "cachoeiras-de-macacu",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -533,6 +689,19 @@
     "valorExibicao": "99,66"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "duque-de-caxias--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "duque-de-caxias",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "duque-de-caxias--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -585,6 +754,45 @@
     "valorExibicao": "4"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "duque-de-caxias--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "duque-de-caxias",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 19,
+    "valorExibicao": "19º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "duque-de-caxias--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "duque-de-caxias",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 748763.3,
+    "valorExibicao": "R$ 748.763,30"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "duque-de-caxias--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "duque-de-caxias",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 4947632.13,
+    "valorExibicao": "R$ 4.947.632,13"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "duque-de-caxias--municipio-destino",
     "indicador": "municipio-destino",
@@ -609,6 +817,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SMO - Secretaria Municipal de Obras"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "duque-de-caxias--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "duque-de-caxias",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei 2881, 28/12/2017 PLAMSAB · Consórcio SERPEN/COBA",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "duque-de-caxias--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "duque-de-caxias",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -780,6 +1014,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "guapimirim--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "guapimirim",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "guapimirim--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -832,6 +1079,45 @@
     "valorExibicao": null
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "guapimirim--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "guapimirim",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 22,
+    "valorExibicao": "22º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "guapimirim--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "guapimirim",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 599779.59,
+    "valorExibicao": "R$ 599.779,59"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "guapimirim--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "guapimirim",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 4844230.55,
+    "valorExibicao": "R$ 4.844.230,55"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "guapimirim--municipio-destino",
     "indicador": "municipio-destino",
@@ -856,6 +1142,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SMO - Secretaria Municipal de Obras e Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "guapimirim--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "guapimirim",
+    "nome": "Possui PMGIRS",
+    "observacao": "Port. 1394, 24/09/21 · Criação do GT PMSB",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "guapimirim--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "guapimirim",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -1027,6 +1339,19 @@
     "valorExibicao": "99,23"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "itaborai--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "itaborai",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "itaborai--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -1079,6 +1404,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaborai--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "itaborai",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 56,
+    "valorExibicao": "56º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaborai--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "itaborai",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 543646.37,
+    "valorExibicao": "R$ 543.646,37"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaborai--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "itaborai",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1267826.65,
+    "valorExibicao": "R$ 1.267.826,65"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "itaborai--municipio-destino",
     "indicador": "municipio-destino",
@@ -1103,6 +1467,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMSP - Secretaria Municipal de Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "itaborai--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "itaborai",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "itaborai--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "itaborai",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -1274,6 +1664,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "itaguai--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "itaguai",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "itaguai--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -1326,6 +1729,45 @@
     "valorExibicao": "1"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaguai--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "itaguai",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 46,
+    "valorExibicao": "46º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaguai--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "itaguai",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 689554.29,
+    "valorExibicao": "R$ 689.554,29"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "itaguai--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "itaguai",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1978458.45,
+    "valorExibicao": "R$ 1.978.458,45"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "itaguai--municipio-destino",
     "indicador": "municipio-destino",
@@ -1350,6 +1792,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SMOPLU - Secretaria Municipal de Ordem Pública e Limpeza Urbana"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "itaguai--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "itaguai",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei Mun. 3842/2020; Lei Mun. 4170/202 · Aprovação e revisão do PMSB",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "itaguai--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "itaguai",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -1521,6 +1989,19 @@
     "valorExibicao": "95"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "japeri--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "japeri",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "japeri--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -1573,6 +2054,45 @@
     "valorExibicao": "1"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "japeri--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "japeri",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 59,
+    "valorExibicao": "59º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "japeri--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "japeri",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 666678.08,
+    "valorExibicao": "R$ 666.678,08"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "japeri--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "japeri",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1191701.8,
+    "valorExibicao": "R$ 1.191.701,80"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "japeri--municipio-destino",
     "indicador": "municipio-destino",
@@ -1597,6 +2117,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMOSP - Secretaria Municipal de Obras e Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "japeri--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "japeri",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "japeri--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "japeri",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -1768,6 +2314,19 @@
     "valorExibicao": "80,73"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "mage--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "mage",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "mage--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -1820,6 +2379,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mage--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "mage",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 31,
+    "valorExibicao": "31º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mage--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "mage",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 98127.4,
+    "valorExibicao": "R$ 98.127,40"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mage--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "mage",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 3443809.49,
+    "valorExibicao": "R$ 3.443.809,49"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "mage--municipio-destino",
     "indicador": "municipio-destino",
@@ -1844,6 +2442,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SMI - Secretaria Municipal de Infraestrutura"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "mage--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "mage",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei 2638/22 · PMSB",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "mage--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "mage",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -2015,6 +2639,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "marica--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "marica",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "marica--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -2067,6 +2704,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "marica--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "marica",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 28,
+    "valorExibicao": "28º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "marica--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "marica",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 444067.58,
+    "valorExibicao": "R$ 444.067,58"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "marica--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "marica",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 3905545.57,
+    "valorExibicao": "R$ 3.905.545,57"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "marica--municipio-destino",
     "indicador": "municipio-destino",
@@ -2091,6 +2767,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SOMAR - Secretaria de Infraestrutura e Obras de Maricá"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "marica--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "marica",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei 2946, 13/08/2020 · PMSB",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "marica--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "marica",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -2262,6 +2964,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "mesquita--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "mesquita",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "mesquita--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -2314,6 +3029,45 @@
     "valorExibicao": "6"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mesquita--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "mesquita",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 4,
+    "valorExibicao": "4º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mesquita--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "mesquita",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 752415.8,
+    "valorExibicao": "R$ 752.415,80"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "mesquita--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "mesquita",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 9262426.87,
+    "valorExibicao": "R$ 9.262.426,87"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "mesquita--municipio-destino",
     "indicador": "municipio-destino",
@@ -2338,6 +3092,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMIMSP - Secretaria Municipal de Infraestrutura, Mobilidade e Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "mesquita--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "mesquita",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "mesquita--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "mesquita",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -2509,6 +3289,19 @@
     "valorExibicao": "96,38"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "nilopolis--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "nilopolis",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": "O município não cobra taxa de coleta domiciliar; o serviço é custeado por outra fonte do orçamento.",
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "nilopolis--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -2561,6 +3354,45 @@
     "valorExibicao": "1"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nilopolis--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "nilopolis",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 47,
+    "valorExibicao": "47º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nilopolis--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "nilopolis",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 666678.08,
+    "valorExibicao": "R$ 666.678,08"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nilopolis--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "nilopolis",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1812853.95,
+    "valorExibicao": "R$ 1.812.853,95"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "nilopolis--municipio-destino",
     "indicador": "municipio-destino",
@@ -2585,6 +3417,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMSERP - Secretaria Municipal de Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "nilopolis--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "nilopolis",
+    "nome": "Possui PMGIRS",
+    "observacao": "Port. 346 e Port. 347, 05/05/22 · Comitê Executivo e Comitê Gestor",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "nilopolis--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "nilopolis",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -2756,6 +3614,19 @@
     "valorExibicao": "99,68"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "niteroi--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "niteroi",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "niteroi--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -2808,6 +3679,45 @@
     "valorExibicao": "1"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "niteroi--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "niteroi",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 5,
+    "valorExibicao": "5º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "niteroi--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "niteroi",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 723195.77,
+    "valorExibicao": "R$ 723.195,77"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "niteroi--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "niteroi",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 9005463.24,
+    "valorExibicao": "R$ 9.005.463,24"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "niteroi--municipio-destino",
     "indicador": "municipio-destino",
@@ -2832,6 +3742,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "CLIN - Companhia de Limpeza de Niterói"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "niteroi--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "niteroi",
+    "nome": "Possui PMGIRS",
+    "observacao": "2012",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "niteroi--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "niteroi",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -3003,6 +3939,19 @@
     "valorExibicao": "98,91"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "nova-iguacu--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "nova-iguacu",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "nova-iguacu--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -3055,6 +4004,45 @@
     "valorExibicao": "2"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nova-iguacu--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "nova-iguacu",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 12,
+    "valorExibicao": "12º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nova-iguacu--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "nova-iguacu",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 883905.94,
+    "valorExibicao": "R$ 883.905,94"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "nova-iguacu--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "nova-iguacu",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 6519888.42,
+    "valorExibicao": "R$ 6.519.888,42"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "nova-iguacu--municipio-destino",
     "indicador": "municipio-destino",
@@ -3079,6 +4067,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "EMLURB - Empresa Municipal de Limpeza Urbana"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "nova-iguacu--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "nova-iguacu",
+    "nome": "Possui PMGIRS",
+    "observacao": "Dec. 12702, 03/05/22; Dec. 12.131, 17/11/2020",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "nova-iguacu--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "nova-iguacu",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -3250,6 +4264,19 @@
     "valorExibicao": "98,12"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "paracambi--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "paracambi",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "paracambi--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -3302,6 +4329,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "paracambi--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "paracambi",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 43,
+    "valorExibicao": "43º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "paracambi--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "paracambi",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 994826.72,
+    "valorExibicao": "R$ 994.826,72"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "paracambi--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "paracambi",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 2386730.45,
+    "valorExibicao": "R$ 2.386.730,45"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "paracambi--municipio-destino",
     "indicador": "municipio-destino",
@@ -3326,6 +4392,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "COMDEP - Companhia Municipal de Desenvolvimento de Paracambi"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "paracambi--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "paracambi",
+    "nome": "Possui PMGIRS",
+    "observacao": "Lei 1593, 10/03/22",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "paracambi--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "paracambi",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -3497,6 +4589,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "petropolis--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "petropolis",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "petropolis--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -3549,6 +4654,45 @@
     "valorExibicao": "7"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "petropolis--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "petropolis",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 16,
+    "valorExibicao": "16º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "petropolis--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "petropolis",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 686286.26,
+    "valorExibicao": "R$ 686.286,26"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "petropolis--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "petropolis",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 5181610.68,
+    "valorExibicao": "R$ 5.181.610,68"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "petropolis--municipio-destino",
     "indicador": "municipio-destino",
@@ -3573,6 +4717,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "COMDEP - Companhia Municipal de Desenvolvimento de Petrópolis"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "petropolis--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "petropolis",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "petropolis--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "petropolis",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -3744,6 +4914,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "queimados--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "queimados",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": "O município não cobra taxa de coleta domiciliar; o serviço é custeado por outra fonte do orçamento.",
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "queimados--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -3796,6 +4979,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "queimados--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "queimados",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 51,
+    "valorExibicao": "51º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "queimados--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "queimados",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 660142.02,
+    "valorExibicao": "R$ 660.142,02"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "queimados--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "queimados",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1531084.54,
+    "valorExibicao": "R$ 1.531.084,54"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "queimados--municipio-destino",
     "indicador": "municipio-destino",
@@ -3820,6 +5042,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMCONSESP - Secretaria Municipal de Conservação e Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "queimados--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "queimados",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "queimados--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "queimados",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -3991,6 +5239,19 @@
     "valorExibicao": "65,65"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "rio-bonito--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "rio-bonito",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "rio-bonito--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -4043,6 +5304,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-bonito--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "rio-bonito",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 39,
+    "valorExibicao": "39º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-bonito--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "rio-bonito",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 429265.33,
+    "valorExibicao": "R$ 429.265,33"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-bonito--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "rio-bonito",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 2508759.72,
+    "valorExibicao": "R$ 2.508.759,72"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "rio-bonito--municipio-destino",
     "indicador": "municipio-destino",
@@ -4067,6 +5367,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMOSP - Secretaria Municipal de Obras e Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "rio-bonito--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "rio-bonito",
+    "nome": "Possui PMGIRS",
+    "observacao": "27/04/22 · Discussão do Plano",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "rio-bonito--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "rio-bonito",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -4238,6 +5564,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "rio-de-janeiro--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "rio-de-janeiro",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "rio-de-janeiro--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -4290,6 +5629,45 @@
     "valorExibicao": "25"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-de-janeiro--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "rio-de-janeiro",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 20,
+    "valorExibicao": "20º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-de-janeiro--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "rio-de-janeiro",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 879676.73,
+    "valorExibicao": "R$ 879.676,73"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "rio-de-janeiro--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "rio-de-janeiro",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 4913449.82,
+    "valorExibicao": "R$ 4.913.449,82"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "rio-de-janeiro--municipio-destino",
     "indicador": "municipio-destino",
@@ -4314,6 +5692,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "COMLURB - Companhia Municipal de Limpeza Urbana"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "rio-de-janeiro--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "rio-de-janeiro",
+    "nome": "Possui PMGIRS",
+    "observacao": "PMSB-AE anterior: 16/08/2011 · Revisado set/22",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "rio-de-janeiro--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "rio-de-janeiro",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -4485,6 +5889,19 @@
     "valorExibicao": "100"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "sao-goncalo--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "sao-goncalo",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "sao-goncalo--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -4537,6 +5954,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-goncalo--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "sao-goncalo",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 53,
+    "valorExibicao": "53º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-goncalo--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "sao-goncalo",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 733576.57,
+    "valorExibicao": "R$ 733.576,57"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-goncalo--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "sao-goncalo",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1493608.95,
+    "valorExibicao": "R$ 1.493.608,95"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "sao-goncalo--municipio-destino",
     "indicador": "municipio-destino",
@@ -4561,6 +6017,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "PMSG - Prefeitura Municipal de São Gonçalo"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "sao-goncalo--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "sao-goncalo",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "sao-goncalo--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "sao-goncalo",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -4732,6 +6214,19 @@
     "valorExibicao": "99,90"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "sao-joao-de-meriti--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "sao-joao-de-meriti--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -4784,6 +6279,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-joao-de-meriti--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 42,
+    "valorExibicao": "42º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-joao-de-meriti--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 784327.15,
+    "valorExibicao": "R$ 784.327,15"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "sao-joao-de-meriti--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 2405767.68,
+    "valorExibicao": "R$ 2.405.767,68"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "sao-joao-de-meriti--municipio-destino",
     "indicador": "municipio-destino",
@@ -4808,6 +6342,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SEMSEP - Secretaria Municipal de Serviços Públicos"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "sao-joao-de-meriti--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "Possui PMGIRS",
+    "observacao": "Tem Relatório Síntese 2015",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "sao-joao-de-meriti--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "sao-joao-de-meriti",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -4979,6 +6539,19 @@
     "valorExibicao": "96,42"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "seropedica--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "seropedica",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "seropedica--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -5031,6 +6604,45 @@
     "valorExibicao": "1"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "seropedica--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "seropedica",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 60,
+    "valorExibicao": "60º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "seropedica--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "seropedica",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 862759.87,
+    "valorExibicao": "R$ 862.759,87"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "seropedica--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "seropedica",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 1166725.73,
+    "valorExibicao": "R$ 1.166.725,73"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "seropedica--municipio-destino",
     "indicador": "municipio-destino",
@@ -5055,6 +6667,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "SMSPT - Secretaria Municipal de Serviços Públicos e Transporte"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "seropedica--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "seropedica",
+    "nome": "Possui PMGIRS",
+    "observacao": "Em 2019, solicitação de PMGIRS",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "seropedica--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "seropedica",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
@@ -5226,6 +6864,19 @@
     "valorExibicao": "85,96"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 23, p. 137 (adaptado do SNIS 2021)",
+    "id": "tangua--cobranca-taxa-lixo",
+    "indicador": "cobranca-taxa-lixo",
+    "municipioId": "tangua",
+    "nome": "Cobra taxa de coleta domiciliar",
+    "observacao": null,
+    "periodoReferencia": "SNIS, 2021",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim — IPTU"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 19",
     "id": "tangua--custo-por-habitante",
     "indicador": "custo-por-habitante",
@@ -5278,6 +6929,45 @@
     "valorExibicao": "0"
   },
   {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "tangua--icms-ecologico-ranking",
+    "indicador": "icms-ecologico-ranking",
+    "municipioId": "tangua",
+    "nome": "Posição no ranking estadual do ICMS Ecológico",
+    "observacao": "Ranking entre os 92 municípios do estado, não entre os 22 da região.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": null,
+    "valor": 82,
+    "valorExibicao": "82º de 92 municípios"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "tangua--icms-ecologico-residuos",
+    "indicador": "icms-ecologico-residuos",
+    "municipioId": "tangua",
+    "nome": "Repasse do ICMS Ecológico por destinação de resíduos",
+    "observacao": "Parcela do repasse total atribuída ao tema Resíduos Sólidos, que desde 2011 considera a coleta seletiva como critério.",
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 444067.58,
+    "valorExibicao": "R$ 444.067,58"
+  },
+  {
+    "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 47, p. 172 (Relatório de Repasse do ICMS Ecológico, 2022)",
+    "id": "tangua--icms-ecologico-total",
+    "indicador": "icms-ecologico-total",
+    "municipioId": "tangua",
+    "nome": "Repasse do ICMS Ecológico",
+    "observacao": null,
+    "periodoReferencia": "2022",
+    "statusValidacao": "dado_oficial_validado",
+    "unidade": "R$",
+    "valor": 567330.47,
+    "valorExibicao": "R$ 567.330,47"
+  },
+  {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 13",
     "id": "tangua--municipio-destino",
     "indicador": "municipio-destino",
@@ -5302,6 +6992,32 @@
     "unidade": null,
     "valor": null,
     "valorExibicao": "PMT - Prefeitura Municipal de Tanguá"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "tangua--possui-pmgirs",
+    "indicador": "possui-pmgirs",
+    "municipioId": "tangua",
+    "nome": "Possui PMGIRS",
+    "observacao": null,
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Não"
+  },
+  {
+    "fonte": "Prognóstico Geral do PMetGIRS, Tabela 22, p. 144 (ENGECONSULT, 2023)",
+    "id": "tangua--possui-pmsb",
+    "indicador": "possui-pmsb",
+    "municipioId": "tangua",
+    "nome": "PMSB aprovado",
+    "observacao": "A Tabela 21, na mesma página, adverte que as informações sobre o PMSB foram autodeclaradas pelos municípios e que o Ministério das Cidades não se responsabiliza pela veracidade.",
+    "periodoReferencia": "ENGECONSULT, 2023",
+    "statusValidacao": "dado_municipal_declarado",
+    "unidade": null,
+    "valor": null,
+    "valorExibicao": "Sim"
   },
   {
     "fonte": "Diagnóstico Geral do PMetGIRS, Tabela 14, p. 108 (SEAS, SNIS, ENGECONSULT e SINIR)",
