@@ -19,7 +19,11 @@ Documentos/
 documentos/
 
 # Dependências
-app/node_modules/
+#
+# Sem prefixo, de propósito: pega node_modules em qualquer profundidade. A
+# regra antiga era `app/node_modules/` e deixava passar um node_modules na
+# raiz — que aparece sozinho quando alguém roda `npx` fora de app/.
+node_modules/
 
 # Build
 app/dist/
@@ -66,3 +70,6 @@ app/scripts/output/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Exportações lógicas do Firestore: dados reais, incluindo membros e auditoria.
+app/backups/

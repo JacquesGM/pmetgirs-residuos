@@ -90,6 +90,127 @@ jobs:
           du -h dist/assets/*.js | sort -h >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
+  # ---------------------------------------------------------------- deploy
+  #
+  # DESLIGADO POR PADRÃO. Só roda quando a variável de repositório
+  # DEPLOY_ENABLED valer "true". O provisionamento (Workload Identity
+  # Federation, conta de serviço, secrets) está no guia interno de deploy do
+  # Instituto Rio Metrópole — a documentação de infraestrutura não fica neste
+  # repositório de propósito.
+  #
+  # O interruptor é uma variável, e não a mera presença dos secrets, por dois
+  # motivos. O primeiro é técnico: o contexto `secrets` não existe em `if` de
+  # job, então "pular se não houver secret" não é expressável — a primeira
+  # versão deste job usava só `github.ref` e teria FALHADO o CI em todo push
+  # para main enquanto o provisionamento não existisse. O segundo é de
+  # governança: ligar publicação automática de um portal público deve ser um
+  # ato deliberado e registrado, não uma consequência de alguém ter criado um
+  # secret.
+  #
+  # Duas decisões que valem explicação:
+  #
+  # 1. O build é REFEITO aqui, e não reaproveitado de build-and-test. Aquele
+  #    build roda sem as variáveis VITE_FIREBASE_*, de propósito: PR de fork não
+  #    recebe secret. O bundle que ele produz compila mas tem a configuração
+  #    vazia, e publicá-lo entregaria a área de gestão morta. O build daqui é o
+  #    único com a configuração real.
+  #
+  # 2. Autenticação por Workload Identity Federation, sem chave de conta de
+  #    serviço. Chave de conta de serviço é credencial de vida longa: vaza uma
+  #    vez e vale até alguém revogar. A regra deste projeto é ADC, e WIF é a
+  #    forma dela no GitHub Actions.
+  deploy:
+    needs: [build-and-test, secrets-scan]
+    if: >-
+      vars.DEPLOY_ENABLED == 'true'
+      && github.event_name == 'push'
+      && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    # Exige aprovação manual se o ambiente estiver configurado com revisor no
+    # GitHub. É um portal público de transparência: a automação leva o commit
+    # até a porta, quem abre a porta é uma pessoa.
+    environment: production
+    defaults:
+      run:
+        working-directory: app
+    permissions:
+      contents: read
+      # Necessária para o GitHub emitir o token OIDC que o WIF troca por
+      # credencial do Google. É a única permissão a mais que o deploy pede.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - run: npm install -g npm@11
+      - run: npm ci
+
+      - name: Build de produção com a configuração real
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_SITE_URL: ${{ secrets.VITE_SITE_URL }}
+        run: npm run build
+
+      # Confere o ARTEFATO, não a tubulação de variáveis.
+      #
+      # Um secret com nome errado, ou não configurado, produz um bundle que
+      # compila e sobe — e só quebra quando alguém tenta entrar. Procurar o ID
+      # do projeto dentro do JavaScript gerado prova que a configuração chegou
+      # ao arquivo que vai ao ar. O ID não é segredo: já aparece no bundle
+      # público, é o que esta verificação constata.
+      - name: Provar que a configuração entrou no bundle
+        env:
+          PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+        run: |
+          if [ -z "$PROJECT_ID" ]; then
+            echo "::error::VITE_FIREBASE_PROJECT_ID não configurado. Ver o guia interno de deploy."
+            exit 1
+          fi
+          if ! grep -rqF "$PROJECT_ID" dist/assets/*.js; then
+            echo "::error::O bundle não contém a configuração do Firebase."
+            echo "A área de gestão subiria morta: readConfig() lança em tempo de execução."
+            exit 1
+          fi
+          echo "Configuração presente no bundle."
+
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_DEPLOY_SERVICE_ACCOUNT }}
+
+      # Regras junto com o hosting, e não em separado, porque as duas coisas
+      # mudam juntas: uma coleção nova precisa da tela E da regra no mesmo
+      # release. Publicar só uma delas foi o que derrubou duas telas em
+      # 16/08/2026. Os 51 testes de Rules já rodaram em build-and-test.
+      - name: Deploy (hosting + regras)
+        run: |
+          npx firebase deploy \
+            --only hosting,firestore:rules \
+            --project "${{ secrets.VITE_FIREBASE_PROJECT_ID }}" \
+            --non-interactive
+
+      # O deploy pode "concluir" e servir uma versão anterior por cache ou por
+      # release não finalizado. Buscar a página prova que o servidor responde.
+      - name: Conferir que o site responde
+        run: |
+          URL="https://${{ secrets.VITE_FIREBASE_PROJECT_ID }}.web.app/"
+          CODIGO=$(curl -sS -o /dev/null -w '%{http_code}' --retry 3 --retry-delay 5 "$URL")
+          if [ "$CODIGO" != "200" ]; then
+            echo "::error::$URL respondeu $CODIGO depois do deploy."
+            exit 1
+          fi
+          echo "$URL respondeu 200."
+
   secrets-scan:
     runs-on: ubuntu-latest
     steps:
