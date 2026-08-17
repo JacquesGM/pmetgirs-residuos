@@ -1,0 +1,62 @@
+[
+  {
+    "curtoPrazo": 4,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "id": "aterro-sanitario",
+    "longoPrazo": null,
+    "medioPrazo": null,
+    "observacao": "Não aparece na Tabela 10 nem no resumo de investimentos do Prognóstico, que somam 45 usinas de tratamento sem contar aterros.",
+    "ordem": 2,
+    "statusValidacao": "informacao_divergente",
+    "tecnologia": "Aterro sanitário",
+    "total": 4
+  },
+  {
+    "curtoPrazo": 1,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "id": "biodegradacao",
+    "longoPrazo": null,
+    "medioPrazo": null,
+    "observacao": null,
+    "ordem": 5,
+    "statusValidacao": "estimativa_tecnica",
+    "tecnologia": "Biodegradação",
+    "total": 1
+  },
+  {
+    "curtoPrazo": 10,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "id": "transbordo-triagem",
+    "longoPrazo": null,
+    "medioPrazo": 15,
+    "observacao": null,
+    "ordem": 1,
+    "statusValidacao": "estimativa_tecnica",
+    "tecnologia": "Transbordo e triagem",
+    "total": 25
+  },
+  {
+    "curtoPrazo": 3,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "id": "ure-combustao",
+    "longoPrazo": null,
+    "medioPrazo": 10,
+    "observacao": "O Prognóstico Geral, na Tabela 73, prevê 10 usinas de combustão e 10 de termodegradação — contra as 13 e 15 deste cronograma. A Tabela 10 do próprio Plano de Ações concorda com o cronograma, e as duas contagens de triagem coincidem em 25. A divergência é entre os dois volumes, não interna a um deles, e permanece aberta.",
+    "ordem": 4,
+    "statusValidacao": "informacao_divergente",
+    "tecnologia": "URE — combustão",
+    "total": 13
+  },
+  {
+    "curtoPrazo": 5,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "id": "ure-gaseificacao",
+    "longoPrazo": null,
+    "medioPrazo": 10,
+    "observacao": "O Prognóstico Geral, na Tabela 73, prevê 10 usinas de combustão e 10 de termodegradação — contra as 13 e 15 deste cronograma. A Tabela 10 do próprio Plano de Ações concorda com o cronograma, e as duas contagens de triagem coincidem em 25. A divergência é entre os dois volumes, não interna a um deles, e permanece aberta.",
+    "ordem": 3,
+    "statusValidacao": "informacao_divergente",
+    "tecnologia": "URE — gaseificação",
+    "total": 15
+  }
+]

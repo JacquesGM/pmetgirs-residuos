@@ -24,6 +24,7 @@ export type TargetCollection =
   | 'economicViability'
   | 'dumpsites'
   | 'wasteComposition'
+  | 'installationSchedule'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -97,6 +98,7 @@ export interface MigrationSources {
   viabilidadeEconomica: unknown[];
   vazadouros: unknown[];
   composicaoRsu: unknown[];
+  cronogramaInstalacao: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

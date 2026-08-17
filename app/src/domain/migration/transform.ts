@@ -12,6 +12,7 @@ import type {
   ViabilidadeEconomica,
   Vazadouro,
   ComponenteRsu,
+  EtapaCronograma,
   Infraestrutura,
   Meta,
   Municipio,
@@ -435,6 +436,29 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// -------------------------------------------- cronograma de instalação
+
+export function transformScheduleStage(e: EtapaCronograma): MigrationRecord {
+  return {
+    collection: 'installationSchedule',
+    id: e.id,
+    legacyId: e.id,
+    data: {
+      name: e.tecnologia,
+      nameNormalized: normalizeName(e.tecnologia),
+      displayOrder: e.ordem,
+      shortTerm: e.curtoPrazo,
+      mediumTerm: e.medioPrazo,
+      longTerm: e.longoPrazo,
+      total: e.total,
+      sourceLabel: e.fonte,
+      validationStatus: mapLegacyValidationStatus(e.statusValidacao).validation ?? 'estimated',
+      note: e.observacao,
+    },
+    gaps: gapsFor({ mediumTerm: e.medioPrazo, longTerm: e.longoPrazo }),
   };
 }
 

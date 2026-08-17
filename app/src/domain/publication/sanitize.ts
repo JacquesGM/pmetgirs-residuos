@@ -28,6 +28,7 @@ export type PublicCollection =
   | 'economicViability'
   | 'dumpsites'
   | 'wasteComposition'
+  | 'installationSchedule'
   | 'glossary'
   | 'evidence';
 
@@ -144,6 +145,19 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /** Cronograma de instalação: quantas unidades em cada horizonte. */
+  installationSchedule: [
+    'name',
+    'displayOrder',
+    'shortTerm',
+    'mediumTerm',
+    'longTerm',
+    'total',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /**
    * Composição gravimétrica do RSU. Percentuais de estudo, nada sensível.
    * `percentageBase` é obrigatório na projeção: sem ele o número muda de

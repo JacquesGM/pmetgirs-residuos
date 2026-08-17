@@ -13,6 +13,12 @@
       "sha256": "679ff3e842400ab1fc427f13bb6af9cdbd75d57cce411dd3be0193c4b341e0e4"
     },
     {
+      "bytes": 2452,
+      "path": "current/cronograma-instalacao.json",
+      "registros": 5,
+      "sha256": "b756adcd1443642784e9f6ef5a7234b6f50dec028f13636ecb28f22519898cf3"
+    },
+    {
       "bytes": 1550,
       "path": "current/documentos.json",
       "registros": 3,
@@ -85,10 +91,11 @@
       "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T19:24:51.971Z",
+  "generatedAt": "2026-08-17T19:41:50.293Z",
   "recordCounts": {
     "centrais-de-tratamento": 4,
     "composicao-rsu": 18,
+    "cronograma-instalacao": 5,
     "documentos": 3,
     "eixos": 12,
     "glossario": 10,
@@ -110,6 +117,7 @@
     "SfEvnIPKunSgquGCSsYk",
     "Xrhb0NxrtaVVeiZBWLcb",
     "axBf0SBVhSkgjAYvFkJ6",
+    "h8QfTIipoMRHGpvC7scK",
     "u22VKqyMyLa4NhVQpbGd"
   ],
   "workspaceId": "pmetgirs-rmrj"

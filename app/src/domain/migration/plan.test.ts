@@ -13,6 +13,7 @@ import centraisDeTratamento from '../../data/centraisDeTratamento.json';
 import viabilidadeEconomica from '../../data/viabilidadeEconomica.json';
 import vazadouros from '../../data/vazadouros.json';
 import composicaoRsu from '../../data/composicaoRsu.json';
+import cronogramaInstalacao from '../../data/cronogramaInstalacao.json';
 import infraestruturas from '../../data/infraestruturas.json';
 import metas from '../../data/metas.json';
 import municipios from '../../data/municipios.json';
@@ -37,6 +38,7 @@ const sources: MigrationSources = {
   viabilidadeEconomica,
   vazadouros,
   composicaoRsu,
+  cronogramaInstalacao,
   evolucao,
   glossario,
   atualizacoes,
@@ -46,12 +48,12 @@ const plan = buildMigrationPlan(sources, 'pmetgirs-rmrj');
 const errors = plan.issues.filter((i) => i.severity === 'error');
 
 describe('reconciliação dos registros', () => {
-  it('a origem tem 817 registros', () => {
-    expect(plan.totalSourceRecords).toBe(817);
+  it('a origem tem 822 registros', () => {
+    expect(plan.totalSourceRecords).toBe(822);
   });
 
   it('o plano produz exatamente um registro por registro de origem', () => {
-    expect(plan.records).toHaveLength(817);
+    expect(plan.records).toHaveLength(822);
   });
 
   it('não perde nem duplica nenhuma coleção', () => {
@@ -77,6 +79,7 @@ describe('reconciliação dos registros', () => {
       economicViability: 7,
       dumpsites: 23,
       wasteComposition: 18,
+      installationSchedule: 5,
       indicators: 56,
       milestones: 9,
       glossary: 10,

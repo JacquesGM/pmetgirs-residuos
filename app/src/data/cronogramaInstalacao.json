@@ -1,0 +1,62 @@
+[
+  {
+    "id": "transbordo-triagem",
+    "tecnologia": "Transbordo e triagem",
+    "ordem": 1,
+    "curtoPrazo": 10,
+    "medioPrazo": 15,
+    "longoPrazo": null,
+    "total": 25,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "statusValidacao": "estimativa_tecnica",
+    "observacao": null
+  },
+  {
+    "id": "aterro-sanitario",
+    "tecnologia": "Aterro sanitário",
+    "ordem": 2,
+    "curtoPrazo": 4,
+    "medioPrazo": null,
+    "longoPrazo": null,
+    "total": 4,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "statusValidacao": "estimativa_tecnica",
+    "observacao": "Não aparece na Tabela 10 nem no resumo de investimentos do Prognóstico, que somam 45 usinas de tratamento sem contar aterros."
+  },
+  {
+    "id": "ure-gaseificacao",
+    "tecnologia": "URE — gaseificação",
+    "ordem": 3,
+    "curtoPrazo": 5,
+    "medioPrazo": 10,
+    "longoPrazo": null,
+    "total": 15,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "statusValidacao": "informacao_divergente",
+    "observacao": "O Prognóstico Geral, na Tabela 73, prevê 10 usinas de combustão e 10 de termodegradação — contra as 13 e 15 deste cronograma. A Tabela 10 do próprio Plano de Ações concorda com o cronograma, e as duas contagens de triagem coincidem em 25. A divergência é entre os dois volumes, não interna a um deles, e permanece aberta."
+  },
+  {
+    "id": "ure-combustao",
+    "tecnologia": "URE — combustão",
+    "ordem": 4,
+    "curtoPrazo": 3,
+    "medioPrazo": 10,
+    "longoPrazo": null,
+    "total": 13,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "statusValidacao": "informacao_divergente",
+    "observacao": "O Prognóstico Geral, na Tabela 73, prevê 10 usinas de combustão e 10 de termodegradação — contra as 13 e 15 deste cronograma. A Tabela 10 do próprio Plano de Ações concorda com o cronograma, e as duas contagens de triagem coincidem em 25. A divergência é entre os dois volumes, não interna a um deles, e permanece aberta."
+  },
+  {
+    "id": "biodegradacao",
+    "tecnologia": "Biodegradação",
+    "ordem": 5,
+    "curtoPrazo": 1,
+    "medioPrazo": null,
+    "longoPrazo": null,
+    "total": 1,
+    "fonte": "Plano de Ações do PMetGIRS, Tabela 11, p. 51 (ENGECONSULT, 2023)",
+    "statusValidacao": "estimativa_tecnica",
+    "observacao": null
+  }
+]

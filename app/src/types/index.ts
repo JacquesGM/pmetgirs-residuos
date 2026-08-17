@@ -409,3 +409,18 @@ export interface ComponenteRsu {
   statusValidacao: StatusValidacao;
   observacao: string | null;
 }
+
+/** Uma linha do cronograma de instalação do sistema de gerenciamento de RSU. */
+export interface EtapaCronograma {
+  id: string;
+  tecnologia: string;
+  ordem: number;
+  /** Unidades previstas em cada horizonte. Nulo = a fonte não prevê nenhuma. */
+  curtoPrazo: number | null;
+  medioPrazo: number | null;
+  longoPrazo: number | null;
+  total: number;
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

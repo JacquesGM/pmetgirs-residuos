@@ -10,6 +10,7 @@ import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
 import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 import { TreatmentCentrals } from './TreatmentCentrals';
+import { InstallationSchedule } from './InstallationSchedule';
 
 const infraestruturasEmbutidas = infraestruturasData as Infraestrutura[];
 
@@ -135,6 +136,8 @@ export function Infrastructure() {
           </li>
         ))}
       </ul>
+
+      <InstallationSchedule />
 
       <TreatmentCentrals />
     </Section>

@@ -17,6 +17,7 @@ import type {
   ViabilidadeEconomica,
   Vazadouro,
   ComponenteRsu,
+  EtapaCronograma,
   Meta,
   Municipio,
   StatusProjeto,
@@ -176,6 +177,24 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// -------------------------------------------- cronograma de instalação
+
+export function toEtapaCronograma(doc: PublishedDocument): EtapaCronograma {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    tecnologia: texto(d, 'name'),
+    ordem: numero(d, 'displayOrder') ?? 0,
+    curtoPrazo: numero(d, 'shortTerm'),
+    medioPrazo: numero(d, 'mediumTerm'),
+    longoPrazo: numero(d, 'longTerm'),
+    total: numero(d, 'total') ?? 0,
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: textoOuNulo(d, 'note') ? 'informacao_divergente' : 'estimativa_tecnica',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -556,6 +575,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'installationSchedule',
+    arquivo: 'cronograma-instalacao',
+    rotulo: 'Cronograma de instalação',
+    mapear: toEtapaCronograma,
   },
   {
     colecao: 'wasteComposition',
