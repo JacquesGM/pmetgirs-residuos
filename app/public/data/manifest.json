@@ -49,10 +49,10 @@
       "sha256": "38ed79fa5727094bceb38bce178c5fec79eb0dee1d78a3bebe4759ac4bcb4cb1"
     },
     {
-      "bytes": 278877,
+      "bytes": 322873,
       "path": "current/indicadores-municipais.json",
-      "registros": 550,
-      "sha256": "c8f43f25eba065b3e831cf4b45a343b9ce9d8719835b5dd25b033c7d9bf54f09"
+      "registros": 638,
+      "sha256": "c1cfc576d9447965b107840736678c11efeffa129d84a61faeec6f6b9c383af4"
     },
     {
       "bytes": 33433,
@@ -97,7 +97,7 @@
       "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T19:57:12.939Z",
+  "generatedAt": "2026-08-17T20:06:36.438Z",
   "recordCounts": {
     "arranjos-de-tratamento": 10,
     "centrais-de-tratamento": 4,
@@ -108,7 +108,7 @@
     "glossario": 10,
     "inconsistencias": 13,
     "indicadores": 56,
-    "indicadores-municipais": 550,
+    "indicadores-municipais": 638,
     "infraestruturas": 7,
     "metas": 44,
     "municipios": 22,
@@ -118,13 +118,13 @@
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
+    "3nOfupLbyFeEVnOtVziO",
     "836bwERNCXB56n5JF8kn",
     "FOfKFrYqNfGKXeDwyilh",
     "IFjBwmvEYwBYI2g2LDRE",
     "Ovk1jztc0LrIz2CbwQu2",
     "SfEvnIPKunSgquGCSsYk",
     "Xrhb0NxrtaVVeiZBWLcb",
-    "axBf0SBVhSkgjAYvFkJ6",
     "h8QfTIipoMRHGpvC7scK",
     "u22VKqyMyLa4NhVQpbGd"
   ],

@@ -65,14 +65,20 @@ describe('indicadores municipais', () => {
     expect(seropedica?.valor).toBeNull();
   });
 
-  it('todo valor carrega fonte com volume e número da tabela, e período', () => {
-    // O regime exigia "Diagnóstico Geral ... Tabela N". Deixou de bastar em
-    // 17/08/2026, quando o PMGIRS e o PMSB por município entraram pela Tabela
-    // 22 do Prognóstico. Alargar a expressão é o certo; o que não pode afrouxar
-    // é a exigência de nomear volume, tabela e período.
+  it('todo valor carrega fonte com volume e localizador, e período', () => {
+    // A regra alargou duas vezes, e cada vez pelo motivo certo.
+    //
+    // Exigia "Diagnóstico Geral ... Tabela N". Passou a aceitar os três volumes
+    // quando o PMGIRS entrou pela Tabela 22 do Prognóstico. E passou a aceitar
+    // "p. N" quando a contagem de PEVs de lâmpada entrou — ela vem do texto
+    // corrido da p. 179, não de uma tabela.
+    //
+    // O que NÃO afrouxou: a fonte precisa nomear o volume e um localizador que
+    // permita achar o dado no documento. Tabela ou página servem; "Diagnóstico
+    // Geral" sozinho não serviria.
     for (const d of dados) {
       expect(d.fonte, `${d.id} sem fonte`).toMatch(
-        /(Diagnóstico Geral|Prognóstico Geral|Plano de Ações) do PMetGIRS, Tabela \d+/,
+        /(Diagnóstico Geral|Prognóstico Geral|Plano de Ações) do PMetGIRS, (Tabela \d+|p\. \d+)/,
       );
       expect(d.periodoReferencia, `${d.id} sem período`).toBeTruthy();
     }
