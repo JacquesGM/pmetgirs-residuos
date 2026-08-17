@@ -309,6 +309,16 @@ function materialize(payload: Record<string, unknown>): Record<string, unknown> 
  * Se o lote falhar, nada é escrito — e as Security Rules recusam a gravação do
  * documento se o evento não estiver presente no commit. Não existe caminho
  * neste código que altere conteúdo sem deixar rastro.
+ *
+ * SEM CHAMADOR desde 17/08/2026, e isso é intencional, não esquecimento. O
+ * conteúdo entra por transcrição, pela migração, que usa o Admin SDK; nenhuma
+ * tela escreve em coleção de conteúdo, e as Rules agora só aceitam a escrita do
+ * proprietário.
+ *
+ * Fica porque é a implementação de referência do envelope de auditoria que as
+ * Rules exigem — os testes de Rules a exercitam pelo caminho real, e é ela que
+ * qualquer caminho de escrita futuro deve usar em vez de reinventar. Apagá-la
+ * convidaria a próxima gravação a nascer sem rastro.
  */
 export async function commitMutation(input: MutationInput): Promise<{ version: number; eventId: string }> {
   const db = getDb();

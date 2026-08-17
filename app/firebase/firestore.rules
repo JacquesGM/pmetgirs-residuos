@@ -43,7 +43,17 @@ service cloud.firestore {
       return hasRole(wid, ['owner']);
     }
 
-    function canEdit(wid) {
+    // Quem PROPÕE uma publicação. Já se chamou `canEdit` e concedia escrita
+    // nas coleções de conteúdo; deixou de conceder em 17/08/2026.
+    //
+    // O conteúdo deste sistema entra por transcrição dos documentos técnicos,
+    // pela migração, que usa o Admin SDK e não passa por estas regras. Nenhuma
+    // tela escreve em coleção de conteúdo. Uma permissão que nenhuma tela usa
+    // é superfície de escrita invisível — não aparece em revisão de interface,
+    // e ninguém lembra que existe.
+    //
+    // O que estes papéis fazem, fazem em `approvalRequests`.
+    function canPropose(wid) {
       return hasRole(wid, ['owner', 'admin', 'editor']);
     }
 
@@ -237,7 +247,7 @@ service cloud.firestore {
 
       match /approvalRequests/{approvalId} {
         allow read: if isActiveMember(wid);
-        allow create: if canEdit(wid)
+        allow create: if canPropose(wid)
           && request.resource.data.createdBy == request.auth.uid
           && request.resource.data.createdAt == request.time
           && request.resource.data.status == 'pending';
@@ -300,14 +310,22 @@ service cloud.firestore {
       // ---- conteúdo do portfólio -------------------------------------------
       //
       // Fechada por lista explícita: nenhuma coleção de governança cai aqui.
-      // Leitura para membros ativos; escrita para editores, sempre com
-      // envelope de auditoria completo e auditEvent no mesmo lote.
+      // Leitura para membros ativos.
+      //
+      // Escrita só do proprietário, desde 17/08/2026. Antes era `canEdit`, que
+      // incluía admin e editor — concessão que nenhuma tela usava desde que os
+      // formulários de conteúdo saíram. O conteúdo entra por transcrição, pela
+      // migração, que usa o Admin SDK e nem passa por aqui.
+      //
+      // O envelope de auditoria continua exigido de quem escrever pelo cliente.
+      // Não é redundância: se um caminho de escrita pela interface voltar a
+      // existir, ele nasce auditado, e não com a regra afrouxada por descuido.
 
       match /{collectionName}/{docId} {
         allow read: if isContentCollection(collectionName) && isActiveMember(wid);
 
         allow create: if isContentCollection(collectionName)
-          && canEdit(wid)
+          && isOwner(wid)
           && hasAuditEnvelope(request.resource.data)
           && request.resource.data.id == docId
           && request.resource.data.workspaceId == wid
@@ -318,7 +336,7 @@ service cloud.firestore {
           && auditMatches(wid, collectionName, docId, request.resource.data);
 
         allow update: if isContentCollection(collectionName)
-          && canEdit(wid)
+          && isOwner(wid)
           && hasAuditEnvelope(request.resource.data)
           && coreUnchanged()
           && serverStamped(request.resource.data)

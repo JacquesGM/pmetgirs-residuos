@@ -339,9 +339,9 @@ describe('escrita de conteúdo', () => {
       isArchived: false,
       lastEventId: 'ev-1',
       createdAt: serverTimestamp(),
-      createdBy: EDITOR.uid,
+      createdBy: OWNER.uid,
       updatedAt: serverTimestamp(),
-      updatedBy: EDITOR.uid,
+      updatedBy: OWNER.uid,
       ...overrides,
     };
   }
@@ -352,7 +352,7 @@ describe('escrita de conteúdo', () => {
       workspaceId: WID,
       entityCollection: 'projects',
       entityId: 'proj-novo',
-      actorUid: EDITOR.uid,
+      actorUid: OWNER.uid,
       occurredAt: serverTimestamp(),
       toVersion: 1,
       reason: 'Criação do projeto',
@@ -360,21 +360,21 @@ describe('escrita de conteúdo', () => {
     };
   }
 
-  it('editor cria projeto quando o auditEvent vem no mesmo lote', async () => {
-    const db = ctx(EDITOR).firestore();
+  it('proprietário cria projeto quando o auditEvent vem no mesmo lote', async () => {
+    const db = ctx(OWNER).firestore();
     const batch = writeBatch(db);
     batch.set(doc(db, `workspaces/${WID}/auditEvents/ev-1`), eventoValido());
     batch.set(doc(db, `workspaces/${WID}/projects/proj-novo`), projetoValido());
     await assertSucceeds(batch.commit());
   });
 
-  it('editor NÃO cria projeto sem auditEvent', async () => {
-    const db = ctx(EDITOR).firestore();
+  it('proprietário NÃO cria projeto sem auditEvent', async () => {
+    const db = ctx(OWNER).firestore();
     await assertFails(setDoc(doc(db, `workspaces/${WID}/projects/proj-novo`), projetoValido()));
   });
 
-  it('editor NÃO cria projeto com auditEvent de outra entidade', async () => {
-    const db = ctx(EDITOR).firestore();
+  it('proprietário NÃO cria projeto com auditEvent de outra entidade', async () => {
+    const db = ctx(OWNER).firestore();
     const batch = writeBatch(db);
     batch.set(doc(db, `workspaces/${WID}/auditEvents/ev-1`), eventoValido({ entityId: 'outra-coisa' }));
     batch.set(doc(db, `workspaces/${WID}/projects/proj-novo`), projetoValido());
@@ -392,8 +392,8 @@ describe('escrita de conteúdo', () => {
     await assertFails(batch.commit());
   });
 
-  it('editor NÃO incrementa a versão fora de sequência', async () => {
-    const db = ctx(EDITOR).firestore();
+  it('proprietário NÃO incrementa a versão fora de sequência', async () => {
+    const db = ctx(OWNER).firestore();
     const batch = writeBatch(db);
     batch.set(
       doc(db, `workspaces/${WID}/auditEvents/ev-2`),
@@ -410,7 +410,7 @@ describe('escrita de conteúdo', () => {
       createdAt: Timestamp.now(),
       createdBy: OWNER.uid,
       updatedAt: serverTimestamp(),
-      updatedBy: EDITOR.uid,
+      updatedBy: OWNER.uid,
     });
     await assertFails(batch.commit());
   });
@@ -459,9 +459,49 @@ describe('buildMutation contra as Rules', () => {
     reason: 'Cadastro pela interface de gestão',
   });
 
-  it('editor cria projeto pelo caminho real da aplicação', async () => {
+  it('proprietário cria projeto pelo caminho real da aplicação', async () => {
+    const db = ctx(OWNER).firestore();
+    await assertSucceeds(commit(db, criar(OWNER.uid, 'owner'), 'ev-app-1'));
+  });
+
+  it('editor NÃO escreve conteúdo, mesmo pelo caminho real e com auditoria perfeita', async () => {
+    // A postura mudou em 17/08/2026. Antes `canEdit` concedia esta escrita a
+    // admin e editor; nenhuma tela usava a concessão desde que os formulários
+    // de conteúdo saíram, e permissão que nenhuma tela usa não aparece em
+    // revisão de interface.
+    //
+    // Este caso satisfaz TODAS as demais condições da regra — envelope de
+    // auditoria completo, auditEvent no mesmo lote, versão 1, carimbos de
+    // servidor. O único motivo possível para a recusa é o papel. Sem essa
+    // completude o teste passaria mesmo com a regra antiga, e não provaria
+    // nada.
     const db = ctx(EDITOR).firestore();
-    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-1'));
+    await assertFails(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-editor'));
+  });
+
+  it('admin NÃO escreve conteúdo, mesmo pelo caminho real', async () => {
+    const db = ctx(ADMIN).firestore();
+    await assertFails(commit(db, criar(ADMIN.uid, 'admin'), 'ev-app-admin'));
+  });
+
+  it('editor continua propondo publicação — o que mudou foi o alcance, não o papel', async () => {
+    // O papel não perdeu função: perdeu uma função que a interface não
+    // oferecia. Propor publicação é o que ele faz, e continua fazendo.
+    await assertSucceeds(
+      setDoc(doc(ctx(EDITOR).firestore(), `workspaces/${WID}/approvalRequests/ped-editor`), {
+        id: 'ped-editor',
+        workspaceId: WID,
+        items: ['projects/proj-1'],
+        reason: 'Proposta de publicação depois do estreitamento de canEdit',
+        itemCount: 1,
+        status: 'pending',
+        createdBy: EDITOR.uid,
+        createdAt: serverTimestamp(),
+        reviewedBy: null,
+        reviewedAt: null,
+        reviewNote: null,
+      }),
+    );
   });
 
   const dependencia = (uid: string, role: string) => ({
@@ -488,8 +528,8 @@ describe('buildMutation contra as Rules', () => {
     // para que a coleção continue coberta por regra explícita mesmo assim —
     // foi a ausência disso que derrubou as telas de municipalIndicators e
     // gutPriorities.
-    const db = ctx(EDITOR).firestore();
-    await assertSucceeds(commit(db, dependencia(EDITOR.uid, 'editor'), 'ev-dep-1'));
+    const db = ctx(OWNER).firestore();
+    await assertSucceeds(commit(db, dependencia(OWNER.uid, 'owner'), 'ev-dep-1'));
   });
 
   const estimar = (uid: string, role: string) => ({
@@ -518,9 +558,9 @@ describe('buildMutation contra as Rules', () => {
     reason: 'Primeira estimativa a partir do EVTE',
   });
 
-  it('editor registra estimativa de custo pelo caminho real', async () => {
-    const db = ctx(EDITOR).firestore();
-    await assertSucceeds(commit(db, estimar(EDITOR.uid, 'editor'), 'ev-custo-1'));
+  it('proprietário registra estimativa de custo pelo caminho real', async () => {
+    const db = ctx(OWNER).firestore();
+    await assertSucceeds(commit(db, estimar(OWNER.uid, 'owner'), 'ev-custo-1'));
   });
 
   it('leitor não registra estimativa de custo', async () => {
@@ -533,9 +573,9 @@ describe('buildMutation contra as Rules', () => {
     await assertFails(commit(db, dependencia(VIEWER.uid, 'viewer'), 'ev-dep-2'));
   });
 
-  it('editor atualiza projeto pelo caminho real, com versão +1', async () => {
-    const db = ctx(EDITOR).firestore();
-    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-2'));
+  it('proprietário atualiza projeto pelo caminho real, com versão +1', async () => {
+    const db = ctx(OWNER).firestore();
+    await assertSucceeds(commit(db, criar(OWNER.uid, 'owner'), 'ev-app-2'));
 
     // Recarrega o documento inteiro antes de editar, como a interface faz.
     // createdAt e createdBy precisam voltar idênticos: as Rules conferem.
@@ -545,7 +585,7 @@ describe('buildMutation contra as Rules', () => {
       commit(
         db,
         {
-          ...criar(EDITOR.uid, 'editor'),
+          ...criar(OWNER.uid, 'owner'),
           action: 'update',
           reason: 'Atualiza situação após reunião',
           currentVersion: 1,
@@ -589,14 +629,14 @@ describe('buildMutation contra as Rules', () => {
   });
 
   it('o evento gravado casa com a entidade, o ator e a versão', async () => {
-    const db = ctx(EDITOR).firestore();
-    await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-6'));
+    const db = ctx(OWNER).firestore();
+    await assertSucceeds(commit(db, criar(OWNER.uid, 'owner'), 'ev-app-6'));
 
     const evento = await getDoc(doc(db, `workspaces/${WID}/auditEvents/ev-app-6`));
     expect(evento.exists()).toBe(true);
     expect(evento.data()?.entityId).toBe('proj-app');
     expect(evento.data()?.entityCollection).toBe('projects');
-    expect(evento.data()?.actorUid).toBe(EDITOR.uid);
+    expect(evento.data()?.actorUid).toBe(OWNER.uid);
     expect(evento.data()?.toVersion).toBe(1);
     expect(evento.data()?.reason).toBe('Cadastro pela interface de gestão');
   });
