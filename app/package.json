@@ -17,7 +17,8 @@
     "migrate:prod": "tsx scripts/migrate-json.ts --production",
     "snapshot": "tsx scripts/build-snapshot.ts",
     "backup": "tsx scripts/backup-firestore.ts",
-    "backup:ensaio": "firebase emulators:exec --only firestore --project demo-pmetgirs \"tsx scripts/backup-firestore.ts --restaurar --ultimo\""
+    "backup:ensaio": "firebase emulators:exec --only firestore --project demo-pmetgirs \"tsx scripts/backup-firestore.ts --restaurar --ultimo\"",
+    "convidar": "tsx scripts/convidar.ts"
   },
   "dependencies": {
     "firebase": "^12.17.1",
