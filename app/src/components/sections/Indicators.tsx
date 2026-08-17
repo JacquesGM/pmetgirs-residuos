@@ -13,6 +13,7 @@ import type { DownloadColumn } from '../../lib/download';
 import { indicadorIcons, iconFor } from '../../lib/icons';
 import { StatusDistributionChart } from '../charts/StatusDistributionChart';
 import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
+import { WasteComposition } from './WasteComposition';
 
 const indicadoresEmbutidos = indicadoresData as Indicador[];
 const projetos = projetosData as Projeto[];
@@ -163,6 +164,8 @@ export function Indicators() {
         </Link>
         .
       </p>
+
+      <WasteComposition />
     </Section>
   );
 }
