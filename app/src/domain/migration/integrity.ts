@@ -1,3 +1,4 @@
+import { findCycle, type DependencyEdge } from '../dependencies/graph';
 import type { MigrationIssue, MigrationPlan, MigrationRecord } from './types';
 
 /**
@@ -210,6 +211,44 @@ export function checkDivergenceHasEvidence(plan: MigrationPlan): MigrationIssue[
   return issues;
 }
 
+/**
+ * Ciclo no grafo de dependências.
+ *
+ * A verificação existia no `createDependency`, que recusava a aresta antes de
+ * gravar. Quando o formulário de dependências saiu — em 16/08/2026, porque as
+ * dependências vêm dos documentos — a verificação veio para cá: agora a
+ * transcrição é o único caminho, e um ciclo vindo dela paralisaria o portfólio
+ * inteiro sem que ninguém fosse avisado.
+ *
+ * É `error`, não `warning`: com um ciclo, nenhuma das ações pode começar,
+ * porque cada uma espera a outra.
+ */
+export function checkDependencyCycles(records: MigrationRecord[]): MigrationIssue[] {
+  const edges: DependencyEdge[] = records
+    .filter((r) => r.collection === 'dependencies')
+    .map((r) => ({
+      id: r.id,
+      predecessorId: String(r.data.predecessorId ?? ''),
+      successorId: String(r.data.successorId ?? ''),
+      type: r.data.type as DependencyEdge['type'],
+      lagDays: Number(r.data.lagDays ?? 0),
+      mandatory: r.data.mandatory === true,
+      justification: String(r.data.justification ?? ''),
+    }));
+
+  const cycle = findCycle(edges);
+  if (cycle === null) return [];
+  return [
+    issue(
+      'error',
+      'ciclo_de_dependencias',
+      `As dependências transcritas fecham um ciclo: ${cycle.join(' → ')}. ` +
+        'Com o ciclo, nenhuma das ações pode começar, porque cada uma espera a outra.',
+      { collection: 'dependencies' },
+    ),
+  ];
+}
+
 /** A contagem final tem que bater com a de origem: nem um a mais, nem a menos. */
 export function checkRecordCount(plan: MigrationPlan): MigrationIssue[] {
   if (plan.records.length === plan.totalSourceRecords) return [];
@@ -231,5 +270,6 @@ export function runIntegrityChecks(plan: MigrationPlan): MigrationIssue[] {
     ...checkNoInventedZeros(plan.records),
     ...checkRanges(plan.records),
     ...checkDivergenceHasEvidence(plan),
+    ...checkDependencyCycles(plan.records),
   ];
 }

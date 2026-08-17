@@ -5,6 +5,9 @@ import type {
   EvolucaoEtapa,
   Inconsistencia,
   Indicador,
+  IndicadorMunicipal,
+  EstimativaDeCustoRegistro,
+  TemaGut,
   Infraestrutura,
   Meta,
   Municipio,
@@ -13,6 +16,11 @@ import type {
 } from '../../types';
 import { mapLegacyProjectStatus, mapLegacyValidationStatus, resolveLegacyStatus } from '../legacy';
 import type { EvidenceDraft, MigrationRecord } from './types';
+import { categoriaDe, validarEstimativa } from '../costEstimate';
+// A regra da abrangência mora fora da migração de propósito: o portal a aplica
+// sobre o dado embutido, que não passa por aqui. Uma cópia em cada lado
+// divergiria em silêncio.
+import { municipiosDoProjeto } from '../abrangencia';
 
 /**
  * Transformação dos JSON legados em registros de domínio.
@@ -108,8 +116,9 @@ export function transformAxis(e: Eixo): MigrationRecord {
 
 // ----------------------------------------------------------------- projetos
 
-export function transformProject(p: Projeto): MigrationRecord {
+export function transformProject(p: Projeto, municipiosDaRmrj: string[]): MigrationRecord {
   const mapped = mapLegacyProjectStatus(p.status);
+  const municipalityIds = municipiosDoProjeto(p.abrangencia, municipiosDaRmrj);
   return {
     collection: 'projects',
     id: p.id,
@@ -121,6 +130,10 @@ export function transformProject(p: Projeto): MigrationRecord {
       axisId: p.eixo,
       description: p.descricao,
       territorialScale: p.abrangencia,
+      // A abrangência em texto continua gravada como a fonte a escreveu; esta
+      // é a leitura estruturada dela, e as duas convivem para que a conferência
+      // contra o documento continue possível.
+      municipalityIds,
       accountable: p.responsavel,
       participants: p.participantes,
       executionStatus: mapped.execution ?? null,
@@ -152,6 +165,7 @@ export function transformProject(p: Projeto): MigrationRecord {
       plannedStart: p.inicioPrevisto,
       plannedEnd: p.terminoPrevisto,
       dataDate: p.ultimaAtualizacao,
+      municipalityIds,
     }).concat(mapped.execution ? [] : ['executionStatus']),
   };
 }
@@ -167,6 +181,12 @@ export function transformGoal(m: Meta): MigrationRecord {
     data: {
       name: m.nome,
       nameNormalized: normalizeName(m.nome),
+      // Coluna "Objetivos Gerais" das tabelas OKR/SMART: várias metas
+      // compartilham o mesmo objetivo, e é por ele que elas se agrupam.
+      generalObjective: m.objetivoGeral,
+      // Coluna "Responsáveis". Sem ela a meta diz o que fazer e omite de quem
+      // é a entrega — que é exatamente o achado INC-13 do Relatório.
+      responsibleParties: m.responsaveis,
       // Linha de base e resultado atual seguem nulos: existem nos documentos
       // técnicos, mas não foram transpostos. Sem eles não há progresso a
       // exibir, só alvo — e é isso que o relatório aponta.
@@ -251,7 +271,10 @@ export function transformIndicator(ind: Indicador): {
   const tipo = mapLegacyValidationStatus(ind.tipoDado);
   const validacao = mapLegacyValidationStatus(ind.statusValidacao);
 
-  const evidence: EvidenceDraft[] = [
+  // O catálogo do SNIS não gera alegação de valor: não há valor algum a
+  // alegar. Criar 48 claims nulas encheria a auditoria de ruído e faria
+  // parecer que alguém mediu e não encontrou.
+  const evidence: EvidenceDraft[] = ind.natureza === 'catalogo_snis' ? [] : [
     {
       id: `${ind.id}--claim-1`,
       entityType: 'indicators',
@@ -276,6 +299,8 @@ export function transformIndicator(ind: Indicador): {
       data: {
         name: ind.nome,
         nameNormalized: normalizeName(ind.nome),
+        // Separa número apurado de definição a observar. Ver NaturezaIndicador.
+        nature: ind.natureza,
         value: ind.valor,
         displayValue: ind.valorExibicao,
         unit: ind.unidade,
@@ -349,18 +374,189 @@ export function transformInconsistency(inc: Inconsistencia): {
         nextStep: inc.encaminhamento,
         dataDate: inc.ultimaAtualizacao,
         hasDivergentSources: fontes.length > 1,
-        // Decisão editorial sobre divulgar ou não cada achado. Está registrada
-        // apenas no Relatório de Inconsistências, em texto solto, e depende de
-        // decisão do proprietário — por isso fica nula e é apontada como lacuna.
-        publicationPolicy: null,
+        reportCode: inc.codigoRelatorio,
+        findingOrigin: inc.origemDoAchado,
+        // Decisão editorial sobre divulgar ou não cada achado. Vem da matriz
+        // consolidada do Relatório de Inconsistências, onde cada linha carrega
+        // a sua anotação. Continua sendo lacuna enquanto estiver nula.
+        publicationPolicy: inc.tratamentoEditorial,
       },
       gaps: gapsFor({
         nextStep: inc.encaminhamento,
         dataDate: inc.ultimaAtualizacao,
-      }).concat('publicationPolicy'),
+      }).concat(
+        // A lacuna só faz sentido para achado que consta do Relatório: é lá
+        // que a decisão de divulgação deveria estar anotada. Achado nosso não
+        // tem anotação a preencher, e cobrar uma seria alarme falso.
+        inc.codigoRelatorio !== null && inc.tratamentoEditorial === null
+          ? ['publicationPolicy']
+          : [],
+      ),
     },
     evidence,
     anomaly,
+  };
+}
+
+// ------------------------------------------------- indicadores municipais
+
+/**
+ * Cada linha das tabelas municipais do Diagnóstico vira um registro próprio.
+ *
+ * Não gera alegação de valor: aqui existe uma fonte por valor, e alegação com
+ * fonte única não é divergência — é só o dado. A exceção declarada no arquivo
+ * de origem (a despesa de Niterói) chega com `informacao_divergente` e a
+ * ressalva no campo de observação.
+ */
+export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRecord {
+  const mapped = mapLegacyValidationStatus(i.statusValidacao);
+  return {
+    collection: 'municipalIndicators',
+    id: i.id,
+    legacyId: i.id,
+    data: {
+      municipalityId: i.municipioId,
+      indicator: i.indicador,
+      name: i.nome,
+      nameNormalized: normalizeName(i.nome),
+      value: i.valor,
+      displayValue: i.valorExibicao,
+      unit: i.unidade,
+      referencePeriod: i.periodoReferencia,
+      sourceLabel: i.fonte,
+      sourceType: mapped.sourceType ?? 'municipal_declared',
+      validationStatus: mapped.validation ?? 'in_validation',
+      actualityStatus: mapped.actuality ?? 'historical',
+      legacyStatus: mapped.legacyStatus,
+      note: i.observacao,
+    },
+    gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ---------------------------------------------------------------- dependências
+
+/**
+ * Arestas de precedência, a partir do campo `dependencias` dos projetos.
+ *
+ * O dado sempre esteve em `projetos.json`, mas só era gravado como uma lista
+ * de ids dentro do documento do projeto — a coleção `dependencies`, que a tela
+ * de Dependências lê, nunca recebia nada. A página mostrava "nenhuma
+ * dependência registrada" com dois pares declarados na origem.
+ *
+ * `justification` cita a origem em vez de explicar a precedência: a origem
+ * declara QUE a dependência existe, não POR QUE nem de que tipo. O tipo fica
+ * `finish_to_start`, que é a leitura padrão do sistema, e o texto diz que essa
+ * classificação é do sistema e não do documento.
+ */
+export function transformDependency(
+  successorId: string,
+  predecessorId: string,
+  fonte: string,
+): MigrationRecord {
+  const id = `${predecessorId}--${successorId}`;
+  return {
+    collection: 'dependencies',
+    id,
+    legacyId: id,
+    data: {
+      predecessorId,
+      successorId,
+      type: 'finish_to_start',
+      lagDays: 0,
+      mandatory: true,
+      justification:
+        `${fonte}: a ação "${successorId}" declara dependência de "${predecessorId}". ` +
+        'A origem declara a existência da dependência, não o seu tipo nem a sua razão; ' +
+        'Término → Início é a leitura padrão do sistema, não uma afirmação do documento.',
+      sharedResourceId: null,
+    },
+    // O documento não classifica o tipo nem justifica a precedência.
+    gaps: ['type', 'lagDays'],
+  };
+}
+
+// ------------------------------------------------------ estimativas de custo
+
+/**
+ * A faixa é derivada aqui, na migração, pelo mesmo `categoriaDe` que a
+ * interface usa — para que arquivo e tela nunca discordem sobre em que faixa
+ * um projeto está.
+ *
+ * `validarEstimativa` roda antes: valor sem ano-base e sem fonte é recusado.
+ * A regra nasceu na tela de edição, e quando essa tela saiu — em 16/08/2026,
+ * porque os valores vêm dos documentos e não de digitação — ela veio para cá.
+ * A transcrição é agora o único caminho de entrada; se a regra não valesse
+ * aqui, não valeria em lugar nenhum.
+ */
+export function transformCostEstimate(e: EstimativaDeCustoRegistro): MigrationRecord {
+  const estimativa = {
+    requiresNewDisbursement: e.requiresNewDisbursement,
+    capexMinCents: e.capexMinCents,
+    capexMaxCents: e.capexMaxCents,
+    annualOpexCents: e.annualOpexCents,
+    currency: e.currency,
+    baseYear: e.baseYear,
+    sourceLabel: e.sourceLabel,
+    assumptions: e.assumptions,
+    confidenceScore: e.confidenceScore,
+    asOfDate: e.asOfDate,
+    underEstimation: e.underEstimation,
+  };
+  validarEstimativa(estimativa);
+  const costCategory = categoriaDe(estimativa);
+  return {
+    collection: 'costEstimates',
+    id: e.id,
+    legacyId: e.id,
+    data: {
+      entityCollection: 'projects',
+      entityId: e.entityId,
+      requiresNewDisbursement: e.requiresNewDisbursement,
+      capexMinCents: e.capexMinCents,
+      capexMaxCents: e.capexMaxCents,
+      annualOpexCents: e.annualOpexCents,
+      currency: e.currency,
+      baseYear: e.baseYear,
+      sourceLabel: e.sourceLabel,
+      assumptions: e.assumptions,
+      confidenceScore: e.confidenceScore,
+      asOfDate: e.asOfDate,
+      underEstimation: e.underEstimation,
+      costCategory,
+    },
+    gaps: gapsFor({
+      capexMinCents: e.capexMinCents,
+      baseYear: e.baseYear,
+      confidenceScore: e.confidenceScore,
+    }),
+  };
+}
+
+// ---------------------------------------------------------- matriz GUT
+
+export function transformGutTheme(t: TemaGut): MigrationRecord {
+  return {
+    collection: 'gutPriorities',
+    id: t.id,
+    legacyId: t.id,
+    data: {
+      themeNumber: t.numero,
+      name: t.tema,
+      nameNormalized: normalizeName(t.tema),
+      severity: t.gravidade,
+      urgency: t.urgencia,
+      trend: t.tendencia,
+      score: t.pontuacao,
+      printedScore: t.pontuacaoImpressa,
+      ranking: t.ranking,
+      relatedProjectIds: t.projetosRelacionados,
+      sourceLabel: t.fonte,
+      note: t.observacao,
+      // Marca a única linha em que a multiplicação do documento não fecha.
+      arithmeticMatches: t.pontuacao === t.pontuacaoImpressa,
+    },
+    gaps: t.projetosRelacionados.length === 0 ? ['relatedProjectIds'] : [],
   };
 }
 

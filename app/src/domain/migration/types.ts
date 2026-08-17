@@ -16,6 +16,10 @@ export type TargetCollection =
   | 'infrastructures'
   | 'documents'
   | 'inconsistencies'
+  | 'municipalIndicators'
+  | 'costEstimates'
+  | 'gutPriorities'
+  | 'dependencies'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -82,6 +86,9 @@ export interface MigrationSources {
   documentos: unknown[];
   inconsistencias: unknown[];
   indicadores: unknown[];
+  indicadoresMunicipais: unknown[];
+  estimativasDeCusto: unknown[];
+  priorizacaoGut: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

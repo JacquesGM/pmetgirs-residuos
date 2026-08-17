@@ -5,6 +5,9 @@ import type {
   EvolucaoEtapa,
   Inconsistencia,
   Indicador,
+  IndicadorMunicipal,
+  EstimativaDeCustoRegistro,
+  TemaGut,
   Infraestrutura,
   Meta,
   Municipio,
@@ -20,6 +23,10 @@ import {
   transformImport,
   transformInconsistency,
   transformIndicator,
+  transformMunicipalIndicator,
+  transformCostEstimate,
+  transformDependency,
+  transformGutTheme,
   transformInfrastructure,
   transformMilestone,
   transformMunicipality,
@@ -57,11 +64,32 @@ export function buildMigrationPlan(sources: MigrationSources, workspaceId: strin
 
   for (const item of sources.municipios as Municipio[]) records.push(transformMunicipality(item));
   for (const item of sources.eixos as Eixo[]) records.push(transformAxis(item));
-  for (const item of sources.projetos as Projeto[]) records.push(transformProject(item));
+  // A lista sai do próprio banco, não de uma constante: escrita à mão, ela
+  // envelheceria em silêncio se a RMRJ mudasse de composição.
+  const municipiosDaRmrj = (sources.municipios as Municipio[]).map((m) => m.id);
+
+  for (const item of sources.projetos as Projeto[]) {
+    records.push(transformProject(item, municipiosDaRmrj));
+    // As dependências viram arestas próprias, e não só uma lista de ids dentro
+    // do projeto: é a coleção `dependencies` que alimenta o grafo, a detecção
+    // de ciclo e o cálculo do que pode começar agora.
+    for (const predecessorId of item.dependencias) {
+      records.push(transformDependency(item.id, predecessorId, item.fonte));
+    }
+  }
   for (const item of sources.metas as Meta[]) records.push(transformGoal(item));
   for (const item of sources.documentos as Documento[]) records.push(transformDocument(item));
   for (const item of sources.evolucao as EvolucaoEtapa[]) records.push(transformMilestone(item));
   for (const item of sources.glossario as TermoGlossario[]) records.push(transformGlossaryTerm(item));
+  for (const item of sources.indicadoresMunicipais as IndicadorMunicipal[]) {
+    records.push(transformMunicipalIndicator(item));
+  }
+  for (const item of sources.estimativasDeCusto as EstimativaDeCustoRegistro[]) {
+    records.push(transformCostEstimate(item));
+  }
+  for (const item of sources.priorizacaoGut as TemaGut[]) {
+    records.push(transformGutTheme(item));
+  }
   for (const item of sources.atualizacoes as Atualizacao[]) records.push(transformImport(item));
 
   for (const item of sources.infraestruturas as Infraestrutura[]) {
@@ -103,7 +131,17 @@ export function buildMigrationPlan(sources: MigrationSources, workspaceId: strin
     indicadores: sources.indicadores.length,
     evolucao: sources.evolucao.length,
     glossario: sources.glossario.length,
+    indicadoresMunicipais: sources.indicadoresMunicipais.length,
+    estimativasDeCusto: sources.estimativasDeCusto.length,
+    priorizacaoGut: sources.priorizacaoGut.length,
     atualizacoes: sources.atualizacoes.length,
+    // Cada id em `dependencias` vira exatamente uma aresta. Contá-los aqui
+    // mantém a invariante de `checkRecordCount` — nem um a mais, nem a menos —
+    // valendo também para os registros derivados.
+    dependencias: (sources.projetos as Projeto[]).reduce(
+      (soma, p) => soma + p.dependencias.length,
+      0,
+    ),
   };
 
   const totalSourceRecords = Object.values(sourceCounts).reduce((sum, n) => sum + n, 0);

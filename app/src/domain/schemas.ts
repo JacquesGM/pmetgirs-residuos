@@ -187,7 +187,9 @@ export const projectSchema = entityMetaSchema.extend({
   problem: z.string().nullable().optional(),
   solution: z.string().nullable().optional(),
   objectives: z.array(z.string()).default([]),
-  municipalityIds: z.array(z.string()).default([]),
+  // Nulo, não `[]`: `[]` afirmaria "nenhum município", e o que ocorre nos dois
+  // projetos sem lista é a fonte declarar a abrangência indeterminada.
+  municipalityIds: z.array(z.string()).nullable().default(null),
   beneficiaryPopulation: z.number().int().nonnegative().nullable().optional(),
   executionStatus: executionStatusSchema,
   validationStatus: validationStatusSchema,
