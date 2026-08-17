@@ -4,6 +4,7 @@ import {
   BarChart3,
   Building2,
   CalendarRange,
+  CheckSquare,
   FileText,
   FolderKanban,
   GitBranch,
@@ -45,6 +46,10 @@ const NAV: NavItem[] = [
   { to: '/app/oportunidades', label: 'Oportunidades', Icon: Send },
   { to: '/app/desafios', label: 'Desafios', Icon: Handshake },
   { to: '/app/documentos', label: 'Documentos', Icon: FileText },
+  // Sem `roles`: todo membro acompanha os pedidos, inclusive quem só lê. É o
+  // registro de o que se propôs publicar e por quê — decidir é que exige
+  // perfil, e a própria tela diz isso a quem não decide.
+  { to: '/app/aprovacoes', label: 'Pedidos', Icon: CheckSquare },
   { to: '/app/publicacao', label: 'Publicação', Icon: Send, roles: ['owner'] },
   { to: '/app/auditoria', label: 'Auditoria', Icon: ScrollText },
   { to: '/app/usuarios', label: 'Usuários', Icon: Users, roles: ['owner'] },

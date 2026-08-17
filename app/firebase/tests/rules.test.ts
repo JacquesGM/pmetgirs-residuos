@@ -828,3 +828,120 @@ describe('convite', () => {
     );
   });
 });
+
+// ----------------------------------------------- FLUXO EDITORIAL DA PUBLICAÇÃO
+//
+// Depois que os formulários de conteúdo saíram, publicar virou a única escrita
+// que a interface oferece — e é ela que o fluxo editorial governa.
+//
+// Três atos, três papéis, e o ponto destes testes é que nenhum papel consegue
+// executar o ato do outro. A separação vive aqui, nas Rules: a interface pode
+// esconder um botão, mas esconder não é impedir.
+describe('pedidos de publicação', () => {
+  const pedido = (uid: string) => ({
+    id: 'ped-1',
+    workspaceId: WID,
+    items: ['projects/proj-app'],
+    reason: 'Metas conferidas contra a Tabela 12 do Plano de Ações',
+    itemCount: 1,
+    status: 'pending',
+    createdBy: uid,
+    createdAt: serverTimestamp(),
+    reviewedBy: null,
+    reviewedAt: null,
+    reviewNote: null,
+  });
+
+  const caminho = `workspaces/${WID}/approvalRequests/ped-1`;
+
+  async function semRegras(dados: Record<string, unknown>) {
+    await testEnv.withSecurityRulesDisabled(async (c) => {
+      await setDoc(doc(c.firestore(), caminho), { ...dados, createdAt: Timestamp.now() });
+    });
+  }
+
+  it('editor cria pedido', async () => {
+    await assertSucceeds(setDoc(doc(ctx(EDITOR).firestore(), caminho), pedido(EDITOR.uid)));
+  });
+
+  it('leitor não cria pedido', async () => {
+    await assertFails(setDoc(doc(ctx(VIEWER).firestore(), caminho), pedido(VIEWER.uid)));
+  });
+
+  it('editor não cria pedido em nome de outra pessoa', async () => {
+    // createdBy é a assinatura do pedido. Sem esta regra, um pedido poderia
+    // nascer atribuído a quem não o fez.
+    await assertFails(setDoc(doc(ctx(EDITOR).firestore(), caminho), pedido(OWNER.uid)));
+  });
+
+  it('editor não cria pedido já aprovado', async () => {
+    // Sem isto, quem propõe se autoaprovaria na criação e o revisor nunca
+    // veria o pedido.
+    await assertFails(
+      setDoc(doc(ctx(EDITOR).firestore(), caminho), { ...pedido(EDITOR.uid), status: 'approved' }),
+    );
+  });
+
+  it('revisor decide pedido pendente', async () => {
+    await semRegras(pedido(EDITOR.uid));
+    await assertSucceeds(
+      setDoc(
+        doc(ctx(REVIEWER).firestore(), caminho),
+        {
+          ...pedido(EDITOR.uid),
+          status: 'approved',
+          reviewedBy: REVIEWER.uid,
+          reviewedAt: serverTimestamp(),
+        },
+      ),
+    );
+  });
+
+  it('editor não decide o próprio pedido', async () => {
+    // A regra é de papel, não de autoria: canReview não inclui editor. Que
+    // ninguém revise o PRÓPRIO pedido é barreira da interface, e está dito lá
+    // em voz alta — aqui se prova a parte que as Rules garantem.
+    await semRegras(pedido(EDITOR.uid));
+    await assertFails(
+      setDoc(doc(ctx(EDITOR).firestore(), caminho), {
+        ...pedido(EDITOR.uid),
+        status: 'approved',
+        reviewedBy: EDITOR.uid,
+        reviewedAt: serverTimestamp(),
+      }),
+    );
+  });
+
+  it('revisor não assina a decisão como outra pessoa', async () => {
+    await semRegras(pedido(EDITOR.uid));
+    await assertFails(
+      setDoc(doc(ctx(REVIEWER).firestore(), caminho), {
+        ...pedido(EDITOR.uid),
+        status: 'approved',
+        reviewedBy: OWNER.uid,
+        reviewedAt: serverTimestamp(),
+      }),
+    );
+  });
+
+  it('pedido não pode ser apagado', async () => {
+    // Registro de decisão não se apaga: um pedido recusado que sumisse levaria
+    // junto a prova de que a recusa aconteceu.
+    await semRegras(pedido(EDITOR.uid));
+    const { deleteDoc } = await import('firebase/firestore');
+    await assertFails(deleteDoc(doc(ctx(OWNER).firestore(), caminho)));
+  });
+
+  it('aprovar não publica: revisor não escreve na árvore pública', async () => {
+    // O ponto do fluxo inteiro. Um revisor com aprovação em mãos continua sem
+    // conseguir tocar em publicWorkspaces.
+    await assertFails(
+      setDoc(doc(ctx(REVIEWER).firestore(), `publicWorkspaces/${WID}/projects/proj-app`), {
+        name: 'Publicado por quem não publica',
+        sourceEntityId: 'proj-app',
+        sourceVersion: 1,
+        releaseId: 'rel-x',
+      }),
+    );
+  });
+});

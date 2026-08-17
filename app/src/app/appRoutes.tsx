@@ -12,6 +12,7 @@ import { InvestmentsPage } from '../features/portfolio/InvestmentsPage';
 import { OpportunitiesPage } from '../features/portfolio/OpportunitiesPage';
 import { ChallengesPage } from '../features/portfolio/ChallengesPage';
 import { PublicationPage } from '../features/portfolio/PublicationPage';
+import { ApprovalsPage } from '../features/portfolio/ApprovalsPage';
 
 export interface PrivateRoute {
   path: string;
@@ -69,6 +70,7 @@ export const privateRoutes: PrivateRoute[] = [
       />
     ),
   },
+  { path: 'aprovacoes', title: 'Pedidos de publicação', element: <ApprovalsPage /> },
   { path: 'publicacao', title: 'Publicação', element: <PublicationPage /> },
   { path: 'auditoria', title: 'Auditoria', element: <AuditPage /> },
   {

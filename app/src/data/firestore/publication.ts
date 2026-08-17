@@ -43,6 +43,14 @@ export async function publishBatch(
   items: PublishItem[],
   actor: { uid: string; role: Role },
   reason: string,
+  /**
+   * Pedido de publicação que esta publicação cumpre, quando houver.
+   *
+   * O elo mora aqui, e não no pedido, porque o release é append-only por
+   * regra: um registro de decisão não deve mudar depois de tomada, e as Rules
+   * de `approvalRequests` nem permitiriam a atualização.
+   */
+  approvalRequestId?: string,
 ): Promise<PublishResult> {
   if (actor.role !== 'owner') {
     throw new Error('Somente o proprietário publica. Revisar e aprovar não é publicar.');
@@ -91,6 +99,7 @@ export async function publishBatch(
     reason: reason.trim(),
     itemCount: items.length,
     items: items.map((i) => `${i.collection}/${i.id}`),
+    approvalRequestId: approvalRequestId ?? null,
     // O que foi removido de cada item fica no release, não no documento
     // público: é registro de auditoria, não conteúdo para o cidadão.
     droppedFields: droppedFieldsByItem,
@@ -123,6 +132,12 @@ export interface ReleaseSummary {
   publishedAt: Date | null;
   reason: string;
   itemCount: number;
+  /**
+   * Pedido que este release cumpriu, quando houve. É por aqui que a tela sabe
+   * que um pedido aprovado já foi publicado — o pedido em si não é alterado
+   * depois da decisão.
+   */
+  approvalRequestId: string | null;
 }
 
 export async function listReleases(max = 20): Promise<ReleaseSummary[]> {
@@ -138,6 +153,10 @@ export async function listReleases(max = 20): Promise<ReleaseSummary[]> {
         publishedAt: at && typeof at.toDate === 'function' ? (at.toDate() as Date) : null,
         reason: String(data.reason ?? ''),
         itemCount: typeof data.itemCount === 'number' ? data.itemCount : 0,
+        approvalRequestId:
+          typeof data.approvalRequestId === 'string' && data.approvalRequestId !== ''
+            ? data.approvalRequestId
+            : null,
       };
     })
     .sort((a, b) => (b.publishedAt?.getTime() ?? 0) - (a.publishedAt?.getTime() ?? 0));

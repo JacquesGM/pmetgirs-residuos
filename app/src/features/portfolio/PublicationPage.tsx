@@ -5,6 +5,7 @@ import { COLECOES_PUBLICAVEIS } from '../../data/published/publishedCollections'
 import { countPublic, listReleases, publishBatch } from '../../data/firestore/publication';
 import { PUBLIC_ALLOWLIST } from '../../domain/publication/sanitize';
 import { useAuth } from '../../app/AuthProvider';
+import { criarPedido, listarPedidos } from '../../data/firestore/approvals';
 import { useAsync } from './useAsync';
 import { Pill } from './StateLabels';
 
@@ -20,6 +21,10 @@ const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeSt
 export function PublicationPage() {
   const { state: auth, hasRole } = useAuth();
   const ehProprietario = hasRole(['owner']);
+  // Editor e administrador propõem; só o proprietário publica. A separação é
+  // das Security Rules — `publicWorkspaces` só aceita escrita do proprietário —,
+  // e esta tela apenas não tenta contorná-la.
+  const podeSolicitar = !ehProprietario && hasRole(['admin', 'editor']);
 
   // Carrega todas as coleções publicáveis de uma vez. O registro é o mesmo que
   // o gerador de snapshot usa, para que a tela e o arquivo nunca discordem
@@ -58,6 +63,41 @@ export function PublicationPage() {
       else proximo.add(chave);
       return proximo;
     });
+  }
+
+  /**
+   * Pedido de publicação, o caminho de quem não publica.
+   *
+   * Grava só as chaves `colecao/id` — não os documentos. O conteúdo é lido de
+   * novo na hora de publicar, do que estiver gravado então: um pedido que
+   * carregasse cópia dos dados publicaria a versão do dia do pedido, e não a
+   * vigente no dia da publicação.
+   */
+  async function solicitar(event: React.FormEvent) {
+    event.preventDefault();
+    if (auth.status !== 'active') return;
+
+    setErro(null);
+    setResultado(null);
+    setPublicando(true);
+    try {
+      const { id } = await criarPedido({
+        itens: [...selecionados],
+        motivo,
+        actorUid: auth.membership.uid,
+        actorRole: auth.membership.role,
+      });
+      setResultado(
+        `Pedido ${id} registrado com ${selecionados.size} item(ns). ` +
+          'Ele aparece em Pedidos, para revisão. Nada foi ao ar ainda.',
+      );
+      setSelecionados(new Set());
+      setMotivo('');
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : 'Não foi possível registrar o pedido.');
+    } finally {
+      setPublicando(false);
+    }
   }
 
   async function publicar(event: React.FormEvent) {
@@ -179,15 +219,21 @@ export function PublicationPage() {
         </div>
       </section>
 
-      {ehProprietario && grupos.status === 'ready' && (
-        <form onSubmit={publicar} className="mt-8 rounded-lg border border-neutral-200 bg-white p-5">
+      {ehProprietario && <PedidosAprovados aoPublicar={() => { releases.reload(); publicados.reload(); }} />}
+
+      {(ehProprietario || podeSolicitar) && grupos.status === 'ready' && (
+        <form
+          onSubmit={ehProprietario ? publicar : solicitar}
+          className="mt-8 rounded-lg border border-neutral-200 bg-white p-5"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
             <Send aria-hidden="true" className="h-4 w-4" />
-            Publicar
+            {ehProprietario ? 'Publicar' : 'Solicitar publicação'}
           </h2>
           <p className="mt-1 text-sm text-neutral-600">
-            Documento público, registro do release e evento de auditoria são gravados no mesmo lote.
-            Se algo falhar, nada muda.
+            {ehProprietario
+              ? 'Documento público, registro do release e evento de auditoria são gravados no mesmo lote. Se algo falhar, nada muda.'
+              : 'Seu perfil propõe a publicação; quem publica é o proprietário, depois da revisão. O pedido fica registrado com o seu nome e o seu motivo.'}
           </p>
 
           <fieldset className="mt-4">
@@ -229,14 +275,19 @@ export function PublicationPage() {
 
           <label className="mt-4 block text-sm">
             <span className="mb-1 block font-medium text-neutral-700">
-              Motivo da publicação <span className="text-status-red">*</span>
+              {ehProprietario ? 'Motivo da publicação' : 'Motivo do pedido'}{' '}
+              <span className="text-status-red">*</span>
             </span>
             <input
               required
               minLength={5}
               value={motivo}
               onChange={(e) => setMotivo(e.target.value)}
-              placeholder="Ex.: atualização trimestral aprovada pelo comitê"
+              placeholder={
+                ehProprietario
+                  ? 'Ex.: atualização trimestral aprovada pelo comitê'
+                  : 'Ex.: metas revisadas contra a Tabela 12 do Plano de Ações'
+              }
               className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
             />
           </label>
@@ -246,7 +297,13 @@ export function PublicationPage() {
             disabled={publicando || selecionados.size === 0}
             className="mt-4 min-h-11 rounded-md bg-brand-blue-700 px-4 text-sm font-medium text-white hover:bg-brand-blue-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {publicando ? 'Publicando...' : `Publicar ${selecionados.size} item(ns)`}
+            {publicando
+              ? ehProprietario
+                ? 'Publicando...'
+                : 'Enviando...'
+              : ehProprietario
+                ? `Publicar ${selecionados.size} item(ns)`
+                : `Solicitar publicação de ${selecionados.size} item(ns)`}
           </button>
 
           {erro && (
@@ -295,5 +352,120 @@ export function PublicationPage() {
         </p>
       </section>
     </div>
+  );
+}
+
+/**
+ * Pedidos aprovados, prontos para o proprietário concluir.
+ *
+ * Publicar daqui relê os documentos do banco na hora, e não o que estava
+ * gravado quando o pedido foi feito: entre a proposta e a publicação o
+ * conteúdo pode ter mudado, e o que vai ao ar tem de ser o vigente.
+ *
+ * O motivo do release é o do pedido, e o release guarda `approvalRequestId`.
+ * É assim que "quem propôs, quem revisou e quem publicou" fica reconstituível
+ * sem alterar o registro da decisão depois de tomada.
+ */
+function PedidosAprovados({ aoPublicar }: { aoPublicar: () => void }) {
+  const { state: auth } = useAuth();
+  const pedidos = useAsync(() => listarPedidos(), []);
+  const [publicandoId, setPublicandoId] = useState<string | null>(null);
+  const [erro, setErro] = useState<string | null>(null);
+  const [feito, setFeito] = useState<string | null>(null);
+
+  const jaPublicados = useAsync(async () => {
+    const releases = await listReleases(100);
+    return new Set(releases.map((r) => r.approvalRequestId).filter(Boolean) as string[]);
+  }, []);
+
+  const aprovados =
+    pedidos.status === 'ready' && jaPublicados.status === 'ready'
+      ? pedidos.data.filter((p) => p.status === 'approved' && !jaPublicados.data.has(p.id))
+      : [];
+
+  if (aprovados.length === 0) return null;
+
+  async function publicarPedido(pedidoId: string, itens: string[], motivo: string) {
+    if (auth.status !== 'active') return;
+    setErro(null);
+    setFeito(null);
+    setPublicandoId(pedidoId);
+    try {
+      // As chaves vêm como `colecao/id`; o documento é lido agora, do banco.
+      const porColecao = new Map<string, string[]>();
+      for (const chave of itens) {
+        const [colecao, ...resto] = chave.split('/');
+        porColecao.set(colecao, [...(porColecao.get(colecao) ?? []), resto.join('/')]);
+      }
+
+      const lidos = await Promise.all(
+        [...porColecao].map(async ([colecao, ids]) => {
+          const brutos = await readDocsForPublication(colecao as never, ids);
+          return brutos.map((b) => ({
+            collection: colecao as never,
+            id: b.id,
+            version: b.version,
+            data: b.data as Record<string, unknown>,
+          }));
+        }),
+      );
+
+      const r = await publishBatch(
+        lidos.flat(),
+        { uid: auth.membership.uid, role: auth.membership.role },
+        motivo,
+        pedidoId,
+      );
+      setFeito(`${r.publishedCount} item(ns) publicado(s) no release ${r.releaseId}.`);
+      jaPublicados.reload();
+      aoPublicar();
+    } catch (e) {
+      setErro(e instanceof Error ? e.message : 'Não foi possível publicar o pedido.');
+    } finally {
+      setPublicandoId(null);
+    }
+  }
+
+  return (
+    <section className="mt-8 rounded-lg border border-brand-green-300 bg-brand-green-50 p-5">
+      <h2 className="text-base font-semibold text-neutral-900">
+        Aprovados, aguardando publicação
+      </h2>
+      <p className="mt-1 text-sm text-neutral-700">
+        Alguém propôs, alguém revisou. Publicar relê os documentos do banco agora — o que vai ao ar
+        é o conteúdo vigente, não o do dia do pedido.
+      </p>
+      <ul className="mt-4 space-y-3">
+        {aprovados.map((p) => (
+          <li key={p.id} className="rounded-md border border-neutral-200 bg-white p-4">
+            <p className="font-medium text-neutral-900">{p.motivo}</p>
+            <p className="mt-0.5 text-xs text-neutral-500">
+              {p.itens.length} item(ns) · pedido {p.id}
+            </p>
+            {p.parecer && <p className="mt-2 text-sm text-neutral-700">Parecer: {p.parecer}</p>}
+            <button
+              type="button"
+              disabled={publicandoId !== null}
+              onClick={() => publicarPedido(p.id, p.itens, p.motivo)}
+              className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-md bg-brand-blue-700 px-4 text-sm font-medium text-white hover:bg-brand-blue-800 disabled:opacity-60"
+            >
+              <Send aria-hidden="true" className="h-4 w-4" />
+              {publicandoId === p.id ? 'Publicando…' : `Publicar ${p.itens.length} item(ns)`}
+            </button>
+          </li>
+        ))}
+      </ul>
+      {erro && (
+        <p className="mt-3 flex items-start gap-2 text-sm text-status-red" role="alert">
+          <AlertTriangle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
+          {erro}
+        </p>
+      )}
+      {feito && (
+        <p className="mt-3 text-sm text-brand-green-800" role="status">
+          {feito}
+        </p>
+      )}
+    </section>
   );
 }
