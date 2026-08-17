@@ -26,6 +26,7 @@ export type PublicCollection =
   | 'municipalIndicators'
   | 'treatmentCentrals'
   | 'economicViability'
+  | 'dumpsites'
   | 'glossary'
   | 'evidence';
 
@@ -142,6 +143,26 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /**
+   * Vazadouros encerrados e o estágio da remediação de cada um.
+   *
+   * Tudo é informação ambiental pública sobre área contaminada. A `note`
+   * atravessa porque é onde ficam as contradições da própria fonte.
+   */
+  dumpsites: [
+    'name',
+    'municipalityIds',
+    'stage',
+    'firstStage',
+    'primaryTreatment',
+    'secondaryTreatment',
+    'tertiaryTreatment',
+    'closureYear',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /**
    * Viabilidade econômica do EVTE.
    *

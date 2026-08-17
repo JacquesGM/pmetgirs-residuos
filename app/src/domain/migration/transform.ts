@@ -10,6 +10,7 @@ import type {
   TemaGut,
   CentralDeTratamento,
   ViabilidadeEconomica,
+  Vazadouro,
   Infraestrutura,
   Meta,
   Municipio,
@@ -433,6 +434,43 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ------------------------------------------------------------ vazadouros
+
+/**
+ * Vazadouro encerrado, com o estágio de remediação de cada etapa.
+ *
+ * `municipalityIds` guarda um único município em lista, e não um campo
+ * escalar, para que a tela do mapa use o mesmo caminho de projetos e centrais
+ * — três entidades diferentes ligadas ao município pelo mesmo campo.
+ */
+export function transformDumpsite(v: Vazadouro): MigrationRecord {
+  return {
+    collection: 'dumpsites',
+    id: v.id,
+    legacyId: v.id,
+    data: {
+      name: v.nome,
+      nameNormalized: normalizeName(v.nome),
+      municipalityIds: [v.municipioId],
+      stage: v.estagio,
+      firstStage: v.primeiraEtapa,
+      primaryTreatment: v.tratamentoPrimario,
+      secondaryTreatment: v.tratamentoSecundario,
+      tertiaryTreatment: v.tratamentoTerciario,
+      closureYear: v.anoEncerramento,
+      sourceLabel: v.fonte,
+      validationStatus: mapLegacyValidationStatus(v.statusValidacao).validation ?? 'validated',
+      note: v.observacao,
+    },
+    gaps: gapsFor({
+      closureYear: v.anoEncerramento,
+      primaryTreatment: v.tratamentoPrimario,
+      secondaryTreatment: v.tratamentoSecundario,
+      tertiaryTreatment: v.tratamentoTerciario,
+    }),
   };
 }
 

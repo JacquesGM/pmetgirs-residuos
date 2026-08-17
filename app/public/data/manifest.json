@@ -67,13 +67,19 @@
       "sha256": "a1ab23ae3f472598385ead57f2e3e4d7c332603f858c39daadc94b2f13b89b04"
     },
     {
+      "bytes": 12750,
+      "path": "current/vazadouros.json",
+      "registros": 23,
+      "sha256": "5d7b80111bdab3cc75b848d7a027bdac39bd93f1b7affd743cc9f7978a24cf59"
+    },
+    {
       "bytes": 6062,
       "path": "current/viabilidade-economica.json",
       "registros": 7,
       "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T18:37:05.578Z",
+  "generatedAt": "2026-08-17T19:06:14.001Z",
   "recordCounts": {
     "centrais-de-tratamento": 4,
     "documentos": 3,
@@ -86,6 +92,7 @@
     "metas": 44,
     "municipios": 22,
     "projetos": 10,
+    "vazadouros": 23,
     "viabilidade-economica": 7
   },
   "schemaVersion": 1,
@@ -93,6 +100,7 @@
     "836bwERNCXB56n5JF8kn",
     "FOfKFrYqNfGKXeDwyilh",
     "Ovk1jztc0LrIz2CbwQu2",
+    "Xrhb0NxrtaVVeiZBWLcb",
     "axBf0SBVhSkgjAYvFkJ6",
     "u22VKqyMyLa4NhVQpbGd"
   ],

@@ -363,3 +363,27 @@ export interface ViabilidadeEconomica {
   statusValidacao: StatusValidacao;
   observacao: string | null;
 }
+
+/**
+ * Vazadouro encerrado e o estágio da sua remediação.
+ *
+ * O tema tem 125 pontos na matriz GUT — 2º de 16 — e o projeto que o carrega
+ * tinha abrangência nula na base, porque a fonte dizia apenas "até 23 áreas
+ * identificadas preliminarmente". A Tabela 29 do Prognóstico diz quais são.
+ */
+export interface Vazadouro {
+  id: string;
+  nome: string;
+  municipioId: string;
+  /** O estágio mais avançado alcançado, para leitura rápida. */
+  estagio: string;
+  primeiraEtapa: string | null;
+  tratamentoPrimario: string | null;
+  tratamentoSecundario: string | null;
+  tratamentoTerciario: string | null;
+  /** Ano de encerramento do vazadouro, quando a Tabela 30 o informa. */
+  anoEncerramento: number | null;
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

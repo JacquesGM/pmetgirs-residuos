@@ -15,6 +15,7 @@ import type {
   IndicadorMunicipal,
   CentralDeTratamento,
   ViabilidadeEconomica,
+  Vazadouro,
   Meta,
   Municipio,
   StatusProjeto,
@@ -174,6 +175,29 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ------------------------------------------------------------ vazadouros
+
+export function toVazadouro(doc: PublishedDocument): Vazadouro {
+  const d = doc.data;
+  const municipios = Array.isArray(d.municipalityIds)
+    ? (d.municipalityIds as unknown[]).filter((x): x is string => typeof x === 'string')
+    : [];
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    municipioId: municipios[0] ?? '',
+    estagio: texto(d, 'stage'),
+    primeiraEtapa: textoOuNulo(d, 'firstStage'),
+    tratamentoPrimario: textoOuNulo(d, 'primaryTreatment'),
+    tratamentoSecundario: textoOuNulo(d, 'secondaryTreatment'),
+    tratamentoTerciario: textoOuNulo(d, 'tertiaryTreatment'),
+    anoEncerramento: numero(d, 'closureYear'),
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: textoOuNulo(d, 'note') ? 'informacao_divergente' : 'dado_oficial_validado',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -512,6 +536,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'dumpsites',
+    arquivo: 'vazadouros',
+    rotulo: 'Vazadouros',
+    mapear: toVazadouro,
   },
   {
     colecao: 'economicViability',

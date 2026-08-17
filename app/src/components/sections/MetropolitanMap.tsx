@@ -4,7 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import municipiosData from '../../data/municipios.json';
 import indicadoresMunicipaisData from '../../data/indicadoresMunicipais.json';
 import projetosData from '../../data/projetos.json';
-import type { IndicadorMunicipal, Municipio, Projeto } from '../../types';
+import vazadourosData from '../../data/vazadouros.json';
+import type { IndicadorMunicipal, Municipio, Projeto, Vazadouro } from '../../types';
 import { municipiosDoProjeto } from '../../domain/abrangencia';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
@@ -21,6 +22,7 @@ import { DataValue } from '../ui/DataValue';
 const municipiosEmbutidos = municipiosData as Municipio[];
 const indicadoresMunicipaisEmbutidos = indicadoresMunicipaisData as IndicadorMunicipal[];
 const projetosEmbutidos = projetosData as Projeto[];
+const vazadourosEmbutidos = vazadourosData as Vazadouro[];
 
 const colunasMunicipios: DownloadColumn<Municipio>[] = [
   { key: 'nome', label: 'Município' },
@@ -61,6 +63,13 @@ export function MetropolitanMap() {
   );
 
   const projetos = useColecaoPublicada<Projeto>('projetos', projetosEmbutidos);
+  const vazadouros = useColecaoPublicada<Vazadouro>('vazadouros', vazadourosEmbutidos);
+
+  /** Vazadouros encerrados no município selecionado. */
+  const vazadourosDoMunicipio = useMemo(
+    () => (selecionado ? vazadouros.filter((v) => v.municipioId === selecionado.id) : []),
+    [vazadouros, selecionado],
+  );
 
   /**
    * Ações que alcançam o município selecionado.
@@ -224,6 +233,35 @@ export function MetropolitanMap() {
                   </dl>
                 </div>
               )}
+              {/* Passivo ambiental antes das ações: é o que já existe no
+                  território, e o tema tem 125 pontos na matriz GUT — 2º de 16. */}
+              <div className="mt-4 border-t border-neutral-200 pt-3">
+                <h3 className="text-sm font-semibold text-neutral-900">
+                  Vazadouros encerrados
+                </h3>
+                {vazadourosDoMunicipio.length === 0 ? (
+                  <p className="mt-2 text-sm text-neutral-600">
+                    Nenhum vazadouro identificado neste município pelo Prognóstico.
+                  </p>
+                ) : (
+                  <ul className="mt-2 space-y-2 text-sm">
+                    {vazadourosDoMunicipio.map((v) => (
+                      <li key={v.id}>
+                        <span className="font-medium text-neutral-800">{v.nome}</span>
+                        <span className="block text-neutral-600">
+                          {v.estagio}
+                          {v.anoEncerramento !== null &&
+                            ` · fechado em ${v.anoEncerramento}, há ${new Date().getFullYear() - v.anoEncerramento} anos`}
+                        </span>
+                        {v.observacao && (
+                          <InfoDisclosure label="Ressalva da fonte">{v.observacao}</InfoDisclosure>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
               <div className="mt-4 border-t border-neutral-200 pt-3">
                 <h3 className="text-sm font-semibold text-neutral-900">
                   Ações que alcançam {selecionado.nome}

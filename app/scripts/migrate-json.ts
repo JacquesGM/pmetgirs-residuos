@@ -67,6 +67,7 @@ function loadSources(): MigrationSources {
     priorizacaoGut: readJson('priorizacaoGut'),
     centraisDeTratamento: readJson('centraisDeTratamento'),
     viabilidadeEconomica: readJson('viabilidadeEconomica'),
+    vazadouros: readJson('vazadouros'),
     evolucao: readJson('evolucao'),
     glossario: readJson('glossario'),
     atualizacoes: readJson('atualizacoes'),

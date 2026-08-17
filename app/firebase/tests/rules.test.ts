@@ -156,7 +156,7 @@ describe('fronteira público / privado', () => {
     for (const colecao of [
       'projects', 'goals', 'indicators', 'municipalIndicators', 'municipalities',
       'infrastructures', 'inconsistencies', 'documents', 'glossary',
-      'costEstimates', 'gutPriorities', 'dependencies', 'treatmentCentrals', 'economicViability',
+      'costEstimates', 'gutPriorities', 'dependencies', 'treatmentCentrals', 'economicViability', 'dumpsites',
       'evidence', 'milestones',
     ]) {
       await assertSucceeds(getDoc(doc(db, `workspaces/${WID}/${colecao}/qualquer-id`)));

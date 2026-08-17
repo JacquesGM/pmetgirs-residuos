@@ -124,7 +124,7 @@ service cloud.firestore {
         'challenges', 'opportunities', 'fundingSources',
         'documents', 'inconsistencies', 'indicators', 'goals',
         'infrastructures', 'municipalities', 'imports', 'glossary',
-        'municipalIndicators', 'gutPriorities', 'treatmentCentrals', 'economicViability'
+        'municipalIndicators', 'gutPriorities', 'treatmentCentrals', 'economicViability', 'dumpsites'
       ];
     }
 
