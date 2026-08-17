@@ -14,6 +14,7 @@ import type {
   Indicador,
   IndicadorMunicipal,
   CentralDeTratamento,
+  ViabilidadeEconomica,
   Meta,
   Municipio,
   StatusProjeto,
@@ -173,6 +174,31 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// ---------------------------------------------------- viabilidade econômica
+
+export function toViabilidadeEconomica(doc: PublishedDocument): ViabilidadeEconomica {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    tipo: (textoOuNulo(d, 'kind') === 'tecnologia' ? 'tecnologia' : 'cenario'),
+    nome: texto(d, 'name'),
+    rsuTdia: numero(d, 'dailyMswTonnes'),
+    crdTdia: numero(d, 'dailyCdwTonnes'),
+    reciclaveisTdia: numero(d, 'dailyRecyclablesTonnes'),
+    usinasCombustao: numero(d, 'combustionPlants'),
+    usinasTermodegradacao: numero(d, 'thermalDegradationPlants'),
+    usinasTriagem: numero(d, 'sortingPlants'),
+    capexTotalReais: numero(d, 'totalCapexReais'),
+    receitaAnualReais: numero(d, 'annualRevenueReais'),
+    capexPorUsinaReais: numero(d, 'capexPerPlantReais'),
+    receitaAnualPorUsinaReais: numero(d, 'annualRevenuePerPlantReais'),
+    opexAnualReais: numero(d, 'annualOpexReais'),
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: 'estimativa_tecnica',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -486,6 +512,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'economicViability',
+    arquivo: 'viabilidade-economica',
+    rotulo: 'Viabilidade econômica',
+    mapear: toViabilidadeEconomica,
   },
   {
     colecao: 'treatmentCentrals',

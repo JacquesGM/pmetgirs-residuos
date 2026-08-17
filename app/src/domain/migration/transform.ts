@@ -9,6 +9,7 @@ import type {
   EstimativaDeCustoRegistro,
   TemaGut,
   CentralDeTratamento,
+  ViabilidadeEconomica,
   Infraestrutura,
   Meta,
   Municipio,
@@ -432,6 +433,48 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ------------------------------------------------ viabilidade econômica
+
+/**
+ * Cenário de investimento ou tecnologia, do EVTE do Prognóstico.
+ *
+ * Os valores em reais vão como número inteiro de reais, e não em centavos:
+ * são estimativas de bilhões arredondadas na fonte, e converter para centavos
+ * fingiria uma precisão de dois dígitos que o documento não tem.
+ */
+export function transformEconomicViability(v: ViabilidadeEconomica): MigrationRecord {
+  return {
+    collection: 'economicViability',
+    id: v.id,
+    legacyId: v.id,
+    data: {
+      name: v.nome,
+      nameNormalized: normalizeName(v.nome),
+      kind: v.tipo,
+      dailyMswTonnes: v.rsuTdia,
+      dailyCdwTonnes: v.crdTdia,
+      dailyRecyclablesTonnes: v.reciclaveisTdia,
+      combustionPlants: v.usinasCombustao,
+      thermalDegradationPlants: v.usinasTermodegradacao,
+      sortingPlants: v.usinasTriagem,
+      totalCapexReais: v.capexTotalReais,
+      annualRevenueReais: v.receitaAnualReais,
+      capexPerPlantReais: v.capexPorUsinaReais,
+      annualRevenuePerPlantReais: v.receitaAnualPorUsinaReais,
+      annualOpexReais: v.opexAnualReais,
+      sourceLabel: v.fonte,
+      validationStatus: mapLegacyValidationStatus(v.statusValidacao).validation ?? 'estimated',
+      note: v.observacao,
+    },
+    gaps: gapsFor({
+      totalCapexReais: v.capexTotalReais,
+      annualRevenueReais: v.receitaAnualReais,
+      capexPerPlantReais: v.capexPorUsinaReais,
+      annualOpexReais: v.opexAnualReais,
+    }),
   };
 }
 

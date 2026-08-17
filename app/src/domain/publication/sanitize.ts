@@ -25,6 +25,7 @@ export type PublicCollection =
   | 'inconsistencies'
   | 'municipalIndicators'
   | 'treatmentCentrals'
+  | 'economicViability'
   | 'glossary'
   | 'evidence';
 
@@ -141,6 +142,32 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /**
+   * Viabilidade econômica do EVTE.
+   *
+   * Números de estudo público, sem nada de pessoa ou de operação interna. A
+   * `note` atravessa porque é onde ficam as ressalvas — inclusive a de que o
+   * valor por extenso no texto da fonte não bate com o numeral.
+   */
+  economicViability: [
+    'name',
+    'kind',
+    'dailyMswTonnes',
+    'dailyCdwTonnes',
+    'dailyRecyclablesTonnes',
+    'combustionPlants',
+    'thermalDegradationPlants',
+    'sortingPlants',
+    'totalCapexReais',
+    'annualRevenueReais',
+    'capexPerPlantReais',
+    'annualRevenuePerPlantReais',
+    'annualOpexReais',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /**
    * Central de tratamento em operação.
    *

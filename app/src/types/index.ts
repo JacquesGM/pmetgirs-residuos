@@ -334,3 +334,32 @@ export interface CentralDeTratamento {
   statusValidacao: StatusValidacao;
   observacao: string | null;
 }
+
+/**
+ * Viabilidade econômica: um cenário de investimento ou uma tecnologia.
+ *
+ * Os dois convivem na mesma coleção porque são saídas do mesmo EVTE em
+ * granularidades diferentes, e a conferência que os prende é cruzada: CAPEX
+ * por tecnologia vezes o número de usinas do cenário dá exatamente o CAPEX
+ * total declarado, e o mesmo vale para a receita. Separá-los em duas coleções
+ * esconderia que um é a decomposição do outro.
+ */
+export interface ViabilidadeEconomica {
+  id: string;
+  tipo: 'cenario' | 'tecnologia';
+  nome: string;
+  rsuTdia: number | null;
+  crdTdia: number | null;
+  reciclaveisTdia: number | null;
+  usinasCombustao: number | null;
+  usinasTermodegradacao: number | null;
+  usinasTriagem: number | null;
+  capexTotalReais: number | null;
+  receitaAnualReais: number | null;
+  capexPorUsinaReais: number | null;
+  receitaAnualPorUsinaReais: number | null;
+  opexAnualReais: number | null;
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

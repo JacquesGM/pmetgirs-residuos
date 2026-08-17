@@ -21,6 +21,7 @@ export type TargetCollection =
   | 'gutPriorities'
   | 'dependencies'
   | 'treatmentCentrals'
+  | 'economicViability'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -91,6 +92,7 @@ export interface MigrationSources {
   estimativasDeCusto: unknown[];
   priorizacaoGut: unknown[];
   centraisDeTratamento: unknown[];
+  viabilidadeEconomica: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

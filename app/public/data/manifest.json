@@ -65,9 +65,15 @@
       "path": "current/projetos.json",
       "registros": 10,
       "sha256": "a1ab23ae3f472598385ead57f2e3e4d7c332603f858c39daadc94b2f13b89b04"
+    },
+    {
+      "bytes": 6062,
+      "path": "current/viabilidade-economica.json",
+      "registros": 7,
+      "sha256": "e805821e45f59315704642a669de201f1f3c105847349f787544fdf2decde189"
     }
   ],
-  "generatedAt": "2026-08-17T18:24:11.654Z",
+  "generatedAt": "2026-08-17T18:37:05.578Z",
   "recordCounts": {
     "centrais-de-tratamento": 4,
     "documentos": 3,
@@ -79,11 +85,13 @@
     "infraestruturas": 7,
     "metas": 44,
     "municipios": 22,
-    "projetos": 10
+    "projetos": 10,
+    "viabilidade-economica": 7
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
     "836bwERNCXB56n5JF8kn",
+    "FOfKFrYqNfGKXeDwyilh",
     "Ovk1jztc0LrIz2CbwQu2",
     "axBf0SBVhSkgjAYvFkJ6",
     "u22VKqyMyLa4NhVQpbGd"
