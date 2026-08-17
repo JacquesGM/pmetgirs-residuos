@@ -1,0 +1,242 @@
+[
+  {
+    "id": "tema-01",
+    "numero": 1,
+    "tema": "Gestão integrada dos RSU Metropolitanos",
+    "gravidade": 3,
+    "urgencia": 4,
+    "tendencia": 2,
+    "pontuacao": 24,
+    "pontuacaoImpressa": 24,
+    "ranking": 8,
+    "projetosRelacionados": [
+      "comite-metropolitano-saneamento"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-02",
+    "numero": 2,
+    "tema": "Valorização Monetária do RSU",
+    "gravidade": 5,
+    "urgencia": 5,
+    "tendencia": 4,
+    "pontuacao": 100,
+    "pontuacaoImpressa": 100,
+    "ranking": 4,
+    "projetosRelacionados": [
+      "licitacao-usinas-triagem"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-03",
+    "numero": 3,
+    "tema": "Gases de Efeito Estufa Relacionados ao RSU",
+    "gravidade": 5,
+    "urgencia": 5,
+    "tendencia": 5,
+    "pontuacao": 125,
+    "pontuacaoImpressa": 125,
+    "ranking": 1,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-04",
+    "numero": 4,
+    "tema": "Logística para Tratamento do RSU Metropolitano",
+    "gravidade": 3,
+    "urgencia": 3,
+    "tendencia": 2,
+    "pontuacao": 18,
+    "pontuacaoImpressa": 18,
+    "ranking": 9,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-05",
+    "numero": 5,
+    "tema": "Custos e Receitas de RSU Metropolitano",
+    "gravidade": 3,
+    "urgencia": 3,
+    "tendencia": 3,
+    "pontuacao": 27,
+    "pontuacaoImpressa": 27,
+    "ranking": 7,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-06",
+    "numero": 6,
+    "tema": "Lodo de ETE & RSU",
+    "gravidade": 2,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 8,
+    "pontuacaoImpressa": 8,
+    "ranking": 12,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-07",
+    "numero": 7,
+    "tema": "Reciclagem e o RSU Metropolitano",
+    "gravidade": 5,
+    "urgencia": 5,
+    "tendencia": 4,
+    "pontuacao": 100,
+    "pontuacaoImpressa": 100,
+    "ranking": 5,
+    "projetosRelacionados": [
+      "apoio-cooperativas-catadores"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-08",
+    "numero": 8,
+    "tema": "Metas e Indicadores de Desempenho para o RSU",
+    "gravidade": 2,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 8,
+    "pontuacaoImpressa": 8,
+    "ranking": 13,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-09",
+    "numero": 9,
+    "tema": "Passivos do RSU e sua Remediação",
+    "gravidade": 5,
+    "urgencia": 5,
+    "tendencia": 5,
+    "pontuacao": 125,
+    "pontuacaoImpressa": 125,
+    "ranking": 2,
+    "projetosRelacionados": [
+      "remediacao-lixoes-aterros"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-10",
+    "numero": 10,
+    "tema": "Conversão do RSU Metropolitano em Energia Elétrica",
+    "gravidade": 5,
+    "urgencia": 5,
+    "tendencia": 5,
+    "pontuacao": 125,
+    "pontuacaoImpressa": 125,
+    "ranking": 3,
+    "projetosRelacionados": [
+      "licitacao-usinas-recuperacao-energetica"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-11",
+    "numero": 11,
+    "tema": "Fomentar tratamento para o RCC Metropolitano",
+    "gravidade": 2,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 8,
+    "pontuacaoImpressa": 8,
+    "ranking": 14,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-12",
+    "numero": 12,
+    "tema": "Banco de Dados e APP para Gestão do RSU Metropolitano",
+    "gravidade": 3,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 12,
+    "pontuacaoImpressa": 12,
+    "ranking": 11,
+    "projetosRelacionados": [
+      "banco-dados-aplicativo-digital"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-13",
+    "numero": 13,
+    "tema": "Imobilização de Cinzas - Final do RSU",
+    "gravidade": 2,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 8,
+    "pontuacaoImpressa": 8,
+    "ranking": 15,
+    "projetosRelacionados": [
+      "licitacao-usinas-asfalto"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-14",
+    "numero": 14,
+    "tema": "Geração de créditos de carbono pela Conversão de RSU em Energia",
+    "gravidade": 2,
+    "urgencia": 3,
+    "tendencia": 3,
+    "pontuacao": 18,
+    "pontuacaoImpressa": 18,
+    "ranking": 10,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  },
+  {
+    "id": "tema-15",
+    "numero": 15,
+    "tema": "Plano de Negócios para RSU Metropolitano",
+    "gravidade": 4,
+    "urgencia": 4,
+    "tendencia": 5,
+    "pontuacao": 80,
+    "pontuacaoImpressa": 88,
+    "ranking": 6,
+    "projetosRelacionados": [
+      "plano-negocios-pmetgirs"
+    ],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": "A Tabela 5 imprime 88 para este tema, mas o produto de Gravidade 4, Urgência 4 e Tendência 5 é 80 — e é 80 que a Tabela 6 usa no ranking. Das dezesseis linhas, esta é a única em que a multiplicação não fecha."
+  },
+  {
+    "id": "tema-16",
+    "numero": 16,
+    "tema": "Fomentar tratamento para o RSS Metropolitano",
+    "gravidade": 2,
+    "urgencia": 2,
+    "tendencia": 2,
+    "pontuacao": 8,
+    "pontuacaoImpressa": 8,
+    "ranking": 16,
+    "projetosRelacionados": [],
+    "fonte": "Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023)",
+    "observacao": null
+  }
+]

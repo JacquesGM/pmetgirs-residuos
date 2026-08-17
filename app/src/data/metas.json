@@ -1,67 +1,780 @@
 [
   {
-    "id": "coleta-domiciliar-universal",
-    "nome": "Universalização da coleta domiciliar",
+    "id": "producao-de-estudos-acerca-das-tecnologias-que-visam-a-m",
+    "nome": "Produção de estudos acerca das tecnologias que visam a minimização da geração de resíduos",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
     "linhaBase": null,
     "resultadoAtual": null,
-    "resultadoEsperado": "Coleta domiciliar universalizada em todos os 22 municípios",
+    "resultadoEsperado": "Apoio e fomento contínuos aos estudos e aplicação de tecnologias e processos com o objetivo de minimizar a quantidade de resíduos encaminhados à disposição final",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Academia"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Criação de acervo de estudos para disponibilização pública",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "producao-de-cartilhas-e-manuais-orientativos",
+    "nome": "Produção de cartilhas e manuais orientativos",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Apoio à implantação de programas permanentes de educação ambiental que abordem a não geração, redução da geração, a reutilização e reciclagem dos resíduos sólidos",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios",
+      "Escolas"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Número de materiais criados por município",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "assinatura-de-acordos-setoriais",
+    "nome": "Assinatura de acordos setoriais",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Obrigatoriedade da adoção de sistemas de logística reversa pelos diversos setores produtivos considerando o compartilhamento de responsabilidades, em um prazo de 10 anos",
+    "prazo": "10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Iniciativa privada"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Número de acordos assinados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "producao-de-estudos-e-campanhas-sobre-compostagem-de-res",
+    "nome": "Produção de estudos e campanhas sobre compostagem de resíduos nos municípios e nas residências",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Estímulo contínuo à implementação da compostagem da parcela orgânica dos RSU e agrossilvopastoris",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Academia",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Disponibilização de estudos para consulta pública; número de campanhas sobre compostagem; assessoria técnica aos municípios que implantarem usinas de compostagem",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "implantacao-de-equipamentos-apropriados-a-gestao-de-resi",
+    "nome": "Implantação de equipamentos apropriados à gestão de resíduos sólidos em assentamentos subnormais",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Implantação de novas tecnologias voltadas à gestão dos resíduos gerados em assentamentos subnormais, em um prazo de 10 anos",
+    "prazo": "10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Academia",
+      "IRM",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Equipamentos implantados em assentamentos subnormais",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "disponibilizacao-de-fluxos-de-mercado-para-composto-e-te",
+    "nome": "Disponibilização de fluxos de mercado para composto e técnicas de aplicação",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Fomento contínuo à utilização de composto orgânico com práticas ambientalmente adequadas nas atividades agrícolas, de acordo com padrões técnicos estabelecidos, em um prazo de 10 anos",
+    "prazo": "10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Academia",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Mapeamento de fluxos de mercado; disponibilização de estudos sobre técnicas de aplicação do composto",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 55",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "conscientizacao-da-populacao-e-empresas",
+    "nome": "Conscientização da população e empresas",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Reforço contínuo das ações de educação ambiental, com vistas a minimizar o descarte inadequado de resíduos sólidos",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Escolas",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Assessoria técnica aos municípios que realizarem campanhas e ações de educação ambiental",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "formalizacao-do-arranjo-de-municipios-para-o-gerenciamen",
+    "nome": "Formalização do arranjo de municípios para o gerenciamento do RSU",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": "Havia um único arranjo formalizado: o Consórcio Intermunicipal de Gestão de Resíduos Sólidos do Centro Sul I, que reúne os municípios ligados à CTR de Paracambi. As demais centrais mantinham concessão e contratos individuais com cada município atendido. Fonte: Diagnóstico Geral, conclusão.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Organização de arranjos intermunicipais, para a gestão de RSU, em um prazo de até 2 anos",
+    "prazo": "Até 2 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de arranjos criados em relação ao total planejado",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
+  },
+  {
+    "id": "coleta-domiciliar-universal",
+    "nome": "Implantação da coleta domiciliar em áreas urbanas",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": "Em 2021/2022, 14 dos 22 municípios já superavam 99% de cobertura da área urbana. Os menores índices eram Rio Bonito (65,65%), Magé (80,73%), Tanguá (85,96%) e Cachoeiras de Macacu (86,50%). Fonte: Diagnóstico Geral, Tabela 12 e conclusão.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Disponibilizar em um prazo de até 2 anos a coleta domiciliar de RSU em áreas urbanas a 100% dos municípios da RMRJ",
     "prazo": "Até 2 anos",
     "municipios": "22 municípios da RMRJ",
-    "situacao": "nao_iniciado",
-    "metodologia": null,
-    "fonte": "Plano de Ações do PMetGIRS",
-    "ultimaAtualizacao": null
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de coleta domiciliar nos municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
+  },
+  {
+    "id": "implantacao-das-25-unidades-de-triagem",
+    "nome": "Implantação das 25 Unidades de Triagem",
+    "objetivoGeral": "Redução da destinação inadequada e da quantidade dos resíduos sólidos dispostos em aterros sanitários",
+    "linhaBase": "Nenhuma das 25 unidades havia sido construída. O Diagnóstico não identificou unidades de triagem mecanizada em operação na RMRJ; as unidades existentes são galpões de beneficiamento primário, de infraestrutura precária e quantidade não apurada, porque os municípios não forneceram os endereços solicitados. Fonte: Diagnóstico Geral, capítulo 6.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Implantação de unidades de transferência e triagem, em um prazo de até 10 anos",
+    "prazo": "Até 10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Arranjos intermunicipais"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de unidades implantadas em relação ao total planejado",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
   },
   {
     "id": "coleta-seletiva-50",
     "nome": "Coleta seletiva — primeira etapa",
-    "linhaBase": null,
+    "objetivoGeral": "Não geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": "Depende do que se mede, e as duas leituras divergem. Por município, 12 dos 22 (54,5%) declaravam ter coleta seletiva em 2022 — acima do alvo de 50%. Por volume, apenas cerca de 1% dos resíduos era efetivamente coletado de forma seletiva, com 11 municípios em 0,00%. Fonte: Diagnóstico Geral, Tabela 44 e conclusão.",
     "resultadoAtual": null,
-    "resultadoEsperado": "50% de cobertura de coleta seletiva",
-    "prazo": "2 anos",
+    "resultadoEsperado": "50% de cobertura de coleta seletiva nos municípios da RMRJ",
+    "prazo": "Até 2 anos",
     "municipios": "22 municípios da RMRJ",
-    "situacao": "nao_iniciado",
-    "metodologia": null,
-    "fonte": "Plano de Ações do PMetGIRS",
-    "ultimaAtualizacao": null
+    "responsaveis": [
+      "IRM",
+      "Municípios",
+      "Associações e cooperativas"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos reciclados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
   },
   {
     "id": "coleta-seletiva-75",
     "nome": "Coleta seletiva — segunda etapa",
-    "linhaBase": null,
+    "objetivoGeral": "Não geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": "Em 2022, 12 dos 22 municípios (54,5%) declaravam ter coleta seletiva, mas apenas cerca de 1% do volume de resíduos era coletado seletivamente. A maior cobertura por volume era Cachoeiras de Macacu, com 5,65%. Fonte: Diagnóstico Geral, Tabela 44 e conclusão.",
     "resultadoAtual": null,
-    "resultadoEsperado": "75% de cobertura de coleta seletiva",
-    "prazo": "10 anos",
+    "resultadoEsperado": "75% de cobertura de coleta seletiva nos municípios da RMRJ",
+    "prazo": "De 2 a 10 anos",
     "municipios": "22 municípios da RMRJ",
-    "situacao": "nao_iniciado",
-    "metodologia": null,
-    "fonte": "Plano de Ações do PMetGIRS",
-    "ultimaAtualizacao": null
+    "responsaveis": [
+      "IRM",
+      "Municípios",
+      "Associações e cooperativas"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos reciclados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
   },
   {
     "id": "coleta-seletiva-100",
     "nome": "Coleta seletiva — meta final",
-    "linhaBase": null,
+    "objetivoGeral": "Não geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": "Em 2022, nenhum município da RMRJ chegava a 6% dos resíduos coletados seletivamente. O município do Rio de Janeiro, responsável por mais da metade do RSU metropolitano, registrava 0,04%. Fonte: Diagnóstico Geral, Tabela 44.",
     "resultadoAtual": null,
-    "resultadoEsperado": "100% de cobertura de coleta seletiva",
+    "resultadoEsperado": "100% de cobertura de coleta seletiva nos municípios da RMRJ",
     "prazo": "20 anos",
     "municipios": "22 municípios da RMRJ",
-    "situacao": "nao_iniciado",
-    "metodologia": null,
-    "fonte": "Plano de Ações do PMetGIRS",
+    "responsaveis": [
+      "IRM",
+      "Municípios",
+      "Associações e cooperativas"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos reciclados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
+  },
+  {
+    "id": "capacitacao-das-associacoes-e-cooperativas",
+    "nome": "Capacitação das associações e cooperativas",
+    "objetivoGeral": "Não geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Promoção de ações contínuas visando a capacitação técnica, gerencial e profissionalizante das cooperativas e associações de catadores",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Academia",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Ações promovidas por ano",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "integracao-das-associacoes-e-cooperativas-ao-programa-de",
+    "nome": "Integração das associações e cooperativas ao programa de coleta seletiva",
+    "objetivoGeral": "Integração das associações e cooperativas de catadores de materiais recicláveis",
+    "linhaBase": "Em 10 dos 22 municípios havia catadores organizados em cooperativas ou associações, somando 49 entidades e cerca de 830 associados. Levantamento do Movimento Eu Sou Catador entre 2019 e 2020 estimava 1.759 catadores em 95 empreendimentos de economia solidária na região. Fonte: Diagnóstico Geral, Tabelas 45 e 46.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Estímulo contínuo às parcerias entre empresas recicladoras, poder público, ONGs e outros segmentos de interesse para o desenvolvimento de programa de coleta seletiva para o fortalecimento de associações e cooperativas de catadores",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de associações e cooperativas participantes do programa de coleta seletiva",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2021-12-31"
+  },
+  {
+    "id": "encaminhamento-dos-materiais-reciclaveis-advindos-da-col",
+    "nome": "Encaminhamento dos materiais recicláveis advindos da coleta seletiva para as organizações de catadores",
+    "objetivoGeral": "Integração das associações e cooperativas de catadores de materiais recicláveis",
+    "linhaBase": "Em 8 dos 22 municípios existiam organizações de catadores integradas à coleta seletiva, e em um deles (Duque de Caxias) apenas uma organização estava integrada. Em todos os 22 municípios há catadores autônomos ou não formalizados, cujo material não é contabilizado pelas prefeituras. Fonte: Diagnóstico Geral, Tabela 44.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Ações de apoio contínuo às cooperativas de catadores na agregação de valor e comercialização dos resíduos recicláveis",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de associações e cooperativas participantes do programa de coleta seletiva",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": "2022-12-31"
+  },
+  {
+    "id": "aumentar-a-quantidade-de-residuos-reciclados",
+    "nome": "Aumentar a quantidade de resíduos reciclados",
+    "objetivoGeral": "Incentivo às práticas de Não Geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Fomento contínuo à segregação dos resíduos gerados em três frações distintas: seco, úmido e rejeitos",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios",
+      "Academia"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos reciclados em relação à quantidade de resíduos recicláveis gerados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "reduzir-a-quantidade-de-residuos-e-rejeitos-encaminhados",
+    "nome": "Reduzir a quantidade de resíduos e rejeitos encaminhados para destinação final",
+    "objetivoGeral": "Incentivo às práticas de Não Geração, Redução, Reutilização e Reciclagem",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Priorização contínua nas aquisições governamentais de produtos recicláveis e reciclados",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos recicláveis no RSU",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 12, p. 56",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "adocao-de-mecanismos-economicos-e-gerenciais-que-assegur",
+    "nome": "Adoção de mecanismos econômicos e gerenciais que assegurem a recuperação dos custos dos serviços prestados como forma de garantir sua sustentabilidade operacional e financeira",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": "Apenas 2 dos 22 municípios arrecadavam o suficiente para cobrir o custo do próprio manejo de resíduos: Rio de Janeiro (101%) e Niterói (100%). Japeri cobria 6%, Duque de Caxias 9% e Tanguá 9%. Nilópolis e Queimados não cobravam a taxa. Os 100% de Niterói merecem reserva: a despesa que o documento lhe atribui é idêntica, ao centavo, à sua arrecadação. Fonte: Diagnóstico Geral, Tabela 24.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos, em um prazo de até 10 anos",
+    "prazo": "Até 10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de municípios da RMRJ com mecanismos de recuperação dos custos adotados em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 57",
+    "ultimaAtualizacao": "2021-12-31"
+  },
+  {
+    "id": "conscientizacao-e-instalacao-de-ecopontos-para-materiais",
+    "nome": "Conscientização e instalação de ecopontos para materiais recicláveis",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Incentivo contínuo à utilização adequada dos ecopontos voltados à coleta seletiva de materiais recicláveis",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de resíduos recicláveis destinados corretamente em relação ao total de resíduos recicláveis",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 57",
     "ultimaAtualizacao": null
   },
   {
     "id": "areas-dificil-acesso",
-    "nome": "Universalização em áreas de difícil acesso",
+    "nome": "Implantação da coleta regular de RSU nos assentamentos subnormais, distritos e comunidades isoladas",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
     "linhaBase": null,
     "resultadoAtual": null,
-    "resultadoEsperado": "Cobertura universalizada em áreas de difícil acesso",
+    "resultadoEsperado": "Disponibilização da coleta regular de resíduos em 100% dos assentamentos subnormais, distritos e comunidades isoladas, em um prazo de até 10 anos",
     "prazo": "Até 10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de assentamentos subnormais, distritos e comunidades isoladas atendidos pela coleta regular em relação ao total",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 57",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "implantacao-da-coleta-seletiva-nos-assentamentos-subnorm",
+    "nome": "Implantação da coleta seletiva nos assentamentos subnormais, distritos e comunidades isoladas",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Incentivo e disponibilização da coleta seletiva em 100% dos assentamentos subnormais, distritos e comunidades isoladas, em um prazo de até 10 anos",
+    "prazo": "Até 10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Assentamentos subnormais, distritos e comunidades isoladas que aderiram à coleta seletiva em relação ao total",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 57",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "compatibilizacao-da-regulamentacao-legal-com-a-realidade",
+    "nome": "Compatibilização da regulamentação legal com a realidade de aglomerados subnormais",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Desenvolvimento, em um prazo de até 5 anos, de políticas públicas municipais que considerem as necessidades no descarte e na coleta de resíduos gerados em aglomerados subnormais",
+    "prazo": "Até 5 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de municípios com regulamentação adequada em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 58",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "criacao-de-material-informativo-e-campanhas-na-midia-sob",
+    "nome": "Criação de material informativo e campanhas na mídia sobre a importância da coleta seletiva",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Desenvolvimento contínuo de campanhas de educação ambiental no âmbito metropolitano para sensibilização da população na adesão à coleta seletiva",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de campanhas criadas por município",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 58",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "disponibilizar-material-bibliografico-para-a-elaboracao-",
+    "nome": "Disponibilizar material bibliográfico para a elaboração de planos municipais em conformidade com a PNRS e a Política Estadual de Resíduos Sólidos",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Apoio contínuo à elaboração, implementação e revisão dos Planos de Gestão Integrada de Resíduos Sólidos Municipais da RMRJ",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Municípios",
+      "Academia"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de municípios que disponibilizaram material para consulta em relação ao total da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 58",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "implantacao-e-funcionamento-do-sistema-de-informacoes-ge",
+    "nome": "Implantação e funcionamento do Sistema de Informações Gerenciais (SIG) compatível com o Sistema Nacional de Informações sobre a Gestão de Resíduos Sólidos (SINIR)",
+    "objetivoGeral": "Universalização do acesso aos serviços públicos de limpeza urbana e de manejo dos resíduos sólidos",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Disponibilização pública de informações acerca do manejo de resíduos, em um prazo de até 10 anos",
+    "prazo": "Até 10 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Quantidade de municípios que implantaram o SIG em relação ao total da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 13, p. 58",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "pmgirs-de-todos-os-municipios-da-rmrj-especificando-os-g",
+    "nome": "PMGIRS de todos os municípios da RMRJ especificando os geradores que devem elaborar PGRS",
+    "objetivoGeral": "Apoio à gestão dos resíduos de estabelecimentos comerciais e prestadores de serviços",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Orientação contínua aos municípios para que eles estabeleçam em seus PMGIRS quais geradores de resíduos estarão sujeitos aos PGRS",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de PMGIRS adequados em relação ao total da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 14, p. 59",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "criacao-de-leis-em-todos-os-municipios-que-nao-as-possua",
+    "nome": "Criação de leis, em todos os municípios que não as possuam, estabelecendo a obrigatoriedade de implementação da coleta seletiva pelos geradores de resíduos de estabelecimentos comerciais e prestadores de serviços",
+    "objetivoGeral": "Apoio à gestão dos resíduos de estabelecimentos comerciais e prestadores de serviços",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Assegurar que 100% dos geradores de resíduos de estabelecimentos comerciais da RMRJ e de prestadores de serviços sujeitos aos PGRS incluam na sua elaboração as formas para implementação da coleta seletiva, bem como o encaminhamento dos resíduos para as cooperativas e associações de catadores, sempre que possível, em um prazo de até 5 anos",
+    "prazo": "Até 5 anos",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de municípios da RMRJ com leis que obriguem a implantação da coleta seletiva pelos geradores de resíduos de estabelecimentos comerciais e prestadores de serviços em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 14, p. 59",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "criacao-de-leis-em-todos-os-municipios-que-equiparem-os-",
+    "nome": "Criação de leis, em todos os municípios, que equiparem os resíduos gerados por estabelecimentos comerciais e prestadores de serviços aos resíduos domiciliares",
+    "objetivoGeral": "Apoio à gestão dos resíduos de estabelecimentos comerciais e prestadores de serviços",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Assegurar que 100% dos municípios promovam a equiparação dos resíduos gerados por estabelecimentos comerciais e de prestadores de serviços aos domiciliares, especialmente nos municípios médios e pequenos, conforme estabelecido pelo parágrafo único do art. 13 da PNRS, como forma de garantir sustentabilidade dos sistemas de coleta, em um prazo de até 5 anos",
+    "prazo": "Até 5 anos",
     "municipios": "22 municípios da RMRJ",
-    "situacao": "nao_iniciado",
-    "metodologia": null,
-    "fonte": "Plano de Ações do PMetGIRS",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de municípios da RMRJ com leis que equiparem os resíduos gerados por estabelecimentos comerciais e prestadores de serviços aos resíduos domiciliares em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 14, p. 59",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "disponibilizar-material-bibliografico-e-campanhas-de-con",
+    "nome": "Disponibilizar material bibliográfico e campanhas de conscientização sobre aproveitamento energético dos resíduos dos serviços de saneamento básico",
+    "objetivoGeral": "Gerenciamento dos resíduos gerados pelas estações de tratamento de água e esgoto",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Estímulo contínuo aos estudos e adoção de novas tecnologias para a reciclagem e aproveitamento energético dos resíduos dos serviços de saneamento básico",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Academia"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Disponibilização pública do material; campanhas realizadas",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 15, p. 60",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "desenvolvimento-de-estudos-sobre-a-reciclagem-dos-lodos-",
+    "nome": "Desenvolvimento de estudos sobre a reciclagem dos lodos gerados nas ETEs nos municípios da RMRJ",
+    "objetivoGeral": "Gerenciamento dos resíduos gerados pelas estações de tratamento de água e esgoto",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Buscar, continuamente, o desenvolvimento de estudos com instituições de ensino e pesquisa que propiciem soluções para a reciclagem dos lodos gerados nas ETEs nos municípios da RMRJ",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM",
+      "Academia"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Estudos desenvolvidos",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 15, p. 60",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "compatibilizacao-da-regulamentacao-legal-com-o-gerenciam",
+    "nome": "Compatibilização da regulamentação legal com o gerenciamento dos resíduos de drenagem",
+    "objetivoGeral": "Eliminação dos resíduos sólidos urbanos presentes nos sistemas de drenagem urbana",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Estabelecimento, em 100% dos municípios da RMRJ, de mecanismos de controle e monitoramento dos resíduos oriundos dos sistemas de drenagem nos municípios, em um prazo de até 5 anos",
+    "prazo": "Até 5 anos",
+    "municipios": "22 municípios da RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de municípios da RMRJ com leis abrangendo resíduos de sistemas de drenagem em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 15, p. 60",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "inclusao-dos-residuos-de-sistemas-de-drenagem-nos-planos",
+    "nome": "Inclusão dos resíduos de sistemas de drenagem nos planos municipais",
+    "objetivoGeral": "Eliminação dos resíduos sólidos urbanos presentes nos sistemas de drenagem urbana",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Reafirmar, de forma contínua, aos municípios a necessidade da compatibilidade entre os Planos Municipais de Saneamento Básico e os Planos Municipais de Gestão Integrada de Resíduos Sólidos, enfatizando a questão da geração de resíduos dos sistemas de drenagem e os potenciais de reciclagem",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Planos municipais contemplando resíduos de drenagem",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 15, p. 60",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "elaboracao-de-diagnostico-aprofundado-da-geracao-de-rcc-",
+    "nome": "Elaboração de diagnóstico aprofundado da geração de RCC na RMRJ",
+    "objetivoGeral": "Fomentar a segregação do RCC na fonte",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Desenvolvimento de estudos para identificação dos quantitativos de RCC na RMRJ",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Municípios com a quantidade de RCC identificada em relação ao total de municípios da RMRJ",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 16, p. 61",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "disponibilizacao-de-pev-para-os-rcc",
+    "nome": "Disponibilização de PEV para os RCC",
+    "objetivoGeral": "Fomentar a segregação do RCC na fonte",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Incentivo contínuo à criação de Pontos de Entrega Voluntária (PEV) para a entrega dos RCC nos municípios da RMRJ",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "PEV criados em relação ao número de PEV planejados",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 16, p. 61",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "implantacao-das-areas-de-transbordo-e-triagem-att-nos-mu",
+    "nome": "Implantação das Áreas de Transbordo e Triagem (ATT) nos municípios",
+    "objetivoGeral": "Fomentar a segregação do RCC na fonte",
+    "linhaBase": "Havia uma única Área de Transbordo e Triagem de RCC licenciada pelo INEA na RMRJ, em Duque de Caxias, operada pela Associação de Catadores e Ex-Catadores de Jardim Gramacho. Em contraste, o Projeto Entulho Limpo identificou 300 áreas de descarte irregular sistemático só na Baixada Fluminense. Fonte: Diagnóstico Geral, seção 5.3.",
+    "resultadoAtual": null,
+    "resultadoEsperado": "Incentivar o desenvolvimento, em 100% dos municípios, do programa de gerenciamento de RCC na RMRJ: de 2 a 10 anos — 25%; de 10 a 20 anos — 75%; de 20 a 30 anos — 100%",
+    "prazo": "Até 30 anos",
+    "municipios": "22 municípios da RMRJ",
+    "responsaveis": [
+      "Municípios",
+      "Iniciativa privada",
+      "Associações e cooperativas"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem de RCC destinado às ATT em relação ao total de RCC gerado",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 16, p. 61",
+    "ultimaAtualizacao": "2022-12-31"
+  },
+  {
+    "id": "aplicacao-de-programas-de-capacitacao-no-manejo-dos-resi",
+    "nome": "Aplicação de programas de capacitação no manejo dos resíduos sólidos aos municípios",
+    "objetivoGeral": "Gestão adequada dos RSS",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Fomento contínuo da capacitação dos municípios em fiscalizar e controlar o fluxo de RSS",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Programas de capacitação aplicados aos municípios",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 17, p. 62",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "criacao-de-legislacao-para-obrigatoriedade-de-segregacao",
+    "nome": "Criação de legislação para obrigatoriedade de segregação na fonte",
+    "objetivoGeral": "Gestão adequada dos RSS",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Fomento contínuo à segregação dos RSS na fonte, com compartimentos adequados para RSS e RSU nas edificações",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Municípios"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Porcentagem dos municípios com legislação específica",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 17, p. 62",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "aplicacao-de-programas-de-capacitacao-as-associacoes-e-c",
+    "nome": "Aplicação de programas de capacitação às associações e cooperativas de catadores",
+    "objetivoGeral": "Gestão adequada dos RSS",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Fomento contínuo da capacitação das cooperativas e associações para o manejo dos RSS classe D",
+    "prazo": "Contínuo",
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "IRM"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Programas de capacitação aplicados às associações e cooperativas",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 17, p. 62",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "diminuicao-de-gee-em-aterros",
+    "nome": "Diminuição de GEE em aterros",
+    "objetivoGeral": "Diminuir a geração de Metano na destinação final de RSU (aterros)",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Queima de Metano em Flares",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Operadores de Aterros Sanitários"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Tonelada eq de CO2 emitida",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 24, p. 91",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "diminuicao-de-gee-em-aterros-2",
+    "nome": "Diminuição de GEE em aterros",
+    "objetivoGeral": "Diminuir a geração de Metano na destinação final de RSU (aterros)",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Coleta de Metano para uso energético (biometano)",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Operadores de Aterros Sanitários"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Tonelada eq de CO2 emitida",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 24, p. 91",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "aumento-no-uso-de-veiculos-com-combustivel-limpo",
+    "nome": "Aumento no uso de veículos com combustível limpo",
+    "objetivoGeral": "Descarbonizar a frota usada para o gerenciamento de RSU (Transporte e Manejo)",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Uso de veículos de energia limpa na frota de gerenciamento do RSU",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Concessionárias de transporte e manejo de RSU"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Número de veículos com energia limpa",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 24, p. 91",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "aproveitamento-do-rsu-pela-compostagem",
+    "nome": "Aproveitamento do RSU pela Compostagem",
+    "objetivoGeral": "Aumentar a participação da Compostagem no Gerenciamento de RSU",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Unidade com capacidade de compostar RSU",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Município"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "Produção de composto a partir de RSU",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 24, p. 91",
+    "ultimaAtualizacao": null
+  },
+  {
+    "id": "geracao-de-energia-a-partir-de-rsu",
+    "nome": "Geração de Energia a partir de RSU",
+    "objetivoGeral": "Aumentar a participação de RSU na Recuperação Energética",
+    "linhaBase": null,
+    "resultadoAtual": null,
+    "resultadoEsperado": "Uso de RSU para geração de Energia",
+    "prazo": null,
+    "municipios": "RMRJ",
+    "responsaveis": [
+      "Concessionárias de destinação de RSU"
+    ],
+    "situacao": "dado_em_validacao",
+    "metodologia": "MWh de energia gerado a partir de resíduos",
+    "fonte": "Plano de Ações do PMetGIRS — Tabela 24, p. 91",
     "ultimaAtualizacao": null
   }
 ]

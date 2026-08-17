@@ -1,0 +1,177 @@
+[
+  {
+    "id": "apoio-cooperativas-catadores",
+    "entityId": "apoio-cooperativas-catadores",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  },
+  {
+    "id": "banco-dados-aplicativo-digital",
+    "entityId": "banco-dados-aplicativo-digital",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  },
+  {
+    "id": "comite-metropolitano-saneamento",
+    "entityId": "comite-metropolitano-saneamento",
+    "requiresNewDisbursement": false,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "O documento declara: \"por se tratar de um Comitê de gestão administrativa, não há previsão de custo para a reunião\".",
+      "Prevê reuniões trimestrais com município anfitrião em rotatividade."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": false
+  },
+  {
+    "id": "licitacao-usinas-asfalto",
+    "entityId": "licitacao-usinas-asfalto",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  },
+  {
+    "id": "licitacao-usinas-recuperacao-energetica",
+    "entityId": "licitacao-usinas-recuperacao-energetica",
+    "requiresNewDisbursement": true,
+    "capexMinCents": 740000000000,
+    "capexMaxCents": 740000000000,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": 2023,
+    "sourceLabel": "Prognóstico Geral, Tabela 40",
+    "assumptions": [
+      "R$ 6,3 bilhões em 10 usinas de combustão a R$ 630 milhões cada.",
+      "R$ 1,1 bilhão em 10 usinas de termodegradação a R$ 110 milhões cada.",
+      "O Plano de Ações apresenta R$ 12,5 bilhões para triagem e conversão somadas, contra R$ 9,15 bilhões do Prognóstico para as 45 usinas — ver a divergência publicada em Pontos em Revisão.",
+      "A quantidade de unidades também diverge: 20 no Prognóstico, 28 no Plano de Ações."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": false
+  },
+  {
+    "id": "licitacao-usinas-triagem",
+    "entityId": "licitacao-usinas-triagem",
+    "requiresNewDisbursement": true,
+    "capexMinCents": 175000000000,
+    "capexMaxCents": 175000000000,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": 2023,
+    "sourceLabel": "Plano de Ações, Anexo I (5W2H) e Prognóstico Geral, Tabela 37",
+    "assumptions": [
+      "25 unidades a R$ 70 milhões cada, capacidade padrão de 685 t/dia por usina.",
+      "O 5W2H registra o valor como \"orçamento preliminar\", a ser confirmado pelo Plano de Negócios."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": false
+  },
+  {
+    "id": "plano-negocios-pmetgirs",
+    "entityId": "plano-negocios-pmetgirs",
+    "requiresNewDisbursement": true,
+    "capexMinCents": 300000000,
+    "capexMaxCents": 400000000,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": 2023,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Estimado por similaridade com a contratação do BNDES pelo Governo do Estado para o Saneamento Básico — Água e Esgoto, com outorga da RMRJ."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": false
+  },
+  {
+    "id": "programa-sensibilizacao-3rs",
+    "entityId": "programa-sensibilizacao-3rs",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  },
+  {
+    "id": "projeto-os-invisiveis",
+    "entityId": "projeto-os-invisiveis",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  },
+  {
+    "id": "remediacao-lixoes-aterros",
+    "entityId": "remediacao-lixoes-aterros",
+    "requiresNewDisbursement": null,
+    "capexMinCents": null,
+    "capexMaxCents": null,
+    "annualOpexCents": null,
+    "currency": "BRL",
+    "baseYear": null,
+    "sourceLabel": "Plano de Ações do PMetGIRS, Anexo I (5W2H)",
+    "assumptions": [
+      "Plano de Ações do PMetGIRS, Anexo I (5W2H): \"a modelagem econômica do Plano de Negócios deverá prever a orçamentação de todas as etapas\". O Plano de Negócios ainda não foi contratado — busca no portal do IRM em 16/08/2026 não encontrou registro."
+    ],
+    "confidenceScore": null,
+    "asOfDate": null,
+    "underEstimation": true
+  }
+]
