@@ -13,6 +13,7 @@ import { OpportunitiesPage } from '../features/portfolio/OpportunitiesPage';
 import { ChallengesPage } from '../features/portfolio/ChallengesPage';
 import { PublicationPage } from '../features/portfolio/PublicationPage';
 import { ApprovalsPage } from '../features/portfolio/ApprovalsPage';
+import { UsersPage } from '../features/portfolio/UsersPage';
 
 export interface PrivateRoute {
   path: string;
@@ -73,16 +74,6 @@ export const privateRoutes: PrivateRoute[] = [
   { path: 'aprovacoes', title: 'Pedidos de publicação', element: <ApprovalsPage /> },
   { path: 'publicacao', title: 'Publicação', element: <PublicationPage /> },
   { path: 'auditoria', title: 'Auditoria', element: <AuditPage /> },
-  {
-    path: 'usuarios',
-    title: 'Usuários',
-    element: (
-      <PlaceholderPage
-        title="Usuários e convites"
-        phase="Fase 1"
-        description="Convite por e-mail, aceite, suspensão e revogação. Somente o proprietário gerencia acessos — e isso é imposto pelas Security Rules, não pelo menu."
-      />
-    ),
-  },
+  { path: 'usuarios', title: 'Usuários', element: <UsersPage /> },
   { path: 'configuracoes', title: 'Configurações', element: <SettingsPage /> },
 ];
