@@ -24,9 +24,37 @@ const selos: { status: StatusValidacao; descricao: string }[] = [
 
 
 
+/**
+ * De onde o achado veio, dito na frente do título.
+ *
+ * Nove achados são do Relatório Técnico encomendado pelo IRM; os demais saíram
+ * da leitura das fontes primárias feita depois e ainda não têm chancela
+ * institucional. Exibi-los sem distinguir emprestaria ao segundo grupo uma
+ * autoridade que ele não tem.
+ */
+function SeloDeOrigem({ item }: { item: Inconsistencia }) {
+  const doRelatorio = item.origemDoAchado === 'relatorio_de_inconsistencias';
+  return (
+    <span
+      className={`inline-flex items-center rounded border px-1.5 py-0.5 text-xs font-medium ${
+        doRelatorio
+          ? 'border-brand-blue-300 bg-brand-blue-50 text-brand-blue-700'
+          : 'border-neutral-300 bg-neutral-100 text-neutral-700'
+      }`}
+    >
+      {doRelatorio
+        ? `Relatório de Inconsistências${item.codigoRelatorio ? ` · ${item.codigoRelatorio}` : ''}`
+        : 'Leitura das fontes · aguarda validação do IRM'}
+    </span>
+  );
+}
+
 function IncidentCard({ item }: { item: Inconsistencia }) {
   return (
     <Card>
+      <div className="mb-2">
+        <SeloDeOrigem item={item} />
+      </div>
       <p className="font-semibold text-neutral-900">{item.titulo}</p>
       <p className="mt-2 text-sm text-neutral-600">{item.descricao}</p>
       {item.fontes && (

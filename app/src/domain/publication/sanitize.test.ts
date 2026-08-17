@@ -90,10 +90,42 @@ describe('sanitização por allowlist', () => {
     // proibidos: só pode atravessar o que estiver em EXCECOES_AO_NEVER_PUBLIC.
     const suspeito = Object.fromEntries(NEVER_PUBLIC.map((f) => [f, 'VAZOU']));
     for (const collection of Object.keys(PUBLIC_ALLOWLIST) as PublicCollection[]) {
-      const r = sanitizeForPublication(collection, suspeito, contexto);
+      // Inconsistências têm retenção no nível do registro: sem política que
+      // autorize, o documento nem chega à filtragem de campos.
+      const r = sanitizeForPublication(
+        collection,
+        { ...suspeito, publicationPolicy: 'definir_na_modelagem' },
+        contexto,
+      );
       const permitidos = EXCECOES_AO_NEVER_PUBLIC[collection] ?? [];
       const vazados = Object.keys(r.data).filter((k) => r.data[k] === 'VAZOU');
       expect(vazados.sort(), `coleção ${collection}`).toEqual([...permitidos].sort());
+    }
+  });
+
+  it('a allowlist entrega todo campo que o portal lê de uma meta', () => {
+    // O defeito que este teste tranca: `generalObjective` e `responsibleParties`
+    // foram acrescentados ao tipo e ao leitor, mas não à escrita nem a esta
+    // lista. As 39 metas chegaram ao cidadão com os dois campos vazios, sem
+    // erro algum — a sanitização preserva o que recebe e não completa o que
+    // falta. Só apareceu comparando o snapshot com o JSON de origem.
+    const interno = {
+      name: 'Implantação da coleta domiciliar em áreas urbanas',
+      generalObjective: 'Redução da destinação inadequada',
+      responsibleParties: ['Municípios'],
+      expectedResult: 'Disponibilizar em até 2 anos',
+      deadline: 'Até 2 anos',
+      scope: '22 municípios da RMRJ',
+      methodology: 'Porcentagem de coleta domiciliar',
+      sourceLabel: 'Plano de Ações do PMetGIRS — Tabela 12, p. 56',
+      baseline: null,
+      currentResult: null,
+      dataDate: null,
+      executionStatus: null,
+    };
+    const { data } = sanitizeForPublication('goals', interno, contexto);
+    for (const campo of Object.keys(interno)) {
+      expect(data, `campo "${campo}" não atravessou`).toHaveProperty(campo);
     }
   });
 

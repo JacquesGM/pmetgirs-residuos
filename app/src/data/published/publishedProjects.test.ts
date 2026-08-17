@@ -1,12 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import projetosData from '../../data/projetos.json';
+import municipiosData from '../../data/municipios.json';
 import { transformProject } from '../../domain/migration/transform';
+import { municipiosDoProjeto } from '../../domain/abrangencia';
 import { sanitizeForPublication } from '../../domain/publication/sanitize';
 import type { Projeto } from '../../types';
 import { decodeFields, decodeValue, documentId } from './firestoreRest';
 import { toProjeto } from './publishedProjects';
 
 const projetos = projetosData as Projeto[];
+const MUNICIPIOS = (municipiosData as { id: string }[]).map((m) => m.id);
 
 describe('decodificação do formato REST do Firestore', () => {
   it('converte os tipos que a projeção usa', () => {
@@ -60,7 +63,7 @@ describe('ida e volta: projeto legado → publicado → interface', () => {
    */
   for (const original of projetos.slice(0, 3)) {
     it(original.nome, () => {
-      const migrado = transformProject(original);
+      const migrado = transformProject(original, MUNICIPIOS);
       const projecao = sanitizeForPublication('projects', migrado.data, {
         sourceEntityId: original.id,
         sourceVersion: 1,
@@ -86,7 +89,7 @@ describe('ida e volta: projeto legado → publicado → interface', () => {
 
   it('não inventa valor para campo que não atravessa a fronteira', () => {
     const original = projetos[0];
-    const migrado = transformProject(original);
+    const migrado = transformProject(original, MUNICIPIOS);
     const projecao = sanitizeForPublication('projects', migrado.data, {
       sourceEntityId: original.id,
       sourceVersion: 1,
@@ -100,6 +103,39 @@ describe('ida e volta: projeto legado → publicado → interface', () => {
     expect(devolta.inicioPrevisto).toBeNull();
     expect(devolta.terminoPrevisto).toBeNull();
     expect(devolta.dependencias).toEqual([]);
+  });
+
+  it('o municipalityIds publicado concorda com a regra que o portal aplica', () => {
+    // Duas leituras da mesma abrangência: a migração grava `municipalityIds`,
+    // e o mapa deriva na hora de desenhar, porque o dado embutido no bundle
+    // não passa pela migração. Se as duas discordassem, o mapa e o banco
+    // diriam coisas diferentes sobre o mesmo projeto sem nada falhar.
+    //
+    // Este teste prende as duas à mesma função. Falha se alguém reimplementar
+    // a regra em qualquer um dos lados.
+    for (const original of projetos) {
+      const migrado = transformProject(original, MUNICIPIOS);
+      const projecao = sanitizeForPublication('projects', migrado.data, {
+        sourceEntityId: original.id,
+        sourceVersion: 1,
+        releaseId: 'rel-teste',
+      });
+
+      const publicado = projecao.data.municipalityIds ?? null;
+      const derivadoNoPortal = municipiosDoProjeto(original.abrangencia, MUNICIPIOS);
+
+      expect(publicado, original.id).toEqual(derivadoNoPortal);
+      // E a allowlist deixa o campo passar — sem isto, os dois seriam `null`
+      // e o teste passaria por vacuidade.
+      expect(projecao.dropped, original.id).not.toContain('municipalityIds');
+
+      // E o campo sobrevive à volta para o tipo da interface, que é a forma em
+      // que o snapshot é gravado. Sem esta asserção, o campo atravessaria a
+      // fronteira do Firestore e desapareceria no arquivo que o portal lê —
+      // publicado pela metade.
+      const devolta = toProjeto({ id: original.id, data: projecao.data });
+      expect(devolta.municipios ?? null, original.id).toEqual(derivadoNoPortal);
+    }
   });
 
   it('sobrevive a documento com campos faltando', () => {

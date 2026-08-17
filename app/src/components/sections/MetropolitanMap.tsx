@@ -2,7 +2,10 @@ import { useMemo, useState } from 'react';
 import { CircleMarker, MapContainer, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import municipiosData from '../../data/municipios.json';
-import type { Municipio } from '../../types';
+import indicadoresMunicipaisData from '../../data/indicadoresMunicipais.json';
+import projetosData from '../../data/projetos.json';
+import type { IndicadorMunicipal, Municipio, Projeto } from '../../types';
+import { municipiosDoProjeto } from '../../domain/abrangencia';
 import { Section } from '../ui/Section';
 import { Card } from '../ui/Card';
 import { StatusBadge, statusLabel } from '../ui/StatusBadge';
@@ -12,8 +15,12 @@ import { MunicipalityComparator } from './MunicipalityComparator';
 import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
 import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
+import { InfoDisclosure } from '../ui/InfoDisclosure';
+import { DataValue } from '../ui/DataValue';
 
 const municipiosEmbutidos = municipiosData as Municipio[];
+const indicadoresMunicipaisEmbutidos = indicadoresMunicipaisData as IndicadorMunicipal[];
+const projetosEmbutidos = projetosData as Projeto[];
 
 const colunasMunicipios: DownloadColumn<Municipio>[] = [
   { key: 'nome', label: 'Município' },
@@ -44,6 +51,38 @@ export function MetropolitanMap() {
   const [selecionado, setSelecionado] = useState<Municipio | null>(null);
   const [metrica, setMetrica] = useState<Metrica>('populacao');
 
+  const todosIndicadores = useColecaoPublicada<IndicadorMunicipal>(
+    'indicadores-municipais',
+    indicadoresMunicipaisEmbutidos,
+  );
+  const indicadoresDoMunicipio = useMemo(
+    () => (selecionado ? todosIndicadores.filter((i) => i.municipioId === selecionado.id) : []),
+    [todosIndicadores, selecionado],
+  );
+
+  const projetos = useColecaoPublicada<Projeto>('projetos', projetosEmbutidos);
+
+  /**
+   * Ações que alcançam o município selecionado.
+   *
+   * A lista é derivada da abrangência pela mesma regra que a migração usa —
+   * `municipiosDoProjeto` —, e não de um campo pronto. O dado embutido no
+   * bundle não passa pela migração e não carrega `municipalityIds`; ler o
+   * campo faria o mapa funcionar só depois de publicado.
+   */
+  const acoesDoMunicipio = useMemo(() => {
+    if (!selecionado) return { alcancam: [] as Projeto[], indeterminadas: [] as Projeto[] };
+    const ids = municipios.map((m) => m.id);
+    const alcancam: Projeto[] = [];
+    const indeterminadas: Projeto[] = [];
+    for (const projeto of projetos) {
+      const cobertos = municipiosDoProjeto(projeto.abrangencia, ids);
+      if (cobertos === null) indeterminadas.push(projeto);
+      else if (cobertos.includes(selecionado.id)) alcancam.push(projeto);
+    }
+    return { alcancam, indeterminadas };
+  }, [projetos, municipios, selecionado]);
+
   const center = useMemo<[number, number]>(() => [-22.75, -43.25], []);
 
   return (
@@ -61,6 +100,13 @@ export function MetropolitanMap() {
           columns={colunasMunicipios}
         />
       </div>
+
+      {/* Dito antes do mapa, não depois: quem navega por teclado precisa saber
+          o que vem pela frente antes de entrar nos 22 marcadores. */}
+      <p className="mb-3 text-sm text-neutral-600">
+        Cada município é um marcador acionável por teclado: use Tab para percorrê-los e Enter ou
+        Espaço para selecionar. A lista abaixo do mapa faz a mesma seleção, sem depender do mapa.
+      </p>
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="isolate h-[420px] overflow-hidden rounded-xl border border-neutral-200 sm:h-[480px]">
@@ -100,6 +146,11 @@ export function MetropolitanMap() {
                       'aria-label',
                       `${municipio.nome}: ${municipio.populacao.toLocaleString('pt-BR')} habitantes em ${municipio.populacaoAno}. Selecionar para ver os dados.`,
                     );
+                    // O Leaflet dispara `add` de novo ao trocar de pane ou
+                    // reanimar o zoom. Sem esta marca, cada disparo empilha mais
+                    // um ouvinte no mesmo elemento.
+                    if (path.dataset.tecladoLigado === 'sim') return;
+                    path.dataset.tecladoLigado = 'sim';
                     path.addEventListener('keydown', (keyEvent: KeyboardEvent) => {
                       if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
                         keyEvent.preventDefault();
@@ -119,7 +170,11 @@ export function MetropolitanMap() {
           </MapContainer>
         </div>
 
-        <Card>
+        {/* `role="status"` porque a seleção muda este painel sem recarregar
+            nada: sem ele, quem aciona um marcador por teclado ouve silêncio e
+            não tem como saber que a escolha surtiu efeito. `atomic` faz o leitor
+            ler o município inteiro, e não só o trecho que mudou. */}
+        <Card role="status" aria-live="polite" aria-atomic="true">
           {selecionado ? (
             <div>
               <p className="font-semibold text-neutral-900">{selecionado.nome}</p>
@@ -140,11 +195,63 @@ export function MetropolitanMap() {
                   <dt className="text-neutral-500">Densidade demográfica ({selecionado.densidadeAno})</dt>
                   <dd className="font-medium">{selecionado.densidadeDemografica.toLocaleString('pt-BR')} hab/km²</dd>
                 </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-neutral-500">Geração de resíduos e projetos locais</dt>
-                  <dd className="italic text-neutral-500">Informação em atualização</dd>
-                </div>
               </dl>
+
+              {/* Cada valor traz a sua própria unidade, ano e tabela de origem:
+                  vêm de levantamentos diferentes e não podem herdar uma data
+                  de referência comum. */}
+              {indicadoresDoMunicipio.length > 0 && (
+                <div className="mt-4 border-t border-neutral-200 pt-3">
+                  <h3 className="text-sm font-semibold text-neutral-900">Resíduos sólidos</h3>
+                  <dl className="mt-2 space-y-2 text-sm">
+                    {indicadoresDoMunicipio.map((ind) => (
+                      <div key={ind.id}>
+                        <div className="flex justify-between gap-2">
+                          <dt className="text-neutral-500">
+                            {ind.nome}
+                            {ind.unidade ? ` (${ind.unidade})` : ''}
+                          </dt>
+                          <dd className="shrink-0 font-medium">
+                            <DataValue value={ind.valorExibicao} status={ind.statusValidacao} />
+                          </dd>
+                        </div>
+                        <InfoDisclosure label="Fonte e período">
+                          {ind.periodoReferencia} · {ind.fonte}
+                          {ind.observacao && <span className="mt-1 block">{ind.observacao}</span>}
+                        </InfoDisclosure>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
+              <div className="mt-4 border-t border-neutral-200 pt-3">
+                <h3 className="text-sm font-semibold text-neutral-900">
+                  Ações que alcançam {selecionado.nome}
+                </h3>
+                {acoesDoMunicipio.alcancam.length > 0 ? (
+                  <ul className="mt-2 space-y-1 text-sm text-neutral-700">
+                    {acoesDoMunicipio.alcancam.map((p) => (
+                      <li key={p.id}>{p.nome}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2 text-sm text-neutral-600">
+                    Nenhuma ação com abrangência declarada sobre este município.
+                  </p>
+                )}
+
+                {/* A ressalva não é rodapé: sem ela, a lista acima seria lida
+                    como "estas são todas as ações do município", e duas ações
+                    reais ficariam invisíveis por um silêncio do documento. */}
+                {acoesDoMunicipio.indeterminadas.length > 0 && (
+                  <p className="mt-2 text-xs text-neutral-500">
+                    Mais {acoesDoMunicipio.indeterminadas.length} ação(ões) do plano têm abrangência
+                    que os documentos não determinam, e podem ou não alcançar este município:{' '}
+                    {acoesDoMunicipio.indeterminadas.map((p) => p.nome).join('; ')}.
+                  </p>
+                )}
+              </div>
+
               <div className="mt-3">
                 <StatusBadge status={selecionado.statusDados} />
               </div>

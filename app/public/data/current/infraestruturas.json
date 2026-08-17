@@ -13,18 +13,22 @@
     "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
     "id": "gaseificacao-termodegradacao",
     "nome": "Gaseificação ou termodegradação",
-    "observacao": "Os documentos divergem quanto à quantidade de usinas de gaseificação/termodegradação. Ver Pontos em Revisão.",
+    "observacao": "Três valores diferentes nos documentos, incluindo divergência interna do Plano de Ações entre a sua tabela e o seu texto. Ver Pontos em Revisão.",
     "quantidade": "Quantidade em validação",
     "statusValidacao": "em_validacao",
     "unidade": "unidades",
     "valoresDivergentes": [
       {
-        "fonte": "Plano de Ações (Anexo III)",
+        "fonte": "Plano de Ações (Tabela 10 e cronograma da Tabela 11)",
+        "valor": "15 usinas de termodegradação"
+      },
+      {
+        "fonte": "Plano de Ações (texto corrido)",
         "valor": "13 usinas de gaseificação"
       },
       {
-        "fonte": "Prognóstico Geral",
-        "valor": "15 usinas de termodegradação"
+        "fonte": "Prognóstico Geral (Tabelas 39, 40 e 73)",
+        "valor": "10 usinas de termodegradação"
       }
     ]
   },
@@ -32,11 +36,20 @@
     "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
     "id": "total-unidades-termicas",
     "nome": "Total de unidades térmicas",
-    "observacao": "O total de 28 unidades é consistente entre os dois documentos, apenas a distribuição interna diverge.",
-    "quantidade": "28",
-    "statusValidacao": "estimativa_tecnica",
+    "observacao": "O total também diverge, e não apenas a divisão entre tecnologias: o Plano de Ações propõe 28 unidades e o Prognóstico Geral, 20. Ver Pontos em Revisão.",
+    "quantidade": "Quantidade em validação",
+    "statusValidacao": "em_validacao",
     "unidade": "unidades",
-    "valoresDivergentes": null
+    "valoresDivergentes": [
+      {
+        "fonte": "Plano de Ações (Tabela 10 e cronograma da Tabela 11)",
+        "valor": "28 unidades"
+      },
+      {
+        "fonte": "Prognóstico Geral (Tabelas 39, 40 e 73)",
+        "valor": "20 unidades"
+      }
+    ]
   },
   {
     "fonte": "Prognóstico Geral do PMetGIRS",
@@ -52,18 +65,22 @@
     "fonte": "Plano de Ações e Prognóstico Geral do PMetGIRS",
     "id": "unidades-combustao",
     "nome": "Unidades de combustão",
-    "observacao": "Os documentos divergem quanto à quantidade de usinas de combustão. Ver Pontos em Revisão.",
+    "observacao": "Três valores diferentes nos documentos, incluindo divergência interna do Plano de Ações entre a sua tabela e o seu texto. Ver Pontos em Revisão.",
     "quantidade": "Quantidade em validação",
     "statusValidacao": "em_validacao",
     "unidade": "unidades",
     "valoresDivergentes": [
       {
-        "fonte": "Plano de Ações (Anexo III)",
+        "fonte": "Plano de Ações (Tabela 10 e cronograma da Tabela 11)",
+        "valor": "13 usinas de combustão"
+      },
+      {
+        "fonte": "Plano de Ações (texto corrido)",
         "valor": "15 usinas de combustão"
       },
       {
-        "fonte": "Prognóstico Geral",
-        "valor": "13 usinas de combustão"
+        "fonte": "Prognóstico Geral (Tabelas 39, 40 e 73)",
+        "valor": "10 usinas de combustão"
       }
     ]
   },

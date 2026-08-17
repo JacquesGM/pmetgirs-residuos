@@ -1,10 +1,10 @@
 {
   "files": [
     {
-      "bytes": 1243,
+      "bytes": 1550,
       "path": "current/documentos.json",
       "registros": 3,
-      "sha256": "b67368d61fe5b0c280c47ad1ead71e79bf9deac4fe5e682eee336f8d2c691b74"
+      "sha256": "42547398a6ac74d8a07415675fbd56965c574323ceea643829507235789b80a0"
     },
     {
       "bytes": 9143,
@@ -19,28 +19,34 @@
       "sha256": "a3d8d46b68c8fe8f1ce09f6609b7866a3a98709f04840e4fd97de8399efa837b"
     },
     {
-      "bytes": 7611,
+      "bytes": 16649,
       "path": "current/inconsistencias.json",
-      "registros": 9,
-      "sha256": "f91da16252e8919285692f9a1488c5685e279c83fb0bf1fbe41690b5210aa75f"
+      "registros": 13,
+      "sha256": "38ed79fa5727094bceb38bce178c5fec79eb0dee1d78a3bebe4759ac4bcb4cb1"
     },
     {
-      "bytes": 4544,
+      "bytes": 118290,
+      "path": "current/indicadores-municipais.json",
+      "registros": 242,
+      "sha256": "d9d5e3ff70a74552984d6b6a3f55196650f6695ef5c20b8d1ca227c15120fbbb"
+    },
+    {
+      "bytes": 33433,
       "path": "current/indicadores.json",
-      "registros": 8,
-      "sha256": "408848026178824ac0169ca06e89b6592de6d6bf8c96a8ea7ad98cbb6ba636c9"
+      "registros": 56,
+      "sha256": "514232f885cbe706db211a4808542b1a155d56ed3799527b1265122071d3b2f3"
     },
     {
-      "bytes": 3070,
+      "bytes": 3797,
       "path": "current/infraestruturas.json",
       "registros": 7,
-      "sha256": "da69891d29bc980b9d5305742ac21f0a6649a7e012c7271d3585f31be29ae5f1"
+      "sha256": "901fca9806993e3f3dc662a1395b09a1b4ab40cc86f0f3391ba78936ec0ab33c"
     },
     {
-      "bytes": 2107,
+      "bytes": 39768,
       "path": "current/metas.json",
-      "registros": 5,
-      "sha256": "dea56322475866d46013bcb3086deb6ecd21f5c71899fcf5ec319ebf67fa8618"
+      "registros": 44,
+      "sha256": "3bb08133f5f20b541bea479ac4047adbb669cf07e3db6a35956fa52317d13c7e"
     },
     {
       "bytes": 9535,
@@ -49,27 +55,29 @@
       "sha256": "f29ad768c15dc1e1756f6e60059a68464031c0196690636b5928460be85e9ed9"
     },
     {
-      "bytes": 8446,
+      "bytes": 12222,
       "path": "current/projetos.json",
       "registros": 10,
-      "sha256": "99aef12026aa3fe082f9fe12eb10b33349136ae2babd41e8d5d9b10505798706"
+      "sha256": "a1ab23ae3f472598385ead57f2e3e4d7c332603f858c39daadc94b2f13b89b04"
     }
   ],
-  "generatedAt": "2026-08-16T01:47:22.861Z",
+  "generatedAt": "2026-08-17T14:00:40.509Z",
   "recordCounts": {
     "documentos": 3,
     "eixos": 12,
     "glossario": 10,
-    "inconsistencias": 9,
-    "indicadores": 8,
+    "inconsistencias": 13,
+    "indicadores": 56,
+    "indicadores-municipais": 242,
     "infraestruturas": 7,
-    "metas": 5,
+    "metas": 44,
     "municipios": 22,
     "projetos": 10
   },
   "schemaVersion": 1,
   "sourceReleaseIds": [
-    "f9dZ5EKrVwUJZ8yoUSXM"
+    "836bwERNCXB56n5JF8kn",
+    "u22VKqyMyLa4NhVQpbGd"
   ],
   "workspaceId": "pmetgirs-rmrj"
 }

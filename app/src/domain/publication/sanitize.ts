@@ -23,6 +23,7 @@ export type PublicCollection =
   | 'infrastructures'
   | 'documents'
   | 'inconsistencies'
+  | 'municipalIndicators'
   | 'glossary'
   | 'evidence';
 
@@ -35,6 +36,14 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'accountable',
     'participants',
     'territorialScale',
+    // Atravessa a fronteira desde 17/08/2026, para ligar cada ação ao mapa
+    // metropolitano. São ids de município — dado público, do próprio banco de
+    // municípios já publicado —, não identificador de pessoa.
+    //
+    // `null` atravessa como `null`: dois projetos têm a abrangência declarada
+    // indeterminada pela fonte, e o portal precisa poder dizer isso em vez de
+    // mostrar zero municípios.
+    'municipalityIds',
     'executionStatus',
     'validationStatus',
     'actualityStatus',
@@ -60,6 +69,9 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
   ],
   indicators: [
     'name',
+    // Distingue número apurado de definição do catálogo SNIS. Sem ele o portal
+    // não sabe separar 8 medições de 48 fichas sem valor.
+    'nature',
     'value',
     'displayValue',
     'unit',
@@ -88,6 +100,8 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
   ],
   goals: [
     'name',
+    'generalObjective',
+    'responsibleParties',
     'baseline',
     'currentResult',
     'expectedResult',
@@ -127,6 +141,28 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // domínio e remigrar a coleção.
   ],
   /**
+   * Indicadores municipais: cada valor com a sua unidade, ano e fonte.
+   *
+   * `municipalityId` entra porque sem ele o valor não pertence a lugar nenhum.
+   * Não é identificador de pessoa — é o mesmo id que já é público na coleção
+   * de municípios.
+   */
+  municipalIndicators: [
+    'municipalityId',
+    'indicator',
+    'name',
+    'value',
+    'displayValue',
+    'unit',
+    'referencePeriod',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+    // Exceção documentada em EXCECOES_AO_NEVER_PUBLIC.
+    'legacyStatus',
+  ],
+
+  /**
    * Glossário: sigla e significado. Não há o que proteger — é vocabulário.
    */
   glossary: ['acronym', 'meaning'],
@@ -159,6 +195,14 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     'dataDate',
     // Exceção documentada em EXCECOES_AO_NEVER_PUBLIC.
     'legacyStatus',
+    // Código do achado no Relatório de Inconsistências: dá ao cidadão como
+    // referenciar o item na fonte.
+    'reportCode',
+    // Distingue achado do Relatório oficial de achado da leitura posterior.
+    'findingOrigin',
+    // `publicationPolicy` fica de fora de propósito: é decisão editorial
+    // interna, e desde 16/08/2026 ela não governa mais o que se publica.
+    // Ver "A anotação que não virou retenção" em SECURITY.md.
   ],
 };
 
@@ -230,6 +274,7 @@ export const EXCECOES_AO_NEVER_PUBLIC: Partial<Record<PublicCollection, string[]
   projects: ['legacyStatus'],
   infrastructures: ['legacyStatus'],
   inconsistencies: ['legacyStatus'],
+  municipalIndicators: ['legacyStatus'],
 };
 
 export class SanitizationError extends Error {}

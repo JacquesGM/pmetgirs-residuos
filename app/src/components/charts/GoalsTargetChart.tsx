@@ -17,7 +17,7 @@ function montarDados(metas: Meta[]) {
   .map((id) => metas.find((m) => m.id === id))
   .filter((m): m is Meta => Boolean(m))
   .map((meta) => ({
-    ano: parseLeadingNumber(meta.prazo),
+    ano: parseLeadingNumber(meta.prazo ?? ''),
     percentual: parseLeadingNumber(meta.resultadoEsperado),
     nome: meta.nome,
     resultadoAtual: meta.resultadoAtual,

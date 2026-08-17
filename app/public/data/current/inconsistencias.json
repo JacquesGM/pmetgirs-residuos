@@ -2,136 +2,279 @@
   {
     "areaResponsavel": "Municípios da RMRJ, com apoio do IRM",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-23",
     "descricao": "Alguns municípios não participaram integralmente dos workshops e seminários realizados durante a elaboração do Diagnóstico Geral, o que resulta em lacunas pontuais de informação por município.",
     "encaminhamento": "Nova rodada de coleta de dados municipais.",
     "fontes": null,
     "id": "atualizacao-municipal-pendente",
     "impacto": "Pode reduzir a precisão de indicadores municipais específicos até a atualização dos dados.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_atualizacao",
     "titulo": "Atualização de dados municipais pendente",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
+  },
+  {
+    "areaResponsavel": "IRM, INEA e Prefeitura de Itaguaí",
+    "categoria": "divergencia_de_dados",
+    "codigoRelatorio": null,
+    "descricao": "O Prognóstico Geral identifica 23 áreas de disposição irregular e levanta o estágio de remediação de cada uma. A Tabela 53 do Diagnóstico Geral contabiliza 24 lixões na região. Há ainda conflito de fonte registrado em nota de rodapé do Prognóstico: a Prefeitura de Itaguaí contesta junto ao INEA a existência do vazadouro Cidade Industrial, reconhecendo apenas o de Santana.",
+    "encaminhamento": "Achado na leitura integral das fontes primárias em 16/08/2026. Não consta do Relatório Técnico de Inconsistências e aguarda validação pela equipe técnica do IRM.",
+    "fontes": [
+      {
+        "fonte": "Prognóstico Geral, Tabelas 28, 29 e 30",
+        "valor": "23 áreas"
+      },
+      {
+        "fonte": "Diagnóstico Geral, Tabela 53",
+        "valor": "24 lixões"
+      }
+    ],
+    "id": "contagem-vazadouros-divergente",
+    "impacto": "Define quantas áreas precisam de remediação e, portanto, o custo e o alcance do programa. Uma área contestada por quem responde por ela não pode entrar nem sair da conta sem decisão registrada.",
+    "origemDoAchado": "leitura_das_fontes",
+    "situacao": "em_validacao",
+    "titulo": "Contagem de vazadouros diverge entre os volumes",
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-09",
     "descricao": "O cronograma físico do Plano de Ações foi elaborado com início de referência em 2024 e ano-horizonte em 2033; o andamento real de cada etapa está sujeito a atualização conforme o avanço da implementação.",
     "encaminhamento": "Acompanhamento contínuo via monitoramento do plano.",
     "fontes": null,
     "id": "cronograma-iniciado-2024",
     "impacto": "Pode gerar diferença entre o cronograma original e o ritmo real de execução das ações.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_atualizacao",
     "titulo": "Cronograma original iniciado em 2024",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
+  },
+  {
+    "areaResponsavel": "IRM e Prefeitura de Niterói",
+    "categoria": "divergencia_de_dados",
+    "codigoRelatorio": null,
+    "descricao": "A Tabela 20 do Diagnóstico atribui a Niterói uma despesa de R$ 273.275.031,32 com o manejo de resíduos — valor idêntico, ao centavo, à sua arrecadação com a taxa de lixo na Tabela 24. Daí a cobertura de exatamente 100%. A Tabela 19 registra R$ 30.185.348,42 de despesa com coleta no município. Substituindo um valor pelo outro, a soma da Tabela 20 passa de R$ 2,94 para R$ 2,69 bilhões, que é o total publicado na conclusão do próprio Diagnóstico.",
+    "encaminhamento": "Achado na leitura integral das fontes primárias em 16/08/2026. Não consta do Relatório Técnico de Inconsistências e aguarda validação pela equipe técnica do IRM.",
+    "fontes": [
+      {
+        "fonte": "Diagnóstico Geral, Tabela 20 (despesa com manejo)",
+        "valor": "R$ 273.275.031,32"
+      },
+      {
+        "fonte": "Diagnóstico Geral, Tabela 24 (arrecadação com a taxa)",
+        "valor": "R$ 273.275.031,32"
+      },
+      {
+        "fonte": "Diagnóstico Geral, Tabela 19 (despesa com coleta)",
+        "valor": "R$ 30.185.348,42"
+      }
+    ],
+    "id": "despesa-niteroi-igual-arrecadacao",
+    "impacto": "Niterói é apresentado como um dos dois únicos municípios que arrecadam o suficiente para cobrir o próprio manejo. Se o valor for repetição da arrecadação, essa conclusão não se sustenta — e o custo metropolitano total está superestimado em cerca de R$ 243 milhões.",
+    "origemDoAchado": "leitura_das_fontes",
+    "situacao": "em_validacao",
+    "titulo": "Despesa de Niterói idêntica à sua arrecadação",
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM — equipe técnica responsável pelo Diagnóstico Geral",
     "categoria": "divergencia_de_dados",
-    "descricao": "A geração diária de resíduos sólidos urbanos é citada como 16.926 t/dia nos trechos narrativos do Diagnóstico Geral e do Plano de Ações, mas as tabelas de totalização de ambos os documentos chegam a 16.929 t/dia.",
-    "encaminhamento": "Aguarda consolidação de uma base única de geração diária.",
+    "codigoRelatorio": "INC-03",
+    "descricao": "A geração metropolitana de RSU aparece com três valores. Dois deles diferem por três toneladas e vêm de bases de referência distintas — SNIS 2021 e COMLURB 2020. O terceiro, na conclusão do próprio Diagnóstico, é quase 1.500 t/dia menor porque usa os questionários respondidos pelos municípios em 2022, e não o SNIS. Não é arredondamento: é outra base de coleta.",
+    "encaminhamento": "Aguarda a definição de uma base oficial única, com data-base, fonte e fórmula declaradas. O Relatório de Inconsistências orienta adotar o maior valor entre os dois primeiros.",
     "fontes": [
       {
-        "fonte": "Diagnóstico Geral e Plano de Ações (texto narrativo)",
+        "fonte": "Diagnóstico Geral, Tabela 9 e Prognóstico Geral, Tabela 36 (SNIS 2021)",
         "valor": "16.926 t/dia"
       },
       {
-        "fonte": "Diagnóstico Geral e Plano de Ações (tabelas de totalização)",
+        "fonte": "Diagnóstico Geral, Tabela 11 e Plano de Ações, Tabela 10 (COMLURB 2020)",
         "valor": "16.929 t/dia"
+      },
+      {
+        "fonte": "Diagnóstico Geral, conclusão (Questionário ENGECONSULT 2022)",
+        "valor": "15.499 t/dia"
       }
     ],
     "id": "divergencia-geracao-diaria",
-    "impacto": "Afeta o dimensionamento de infraestrutura e os indicadores per capita apresentados publicamente.",
+    "impacto": "Afeta o dimensionamento de infraestrutura e os indicadores per capita apresentados publicamente. A própria Tabela 9 registra erro relativo de até 92,67% entre SNIS e questionário em municípios isolados.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_validacao",
     "titulo": "Divergência na geração diária de RSU",
-    "ultimaAtualizacao": null
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM — equipes técnicas responsáveis pelo Prognóstico Geral e pelo Plano de Ações",
     "categoria": "divergencia_de_dados",
-    "descricao": "Na avaliação de viabilidade técnica e econômica (EVTE) das usinas térmicas, o Prognóstico Geral chega a um CAPEX total de R$ 4,73 bilhões; já o Plano de Ações estima R$ 12,5 bilhões para os centros de triagem e as usinas de conversão de RSU em energia elétrica, considerando todas as etapas.",
-    "encaminhamento": "Aguarda o Plano de Negócios (ver Portfólio de Projetos) para consolidar uma estimativa financeira única.",
+    "codigoRelatorio": "INC-04",
+    "descricao": "A Tabela 73 do Prognóstico Geral apresenta o CAPEX em três recortes: o município do Rio de Janeiro isolado (R$ 4,73 bilhões), a RMRJ sem o Rio (R$ 4,42 bilhões) e a região inteira, com 45 usinas (R$ 9,15 bilhões). O Plano de Ações estima R$ 12,5 bilhões e atribui esse número ao mesmo estudo de viabilidade. A diferença entre R$ 9,15 e R$ 12,5 bilhões acompanha a divergência na quantidade de usinas térmicas — 20 contra 28.",
+    "encaminhamento": "Aguarda o Plano de Negócios (ver Portfólio de Projetos) para consolidar uma memória de cálculo única, rastreável por ativo, quantidade, capacidade e data-base.",
     "fontes": [
       {
-        "fonte": "Prognóstico Geral (EVTE consolidada)",
+        "fonte": "Prognóstico Geral, Tabela 73 (RMRJ inteira, 45 usinas)",
+        "valor": "R$ 9,15 bilhões (CAPEX)"
+      },
+      {
+        "fonte": "Prognóstico Geral, Tabela 73 (recorte do município do Rio de Janeiro)",
         "valor": "R$ 4,73 bilhões (CAPEX)"
       },
       {
-        "fonte": "Plano de Ações",
-        "valor": "R$ 12,5 bilhões (estimativa, todas as etapas)"
+        "fonte": "Plano de Ações (5W2H e seção do Plano de Negócios)",
+        "valor": "R$ 12,5 bilhões (todas as etapas)"
       }
     ],
     "id": "divergencia-investimento-estimado",
-    "impacto": "Gera incerteza sobre o volume de investimento necessário para o planejamento orçamentário e para negociação com o setor privado.",
+    "impacto": "Gera incerteza sobre o volume de investimento necessário para o planejamento orçamentário e para a negociação com o setor privado. Comparar o subtotal do Rio de Janeiro com o total do Plano de Ações amplia artificialmente a diferença.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_validacao",
     "titulo": "Divergência na estimativa de investimento das usinas",
-    "ultimaAtualizacao": null
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM — equipe técnica responsável pela consolidação do Prognóstico Geral e do Plano de Ações",
     "categoria": "divergencia_de_dados",
-    "descricao": "As 28 unidades térmicas de recuperação energética somam o mesmo total nos dois documentos, mas a forma como esse total se divide entre combustão e gaseificação (termodegradação) diverge: o Plano de Ações aponta 15 usinas de combustão e 13 de gaseificação, enquanto o Prognóstico Geral inverte essa proporção: 13 de combustão e 15 de gaseificação.",
-    "encaminhamento": "Aguarda consolidação oficial entre as equipes responsáveis pelos dois documentos.",
+    "codigoRelatorio": "INC-01",
+    "descricao": "A divergência não está apenas em como as unidades se dividem entre combustão e termodegradação — está também no total. O Prognóstico Geral propõe 20 unidades (10 de cada tecnologia), em três tabelas que concordam entre si. O Plano de Ações propõe 28, e inverte a divisão entre a sua própria tabela (13 de combustão e 15 de termodegradação, número que o cronograma confirma) e o seu texto corrido (15 de combustão e 13 de gaseificação).",
+    "encaminhamento": "Aguarda consolidação oficial de uma configuração única entre as equipes responsáveis pelos dois documentos, com correção propagada para tabelas, texto corrido e cronograma.",
     "fontes": [
       {
-        "fonte": "Plano de Ações (Anexo III)",
-        "valor": "15 usinas de combustão / 13 de gaseificação"
+        "fonte": "Prognóstico Geral (Tabelas 39, 40 e 73)",
+        "valor": "10 de combustão / 10 de termodegradação — 20 unidades"
       },
       {
-        "fonte": "Prognóstico Geral",
-        "valor": "13 usinas de combustão / 15 de gaseificação"
+        "fonte": "Plano de Ações (Tabela 10 e cronograma da Tabela 11)",
+        "valor": "13 de combustão / 15 de termodegradação — 28 unidades"
+      },
+      {
+        "fonte": "Plano de Ações (texto corrido, dois trechos)",
+        "valor": "15 de combustão / 13 de gaseificação — 28 unidades"
       }
     ],
     "id": "divergencia-unidades-termicas",
-    "impacto": "Afeta o dimensionamento técnico e financeiro das licitações de recuperação energética.",
+    "impacto": "Altera o dimensionamento técnico e financeiro das licitações de recuperação energética. Como o total difere em oito unidades, afeta também a estimativa de investimento — ver a divergência sobre o CAPEX das usinas.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_validacao",
-    "titulo": "Divergência na distribuição das unidades térmicas",
-    "ultimaAtualizacao": null
+    "titulo": "Divergência na quantidade e na distribuição das unidades térmicas",
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-16",
     "descricao": "A definição final dos locais das usinas de triagem, unidades térmicas e demais infraestruturas planejadas depende de estudos locacionais e ambientais ainda não concluídos.",
     "encaminhamento": "Licenciamento ambiental e estudos técnicos em andamento.",
     "fontes": null,
     "id": "estudos-locacionais-ambientais",
     "impacto": "As localizações apresentadas neste momento são preliminares e podem ser alteradas.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_atualizacao",
     "titulo": "Estudos locacionais e ambientais pendentes",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
+  },
+  {
+    "areaResponsavel": "IRM — equipe técnica responsável pelo Diagnóstico Geral",
+    "categoria": "divergencia_de_dados",
+    "codigoRelatorio": null,
+    "descricao": "O Diagnóstico Geral apresenta duas médias metropolitanas diferentes: 1,17 kg por habitante ao dia na seção 5.2.3 e 1,28 kg na sua própria conclusão. O prefácio institucional traz ainda \"média de geração diária de 1.200 kg por pessoa\", atribuída ao SINIR de 2019 — três ordens de grandeza acima do valor real.",
+    "encaminhamento": "Achado na leitura integral das fontes primárias em 16/08/2026. Não consta do Relatório Técnico de Inconsistências e aguarda validação pela equipe técnica do IRM.",
+    "fontes": [
+      {
+        "fonte": "Diagnóstico Geral, seção 5.2.3",
+        "valor": "1,17 kg/habitante/dia"
+      },
+      {
+        "fonte": "Diagnóstico Geral, conclusão",
+        "valor": "1,28 kg/habitante/dia"
+      },
+      {
+        "fonte": "Diagnóstico Geral, prefácio institucional",
+        "valor": "1.200 kg/pessoa/dia"
+      }
+    ],
+    "id": "geracao-per-capita-divergente",
+    "impacto": "A geração por habitante é o número mais citado para comparar a região com outras metrópoles e para dimensionar coleta. Duas médias no mesmo documento impedem qualquer comparação confiável.",
+    "origemDoAchado": "leitura_das_fontes",
+    "situacao": "em_validacao",
+    "titulo": "Geração por habitante com valores incompatíveis no mesmo documento",
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   },
   {
     "areaResponsavel": "IRM e municípios da RMRJ",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-12",
     "descricao": "Parte dos indicadores de desempenho previstos para o monitoramento do PMetGIRS depende de dados municipais que ainda não foram integralmente consolidados.",
     "encaminhamento": "Depende da estruturação do Banco de Dados e Aplicativo Digital do PMetGIRS.",
     "fontes": null,
     "id": "indicadores-incompletos",
     "impacto": "Limita, por ora, o acompanhamento público de alguns resultados por município.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_atualizacao",
     "titulo": "Indicadores de desempenho ainda incompletos",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
   },
   {
     "areaResponsavel": "IRM",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-13",
     "descricao": "A divisão de responsabilidades operacionais entre o IRM, os municípios e futuros concessionários/parceiros privados ainda está sendo detalhada para diversas ações previstas no Plano de Ações.",
     "encaminhamento": "Detalhamento previsto no Plano de Negócios e nos modelos de concessão/PPP descritos no Plano de Ações.",
     "fontes": null,
     "id": "responsabilidades-difusas",
     "impacto": "Pode atrasar a contratação e execução de algumas ações até a definição formal de responsabilidades.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_estruturacao",
     "titulo": "Responsabilidades entre IRM e municípios ainda em definição",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
   },
   {
     "areaResponsavel": "IRM",
     "categoria": "ponto_em_revisao",
+    "codigoRelatorio": "INC-06",
     "descricao": "O Prognóstico Geral apresenta uma avaliação de viabilidade técnica e econômica específica para a captação e aproveitamento do biogás gerado nos aterros sanitários, cujos parâmetros financeiros seguem em processo de revisão.",
     "encaminhamento": "Em análise técnica.",
     "fontes": null,
     "id": "revisao-estudo-biogas",
     "impacto": "Pode alterar o dimensionamento e o retorno financeiro estimado para essa frente de recuperação energética.",
+    "origemDoAchado": "relatorio_de_inconsistencias",
     "situacao": "em_validacao",
     "titulo": "Revisão do estudo de aproveitamento de biogás",
+    "tratamentoEditorial": null,
     "ultimaAtualizacao": null
+  },
+  {
+    "areaResponsavel": "IRM — equipes técnicas responsáveis pela consolidação dos volumes",
+    "categoria": "divergencia_de_dados",
+    "codigoRelatorio": null,
+    "descricao": "A seção 8.8 do Prognóstico Geral apresenta o orçamento das 45 usinas em algarismos e por extenso, e os dois não coincidem: \"R$ 9.150.000.000,00 (nove bilhões, cento e dezesseis milhões, trezentos e vinte e três mil e oitocentos e trinta e seis reais)\". As parcelas do próprio estudo — R$ 6,3 bilhões de combustão, R$ 1,1 bilhão de termodegradação e R$ 1,75 bilhão de triagem — fecham nos algarismos.",
+    "encaminhamento": "Achado na leitura integral das fontes primárias em 16/08/2026. Não consta do Relatório Técnico de Inconsistências e aguarda validação pela equipe técnica do IRM.",
+    "fontes": [
+      {
+        "fonte": "Prognóstico Geral, seção 8.8 (algarismos)",
+        "valor": "R$ 9.150.000.000,00"
+      },
+      {
+        "fonte": "Prognóstico Geral, seção 8.8 (por extenso)",
+        "valor": "R$ 9.116.323.836,00"
+      }
+    ],
+    "id": "total-evte-por-extenso",
+    "impacto": "Baixo do ponto de vista do cálculo, porque as parcelas fecham. Relevante como citação: o valor por extenso é o que costuma ser transcrito em atas, pareceres e notícias.",
+    "origemDoAchado": "leitura_das_fontes",
+    "situacao": "em_validacao",
+    "titulo": "Total do estudo de viabilidade escrito por extenso com outro valor",
+    "tratamentoEditorial": null,
+    "ultimaAtualizacao": "2026-08-16"
   }
 ]

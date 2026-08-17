@@ -39,9 +39,11 @@ export function Infrastructure() {
       <div className="mb-6 flex gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
         <AlertTriangle aria-hidden="true" className="h-5 w-5 shrink-0" />
         <p>
-          <strong>Aviso de transparência:</strong> os documentos divergem sobre como as 28 unidades
-          térmicas se dividem entre combustão e gaseificação. As duas versões aparecem abaixo, sem
-          escolher uma.
+          <strong>Aviso de transparência:</strong> os documentos divergem sobre{' '}
+          <strong>quantas</strong> unidades térmicas estão previstas — 20 no Prognóstico Geral e 28 no
+          Plano de Ações — e também sobre como esse total se divide entre combustão e gaseificação. O
+          Plano de Ações diverge de si mesmo: a sua tabela e o seu texto trocam os dois números. Todas
+          as versões aparecem abaixo, sem escolher uma.
         </p>
       </div>
 

@@ -38,6 +38,9 @@ export function toProjeto(doc: PublishedDocument): Projeto {
     eixo: texto('axisId'),
     descricao: texto('description'),
     abrangencia: texto('territorialScale'),
+    // `null` atravessa como `null`: dois projetos têm a abrangência declarada
+    // indeterminada pela fonte, e `[]` afirmaria "nenhum município".
+    municipios: Array.isArray(d.municipalityIds) ? lista('municipalityIds') : null,
     responsavel: texto('accountable'),
     participantes: lista('participants'),
     status: status ?? ('nao_iniciado' as StatusProjeto),

@@ -12,6 +12,7 @@ import type {
   ValorDivergente,
   Eixo,
   Indicador,
+  IndicadorMunicipal,
   Meta,
   Municipio,
   StatusProjeto,
@@ -134,10 +135,13 @@ export function toIndicador(doc: PublishedDocument): Indicador {
   return {
     id: doc.id,
     nome: texto(d, 'name'),
+    // Sem natureza declarada, trata como medido: é o que os 8 indicadores
+    // publicados antes da Tabela 25 sempre foram.
+    natureza: textoOuNulo(d, 'nature') === 'catalogo_snis' ? 'catalogo_snis' : 'medido',
     valor: numero(d, 'value'),
-    valorExibicao: texto(d, 'displayValue'),
-    unidade: texto(d, 'unit'),
-    periodoReferencia: texto(d, 'referencePeriod'),
+    valorExibicao: textoOuNulo(d, 'displayValue'),
+    unidade: textoOuNulo(d, 'unit'),
+    periodoReferencia: textoOuNulo(d, 'referencePeriod'),
     fonte: texto(d, 'sourceLabel'),
     tipoDado,
     statusValidacao,
@@ -146,6 +150,31 @@ export function toIndicador(doc: PublishedDocument): Indicador {
   };
 }
 
+
+// -------------------------------------------------- indicadores municipais
+
+export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    municipioId: texto(d, 'municipalityId'),
+    indicador: texto(d, 'indicator'),
+    nome: texto(d, 'name'),
+    valor: numero(d, 'value'),
+    valorExibicao: textoOuNulo(d, 'displayValue'),
+    unidade: textoOuNulo(d, 'unit'),
+    periodoReferencia: textoOuNulo(d, 'referencePeriod'),
+    fonte: texto(d, 'sourceLabel'),
+    // O legado é o valor exato da coluna de situação; a reconstrução a partir
+    // de validação e atualidade produziria rótulo falso, como já produziu.
+    statusValidacao: (textoOuNulo(d, 'legacyStatus') as StatusValidacao | null) ??
+      statusDeValidacaoLegado(
+        d.validationStatus as string | null,
+        d.actualityStatus as string | null,
+      ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
 
 // ------------------------------------------------------------------ eixos
 
@@ -206,10 +235,14 @@ export function toMeta(doc: PublishedDocument): Meta {
   return {
     id: doc.id,
     nome: texto(d, 'name'),
+    objetivoGeral: textoOuNulo(d, 'generalObjective'),
     linhaBase: textoOuNulo(d, 'baseline'),
     resultadoAtual: textoOuNulo(d, 'currentResult'),
     resultadoEsperado: texto(d, 'expectedResult'),
-    prazo: texto(d, 'deadline'),
+    prazo: textoOuNulo(d, 'deadline'),
+    responsaveis: Array.isArray(d.responsibleParties)
+      ? (d.responsibleParties as unknown[]).map(String)
+      : [],
     municipios: texto(d, 'scope'),
     situacao: situacaoLegada(d.executionStatus),
     metodologia: textoOuNulo(d, 'methodology'),
@@ -312,6 +345,16 @@ export function toInconsistencia(
   const categoria = texto(d, 'category');
   return {
     id: doc.id,
+    codigoRelatorio: textoOuNulo(d, 'reportCode'),
+    origemDoAchado:
+      textoOuNulo(d, 'findingOrigin') === 'leitura_das_fontes'
+        ? 'leitura_das_fontes'
+        : 'relatorio_de_inconsistencias',
+    // Nulo aqui significa retido, e o portal esconde. Isso protege contra
+    // snapshot antigo: os gerados antes da matriz não trazem o campo, e um
+    // achado retido que sobreviva num arquivo velho não volta à tela.
+    tratamentoEditorial: textoOuNulo(d, 'publicationPolicy') as
+      Inconsistencia['tratamentoEditorial'],
     categoria: categoria === 'ponto_em_revisao' ? 'ponto_em_revisao' : 'divergencia_de_dados',
     titulo: texto(d, 'title'),
     descricao: texto(d, 'description'),
@@ -404,6 +447,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'municipalIndicators',
+    arquivo: 'indicadores-municipais',
+    rotulo: 'Indicadores municipais',
+    mapear: toIndicadorMunicipal,
   },
   {
     colecao: 'glossary',

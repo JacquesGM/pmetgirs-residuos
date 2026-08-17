@@ -7,33 +7,51 @@ import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
 const infraestruturasEmbutidos = infraestruturasData as Infraestrutura[];
 
-const PLANO_ACOES = 'Plano de Ações';
-const PROGNOSTICO = 'Prognóstico Geral';
+/**
+ * Uma série por fonte, derivada do dado.
+ *
+ * Este gráfico já teve duas séries fixas — "Plano de Ações" e "Prognóstico
+ * Geral" — casadas por prefixo com `find()`. Quando a leitura dos volumes, em
+ * 16/08/2026, revelou que o Plano de Ações diverge de si mesmo (a sua tabela
+ * diz 13 usinas de combustão, o seu texto corrido diz 15), o `find()` passou a
+ * devolver a primeira e **descartar a segunda em silêncio** — o oposto do que
+ * a legenda do gráfico promete. Agora as fontes vêm dos dados: se aparecer uma
+ * quarta, ela é desenhada.
+ */
+const IDS = [
+  { id: 'unidades-combustao', categoria: 'Usinas de combustão' },
+  { id: 'gaseificacao-termodegradacao', categoria: 'Gaseificação / termodegradação' },
+] as const;
 
-function parseQuantidade(valor: string): number {
+/** Distinguíveis também em escala de cinza e por posição, nunca só por matiz. */
+const CORES = ['#2a6ca8', '#2f9e5c', '#8a4fbd', '#b26a12'];
+
+function parseQuantidade(valor: string): number | null {
   const match = valor.match(/^\d+/);
-  return match ? Number(match[0]) : 0;
+  return match ? Number(match[0]) : null;
 }
 
-function buildSerie(infraestruturas: Infraestrutura[], id: string) {
-  const item = infraestruturas.find((i) => i.id === id);
-  const divergentes = item?.valoresDivergentes ?? [];
-  const planoAcoes = divergentes.find((v) => v.fonte.startsWith('Plano de Ações'));
-  const prognostico = divergentes.find((v) => v.fonte.startsWith('Prognóstico'));
-  return {
-    [PLANO_ACOES]: planoAcoes ? parseQuantidade(planoAcoes.valor) : null,
-    [PROGNOSTICO]: prognostico ? parseQuantidade(prognostico.valor) : null,
-  };
+/** Fontes na ordem em que aparecem, sem repetir. */
+function fontesDistintas(infraestruturas: Infraestrutura[]): string[] {
+  const vistas: string[] = [];
+  for (const { id } of IDS) {
+    for (const v of infraestruturas.find((i) => i.id === id)?.valoresDivergentes ?? []) {
+      if (!vistas.includes(v.fonte)) vistas.push(v.fonte);
+    }
+  }
+  return vistas;
 }
 
-function montarDados(infraestruturas: Infraestrutura[]) {
-  return [
-    { categoria: 'Usinas de combustão', ...buildSerie(infraestruturas, 'unidades-combustao') },
-    {
-      categoria: 'Gaseificação / termodegradação',
-      ...buildSerie(infraestruturas, 'gaseificacao-termodegradacao'),
-    },
-  ];
+function montarDados(infraestruturas: Infraestrutura[], fontes: string[]) {
+  return IDS.map(({ id, categoria }) => {
+    const divergentes = infraestruturas.find((i) => i.id === id)?.valoresDivergentes ?? [];
+    const linha: Record<string, string | number | null> = { categoria };
+    for (const fonte of fontes) {
+      const achado = divergentes.find((v) => v.fonte === fonte);
+      linha[fonte] = achado ? parseQuantidade(achado.valor) : null;
+    }
+    return linha;
+  });
 }
 
 function CustomTooltip({
@@ -60,33 +78,36 @@ function CustomTooltip({
 
 export function InfrastructureDivergenceChart() {
   const infraestruturas = useColecaoPublicada<Infraestrutura>('infraestruturas', infraestruturasEmbutidos);
-  const chartData = useMemo(() => montarDados(infraestruturas), [infraestruturas]);
+  const fontes = useMemo(() => fontesDistintas(infraestruturas), [infraestruturas]);
+  const chartData = useMemo(() => montarDados(infraestruturas, fontes), [infraestruturas, fontes]);
 
   const resumo = chartData
-    .map((d) => `${d.categoria} — ${PLANO_ACOES}: ${d[PLANO_ACOES] ?? 'não informado'}, ${PROGNOSTICO}: ${d[PROGNOSTICO] ?? 'não informado'}`)
+    .map((d) =>
+      `${d.categoria} — ` +
+      fontes.map((f) => `${f}: ${d[f] ?? 'não informado'}`).join(', '),
+    )
     .join('; ');
 
   return (
     <ChartFigure
       title="Distribuição divergente das unidades térmicas, por fonte"
       description={
-        `Gráfico de barras agrupadas comparando o que cada documento oficial afirma sobre a divisão das ` +
-        `28 unidades térmicas. ${resumo}. As duas fontes são apresentadas lado a lado, sem escolher ` +
-        `nenhuma delas.`
+        `Gráfico de barras agrupadas comparando o que cada documento oficial afirma sobre a ` +
+        `divisão das unidades térmicas entre combustão e gaseificação. ${resumo}. ` +
+        `As ${fontes.length} fontes são apresentadas lado a lado, sem escolher nenhuma delas.`
       }
       height="18rem"
       table={{
-        columns: ['Tecnologia', PLANO_ACOES, PROGNOSTICO],
+        columns: ['Tecnologia', ...fontes],
         rows: chartData.map((d) => [
-          d.categoria,
-          d[PLANO_ACOES] ?? 'Não informado',
-          d[PROGNOSTICO] ?? 'Não informado',
+          String(d.categoria),
+          ...fontes.map((f) => (d[f] === null || d[f] === undefined ? 'Não informado' : String(d[f]))),
         ]),
       }}
       note={
         <>
-          As duas fontes são apresentadas lado a lado, sem escolher nenhuma delas silenciosamente. Ver aviso
-          de transparência acima.
+          As fontes são apresentadas lado a lado, sem escolher nenhuma delas silenciosamente. O total
+          também diverge — ver aviso de transparência acima.
         </>
       }
     >
@@ -107,8 +128,16 @@ export function InfrastructureDivergenceChart() {
           />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0,0,0,0.03)' }} />
           <Legend wrapperStyle={{ fontSize: 13 }} />
-          <Bar dataKey={PLANO_ACOES} fill="#2a6ca8" radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false} />
-          <Bar dataKey={PROGNOSTICO} fill="#2f9e5c" radius={[4, 4, 0, 0]} maxBarSize={48} isAnimationActive={false} />
+          {fontes.map((fonte, i) => (
+            <Bar
+              key={fonte}
+              dataKey={fonte}
+              fill={CORES[i % CORES.length]}
+              radius={[4, 4, 0, 0]}
+              maxBarSize={48}
+              isAnimationActive={false}
+            />
+          ))}
         </BarChart>
       </ResponsiveContainer>
     </ChartFigure>

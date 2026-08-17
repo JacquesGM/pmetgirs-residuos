@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { FileText } from 'lucide-react';
+import { Download, FileText } from 'lucide-react';
 import documentosData from '../../data/documentos.json';
 import type { Documento } from '../../types';
 import { Section } from '../ui/Section';
@@ -63,7 +63,33 @@ export function Documents() {
                 {doc.orgao} · {doc.formato} {doc.tamanho ?? ''}
                 {doc.versao ? ` · v.${doc.versao}` : ''}
               </p>
-              <p className="mt-2 text-xs italic text-neutral-500">Link do PDF em breve.</p>
+              {doc.link ? (
+                <p className="mt-3">
+                  <a
+                    href={doc.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-medium text-brand-blue-700 underline underline-offset-2 hover:text-brand-blue-800"
+                  >
+                    <Download aria-hidden="true" className="h-4 w-4 shrink-0" />
+                    {/* O nome acessível diz formato, peso e que abre fora: quem
+                        está no celular decide antes de baixar 20 MB, e quem usa
+                        leitor de tela não é levado para outra aba sem aviso. */}
+                    <span>
+                      Abrir {doc.titulo}
+                      <span className="sr-only">
+                        {` em ${doc.formato}${doc.tamanho ? `, ${doc.tamanho}` : ''}, no portal oficial do IRM, em nova aba`}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" className="text-xs font-normal text-neutral-500">
+                      ({doc.formato}
+                      {doc.tamanho ? `, ${doc.tamanho}` : ''})
+                    </span>
+                  </a>
+                </p>
+              ) : (
+                <p className="mt-2 text-xs italic text-neutral-500">Link do PDF em breve.</p>
+              )}
             </Card>
           ))}
         </div>

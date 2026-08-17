@@ -6,6 +6,7 @@ import { BackToTop } from './BackToTop';
 import { ScrollToTop } from './ScrollToTop';
 import { RouteTitle } from './RouteTitle';
 import { VLibrasWidget } from './VLibrasWidget';
+import { PrototypeNotice } from './PrototypeNotice';
 
 export function RootLayout() {
   return (
@@ -13,6 +14,7 @@ export function RootLayout() {
       <SkipLink />
       <ScrollToTop />
       <RouteTitle />
+      <PrototypeNotice />
       <Header />
       {/*
         tabIndex={-1} é o que faz o "Ir para o conteúdo" funcionar de verdade:

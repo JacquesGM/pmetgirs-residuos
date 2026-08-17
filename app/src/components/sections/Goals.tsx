@@ -11,6 +11,16 @@ import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
 const metasEmbutidos = metasData as Meta[];
 
+/**
+ * A data de referência é do dado, não da página. Exibi-la só faz sentido quando
+ * existe: sem ela, o `DataValue` diz "Em atualização" em vez de inventar hoje.
+ */
+function formatarDataDeReferencia(iso: string | null): string | null {
+  if (!iso) return null;
+  const [ano, mes, dia] = iso.split('-');
+  return dia && mes ? `${dia}/${mes}/${ano}` : ano;
+}
+
 export function Goals() {
   const metas = useColecaoPublicada<Meta>('metas', metasEmbutidos);
 
@@ -49,6 +59,10 @@ export function Goals() {
                     Resultado atual: <DataValue value={meta.resultadoAtual} status="em_atualizacao" />
                   </span>
                   <span className="mt-1 block">Fonte: {meta.fonte}</span>
+                  <span className="mt-1 block">
+                    Data de referência da linha de base:{' '}
+                    <DataValue value={formatarDataDeReferencia(meta.ultimaAtualizacao)} status="em_atualizacao" />
+                  </span>
                 </InfoDisclosure>
               </Card>
             </li>
