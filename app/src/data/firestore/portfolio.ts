@@ -38,6 +38,12 @@ export interface PortfolioProject {
   costCategory: string | null;
   priorityScore: number | null;
   dataDate: string | null;
+  /** Documento, tabela e página de onde o registro veio. É o único caminho de entrada. */
+  sourceLabel: string | null;
+  /** Abrangência como a fonte escreveu. */
+  territorialScale: string | null;
+  /** Leitura estruturada da abrangência. `null` quando a fonte não determina. */
+  municipalityIds: string[] | null;
   version: number;
   updatedAt: Date | null;
   isArchived: boolean;
@@ -86,6 +92,11 @@ function mapProject(id: string, data: DocumentData): PortfolioProject {
     costCategory: str(data.costCategory),
     priorityScore: num(data.priorityScore),
     dataDate: str(data.dataDate),
+    sourceLabel: str(data.sourceLabel),
+    territorialScale: str(data.territorialScale),
+    municipalityIds: Array.isArray(data.municipalityIds)
+      ? (data.municipalityIds as string[])
+      : null,
     version: num(data.version) ?? 1,
     updatedAt: toDate(data.updatedAt),
     isArchived: data.isArchived === true,
@@ -128,13 +139,40 @@ export interface PublishableItem {
  * ar. O documento completo só é lido na hora de publicar, por
  * `readDocsForPublication`.
  */
+/**
+ * O teto existe para não estourar cota de leitura numa tela só. Ele era 200 e
+ * truncava em silêncio: a coleção de indicadores municipais tem 242 registros,
+ * e 42 deles simplesmente não apareciam para publicar. Agora o corte é
+ * detectado e informado — um limite que esconde dado é pior que um erro.
+ */
+export const LIMITE_PUBLICACAO = 500;
+
+export interface EixoResumo {
+  id: string;
+  name: string;
+}
+
+/** Eixos para preencher seletor. São doze; não há paginação a fazer. */
+export async function listAxes(): Promise<EixoResumo[]> {
+  const snap = await getDocs(collection(getDb(), `${base()}/axes`));
+  return snap.docs
+    .map((d) => ({ id: d.id, name: str(d.data().name) ?? d.id }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+}
+
 export async function listForPublication(
   collection_: string,
-  max = 200,
+  max = LIMITE_PUBLICACAO,
 ): Promise<PublishableItem[]> {
   const snapshot = await getDocs(
     query(collection(getDb(), `${base()}/${collection_}`), fsLimit(max)),
   );
+  if (snapshot.size === max) {
+    throw new Error(
+      `A coleção "${collection_}" atingiu o teto de ${max} registros na listagem para ` +
+        'publicação. Publicar com a lista truncada deixaria registros de fora sem aviso.',
+    );
+  }
   return snapshot.docs
     .map((d) => {
       const data = d.data();
@@ -212,9 +250,27 @@ export async function countByCollection(name: string, max = 500): Promise<number
   return snapshot.size;
 }
 
-export async function listAuditEvents(entityId?: string, max = 50): Promise<AuditEntry[]> {
+/**
+ * Histórico de auditoria, do workspace inteiro ou de uma entidade.
+ *
+ * Filtrar por entidade exige TAMBÉM a coleção: o índice composto declarado é
+ * `entityCollection + entityId + occurredAt`, e uma consulta que só filtre
+ * `entityId` não usa esse prefixo — o Firestore recusa por falta de índice.
+ * Era o que acontecia no detalhe do projeto: a consulta falhava, a tela não
+ * tinha ramo de erro e o Histórico aparecia vazio, como se não houvesse eventos.
+ *
+ * Exigir a coleção também é mais correto: dois documentos de coleções
+ * diferentes podem ter o mesmo id.
+ */
+export async function listAuditEvents(
+  entity?: { collection: string; id: string },
+  max = 50,
+): Promise<AuditEntry[]> {
   const constraints: QueryConstraint[] = [];
-  if (entityId) constraints.push(where('entityId', '==', entityId));
+  if (entity) {
+    constraints.push(where('entityCollection', '==', entity.collection));
+    constraints.push(where('entityId', '==', entity.id));
+  }
   constraints.push(orderBy('occurredAt', 'desc'));
   constraints.push(fsLimit(max));
 
@@ -265,4 +321,40 @@ export async function commitMutation(input: MutationInput): Promise<{ version: n
   await batch.commit();
 
   return { version: plan.nextVersion, eventId: plan.eventId };
+}
+
+export interface TemaGutGravado {
+  id: string;
+  tema: string;
+  gravidade: number;
+  urgencia: number;
+  tendencia: number;
+  pontuacao: number;
+  ranking: number;
+  projetosRelacionados: string[];
+  observacao: string | null;
+}
+
+/**
+ * A priorização que o Plano de Ações já fez, por Gravidade, Urgência e
+ * Tendência. Dezesseis temas; não há paginação a fazer.
+ */
+export async function listGutPriorities(): Promise<TemaGutGravado[]> {
+  const snap = await getDocs(collection(getDb(), `${base()}/gutPriorities`));
+  return snap.docs
+    .map((d) => {
+      const x = d.data();
+      return {
+        id: d.id,
+        tema: str(x.name) ?? d.id,
+        gravidade: num(x.severity) ?? 0,
+        urgencia: num(x.urgency) ?? 0,
+        tendencia: num(x.trend) ?? 0,
+        pontuacao: num(x.score) ?? 0,
+        ranking: num(x.ranking) ?? 99,
+        projetosRelacionados: Array.isArray(x.relatedProjectIds) ? (x.relatedProjectIds as string[]) : [],
+        observacao: str(x.note) ?? null,
+      };
+    })
+    .sort((a, b) => a.ranking - b.ranking);
 }

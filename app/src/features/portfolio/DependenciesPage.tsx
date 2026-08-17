@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
-import { AlertTriangle, CheckCircle2, GitBranch, Lock, Plus } from 'lucide-react';
+import { useMemo } from 'react';
+import { CheckCircle2, GitBranch, Lock } from 'lucide-react';
 import { listProjects } from '../../data/firestore/portfolio';
-import { CycleBlocked, createDependency, listDependencies } from '../../data/firestore/dependencies';
+import { listDependencies } from '../../data/firestore/dependencies';
 import {
   assessPair,
   computeStartability,
@@ -9,7 +9,6 @@ import {
   type GraphNode,
 } from '../../domain/dependencies/graph';
 import type { DependencyType } from '../../domain/enums';
-import { useAuth } from '../../app/AuthProvider';
 import { useAsync } from './useAsync';
 import { Pill } from './StateLabels';
 
@@ -22,19 +21,8 @@ const TIPO_LABEL: Record<DependencyType, string> = {
 };
 
 export function DependenciesPage() {
-  const { state: auth, hasRole } = useAuth();
-  const podeEditar = hasRole(['owner', 'admin', 'editor']);
-
   const projetos = useAsync(() => listProjects({ limit: 200 }), []);
   const deps = useAsync(() => listDependencies(), []);
-
-  const [predecessor, setPredecessor] = useState('');
-  const [sucessor, setSucessor] = useState('');
-  const [tipo, setTipo] = useState<DependencyType>('finish_to_start');
-  const [justificativa, setJustificativa] = useState('');
-  const [erro, setErro] = useState<string | null>(null);
-  const [sucesso, setSucesso] = useState<string | null>(null);
-  const [salvando, setSalvando] = useState(false);
 
   const nodes: GraphNode[] = useMemo(() => {
     if (projetos.status !== 'ready') return [];
@@ -58,6 +46,11 @@ export function DependenciesPage() {
   const podemComecar = startability.filter((s) => s.canStart);
   const bloqueados = startability.filter((s) => !s.canStart);
 
+  // Ação que não aparece em nenhuma aresta: os documentos não dizem nada sobre
+  // o que ela espera nem sobre o que espera por ela.
+  const comAresta = new Set(edges.flatMap((e) => [e.predecessorId, e.successorId]));
+  const semPrecedencia = nodes.filter((n) => !comAresta.has(n.id)).length;
+
   const paresParalelos = useMemo(() => {
     if (nodes.length < 2 || edges.length === 0) return [];
     const resultado = [];
@@ -66,44 +59,20 @@ export function DependenciesPage() {
         resultado.push(assessPair(nodes, edges, nodes[i].id, nodes[j].id));
       }
     }
-    return resultado.filter((p) => p.relation !== 'parallel');
+    // Só os pares que os documentos permitem afirmar. `not_ready` significa
+    // "falta avaliação de prontidão", e a prontidão saiu do sistema junto com
+    // o formulário que a produziria — listar 45 pares com esse mesmo aviso
+    // seria encher a tela de uma pendência que não tem como ser resolvida.
+    return resultado.filter((p) => p.relation === 'sequential' || p.relation === 'resource_conflict');
   }, [nodes, edges]);
-
-  async function salvar(event: React.FormEvent) {
-    event.preventDefault();
-    if (auth.status !== 'active') return;
-    setErro(null);
-    setSucesso(null);
-    setSalvando(true);
-
-    try {
-      await createDependency({
-        predecessorId: predecessor,
-        successorId: sucessor,
-        type: tipo,
-        lagDays: 0,
-        mandatory: true,
-        justification: justificativa,
-        actorUid: auth.membership.uid,
-        actorRole: auth.membership.role,
-        names: nomes,
-      });
-      setSucesso('Dependência registrada.');
-      setJustificativa('');
-      deps.reload();
-    } catch (e) {
-      setErro(e instanceof CycleBlocked ? e.message : e instanceof Error ? e.message : 'Falhou.');
-    } finally {
-      setSalvando(false);
-    }
-  }
 
   return (
     <div className="max-w-5xl">
       <h1 className="text-2xl font-bold text-neutral-900">Dependências e concomitância</h1>
       <p className="mt-1 max-w-prose text-sm text-neutral-600">
-        O que precede o quê, o que pode começar agora e o que pode andar em paralelo. Ciclos são
-        recusados na gravação.
+        O que precede o quê, o que pode começar agora e o que pode andar em paralelo. As
+        precedências são as declaradas nos documentos técnicos; ciclos são recusados na migração,
+        antes de qualquer gravação.
       </p>
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -153,90 +122,6 @@ export function DependenciesPage() {
         </section>
       </div>
 
-      {podeEditar && (
-        <form onSubmit={salvar} className="mt-8 rounded-lg border border-neutral-200 bg-white p-5">
-          <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
-            <Plus aria-hidden="true" className="h-4 w-4" />
-            Registrar dependência
-          </h2>
-
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">Precede</span>
-              <select
-                required
-                value={predecessor}
-                onChange={(e) => setPredecessor(e.target.value)}
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              >
-                <option value="">Selecione</option>
-                {nodes.map((n) => (
-                  <option key={n.id} value={n.id}>{n.name}</option>
-                ))}
-              </select>
-            </label>
-
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">Depende de</span>
-              <select
-                required
-                value={sucessor}
-                onChange={(e) => setSucessor(e.target.value)}
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              >
-                <option value="">Selecione</option>
-                {nodes.map((n) => (
-                  <option key={n.id} value={n.id}>{n.name}</option>
-                ))}
-              </select>
-            </label>
-
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">Tipo</span>
-              <select
-                value={tipo}
-                onChange={(e) => setTipo(e.target.value as DependencyType)}
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              >
-                {(Object.keys(TIPO_LABEL) as DependencyType[]).map((t) => (
-                  <option key={t} value={t}>{TIPO_LABEL[t]}</option>
-                ))}
-              </select>
-            </label>
-
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">
-                Justificativa <span className="text-status-red">*</span>
-              </span>
-              <input
-                required
-                minLength={5}
-                value={justificativa}
-                onChange={(e) => setJustificativa(e.target.value)}
-                placeholder="Por que uma precisa da outra"
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              />
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={salvando}
-            className="mt-4 min-h-11 rounded-md bg-brand-blue-700 px-4 text-sm font-medium text-white hover:bg-brand-blue-800 disabled:opacity-60"
-          >
-            {salvando ? 'Verificando...' : 'Registrar dependência'}
-          </button>
-
-          {erro && (
-            <div className="mt-3 flex items-start gap-2 rounded-md border border-status-red bg-red-50 p-3" role="alert">
-              <AlertTriangle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-status-red" />
-              <p className="text-sm text-neutral-800">{erro}</p>
-            </div>
-          )}
-          {sucesso && <p className="mt-3 text-sm text-brand-green-700" role="status">{sucesso}</p>}
-        </form>
-      )}
-
       <section className="mt-8">
         <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
           <GitBranch aria-hidden="true" className="h-4 w-4" />
@@ -247,9 +132,7 @@ export function DependenciesPage() {
           <div className="mt-3 rounded-md border border-dashed border-neutral-300 bg-white p-6 text-center text-sm">
             <p className="font-medium text-neutral-800">Nenhuma dependência registrada</p>
             <p className="mt-1 text-neutral-600">
-              Os projetos migrados vieram dos documentos técnicos com a lista de dependências vazia.
-              O Relatório de Inconsistências aponta isso como lacuna crítica: grandes obras foram
-              programadas sem comprovar a conclusão de governança, estudos e licenciamento.
+              Nenhuma precedência foi encontrada nos documentos técnicos transcritos.
             </p>
           </div>
         ) : (
@@ -283,11 +166,30 @@ export function DependenciesPage() {
             </table>
           </div>
         )}
+
+        {semPrecedencia > 0 && (
+          <div className="mt-4 rounded-md border border-amber-300 bg-amber-50 p-4 text-sm text-neutral-800">
+            <p className="font-medium">
+              {semPrecedencia} de {nodes.length} ações não declaram precedência nos documentos.
+            </p>
+            <p className="mt-1">
+              Ausência de dependência declarada não é ausência de dependência. O Relatório de
+              Inconsistências aponta a lacuna como crítica: grandes obras foram programadas sem
+              comprovar a conclusão de governança, estudos e licenciamento. O que aparece na tabela
+              acima é o que os documentos declaram — não o encadeamento real do programa.
+            </p>
+          </div>
+        )}
       </section>
 
       {paresParalelos.length > 0 && (
         <section className="mt-8">
           <h2 className="text-base font-semibold text-neutral-900">Pares que não podem andar juntos</h2>
+          <p className="mt-1 max-w-prose text-sm text-neutral-600">
+            Apenas o que decorre das precedências declaradas. Se dois projetos podem de fato ser
+            tocados ao mesmo tempo depende também de equipe, orçamento e capacidade institucional —
+            nada disso está nos documentos técnicos, e o sistema não deduz.
+          </p>
           <ul className="mt-3 space-y-2 text-sm">
             {paresParalelos.slice(0, 12).map((p) => (
               <li key={`${p.a}-${p.b}`} className="rounded-md border border-neutral-200 bg-white p-3">

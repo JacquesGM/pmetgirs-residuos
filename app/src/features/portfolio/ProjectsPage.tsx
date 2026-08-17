@@ -41,10 +41,13 @@ export function ProjectsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-neutral-900">Projetos</h1>
-      <p className="mt-1 max-w-prose text-sm text-neutral-600">
-        Portfólio interno. Cada alteração exige motivo e gera evento de auditoria no mesmo lote.
-      </p>
+      <div>
+        <h1 className="text-2xl font-bold text-neutral-900">Projetos</h1>
+        <p className="mt-1 max-w-prose text-sm text-neutral-600">
+          Portfólio transcrito dos documentos técnicos do PMetGIRS. Cada registro cita o documento,
+          a tabela e a página de onde veio; a entrada é por transcrição conferida, não por digitação.
+        </p>
+      </div>
 
       <div className="mt-6 flex flex-wrap items-end gap-3">
         <label className="text-sm">

@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AlertTriangle, ArrowLeft, History, Save } from 'lucide-react';
-import { commitMutation, getProject, listAuditEvents } from '../../data/firestore/portfolio';
-import { useAuth } from '../../app/AuthProvider';
+import { ArrowLeft, History } from 'lucide-react';
+import { getProject, listAuditEvents } from '../../data/firestore/portfolio';
+import { ProjectCostEstimate } from './ProjectCostEstimate';
 import { useAsync } from './useAsync';
 import {
   actionLabel,
@@ -15,34 +14,16 @@ import {
   validationLabel,
 } from './StateLabels';
 
-const EXECUTION_OPTIONS = [
-  'not_started',
-  'structuring',
-  'study',
-  'procurement',
-  'licensing',
-  'implementation',
-  'operation',
-  'completed',
-  'paused',
-  'cancelled',
-];
-
 const dateFormat = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' });
 
 export function ProjectDetailPage() {
   const { projetoId = '' } = useParams();
-  const { state: auth, hasRole } = useAuth();
-  const podeEditar = hasRole(['owner', 'admin', 'editor']);
 
   const state = useAsync(() => getProject(projetoId), [projetoId]);
-  const audit = useAsync(() => listAuditEvents(projetoId, 25), [projetoId]);
-
-  const [novaSituacao, setNovaSituacao] = useState('');
-  const [motivo, setMotivo] = useState('');
-  const [salvando, setSalvando] = useState(false);
-  const [erro, setErro] = useState<string | null>(null);
-  const [sucesso, setSucesso] = useState<string | null>(null);
+  const audit = useAsync(
+    () => listAuditEvents({ collection: 'projects', id: projetoId }, 25),
+    [projetoId],
+  );
 
   if (state.status === 'loading') {
     return <div className="h-40 animate-pulse rounded-lg bg-neutral-200" aria-label="Carregando projeto" />;
@@ -68,42 +49,7 @@ export function ProjectDetailPage() {
     );
   }
 
-  const { project, raw } = state.data;
-
-  async function salvar(event: React.FormEvent) {
-    event.preventDefault();
-    if (auth.status !== 'active') return;
-
-    setErro(null);
-    setSucesso(null);
-    setSalvando(true);
-
-    try {
-      const { version } = await commitMutation({
-        workspaceId: raw.workspaceId as string,
-        collection: 'projects',
-        id: project.id,
-        // Só o campo alterado muda; o resto do documento vai como está, porque
-        // as Rules validam o documento inteiro a cada gravação.
-        data: { ...raw, executionStatus: novaSituacao || null },
-        actorUid: auth.membership.uid,
-        actorRole: auth.membership.role,
-        action: 'update',
-        reason: motivo,
-        currentVersion: project.version,
-        currentData: raw,
-      });
-
-      setSucesso(`Salvo na versão ${version}. O evento de auditoria foi gravado no mesmo lote.`);
-      setMotivo('');
-      state.reload();
-      audit.reload();
-    } catch (e) {
-      setErro(e instanceof Error ? e.message : 'Não foi possível salvar.');
-    } finally {
-      setSalvando(false);
-    }
-  }
+  const { project } = state.data;
 
   return (
     <div className="max-w-4xl">
@@ -132,80 +78,51 @@ export function ProjectDetailPage() {
       <dl className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2">
         <Campo rotulo="Responsável" valor={project.accountable} />
         <Campo rotulo="Eixo" valor={project.axisId} />
+        <Abrangencia
+          texto={project.territorialScale}
+          municipios={project.municipalityIds}
+        />
         <Campo rotulo="Horizonte temporal" valor={project.timeHorizon === 'not_informed' ? null : project.timeHorizon} />
-        <Campo rotulo="Categoria de custo" valor={project.costCategory === 'not_informed' ? null : project.costCategory} />
+        {/* A faixa de custo NÃO entra aqui. O documento do projeto carrega um
+            `costCategory` que a migração deixa em "not_informed", enquanto a
+            estimativa transcrita — logo abaixo, com fonte e ano-base — traz a
+            faixa real. Mostrar os dois punha "Não informado" e "Alto custo" na
+            mesma tela. Quem tem a fonte é a estimativa; é ela que responde. */}
         <Campo rotulo="Data de referência do dado" valor={project.dataDate} />
         <Campo rotulo="Status na base antiga" valor={project.legacyStatus} />
       </dl>
 
-      {podeEditar && (
-        <form onSubmit={salvar} className="mt-8 rounded-lg border border-neutral-200 bg-white p-5">
-          <h2 className="text-base font-semibold text-neutral-900">Alterar situação de execução</h2>
-          <p className="mt-1 text-sm text-neutral-600">
-            O motivo é obrigatório e fica registrado no histórico junto com quem alterou e quando.
-          </p>
+      <section className="mt-8 rounded-lg border border-neutral-200 bg-neutral-50 p-5">
+        <h2 className="text-base font-semibold text-neutral-900">Procedência do registro</h2>
+        <p className="mt-1.5 text-sm text-neutral-800">
+          {project.sourceLabel ?? 'Origem não declarada.'}
+        </p>
+        <p className="mt-3 max-w-prose text-sm text-neutral-600">
+          Este registro é transcrição de documento técnico, não digitação. Corrigir um campo aqui
+          significa corrigir a transcrição na origem e migrar de novo — assim a conferência contra o
+          documento continua possível, e nenhum valor passa a existir sem fonte.
+        </p>
+      </section>
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">Nova situação</span>
-              <select
-                required
-                value={novaSituacao}
-                onChange={(e) => setNovaSituacao(e.target.value)}
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              >
-                <option value="">Selecione</option>
-                {EXECUTION_OPTIONS.map((v) => (
-                  <option key={v} value={v}>
-                    {executionLabel(v)}
-                  </option>
-                ))}
-              </select>
-            </label>
-
-            <label className="text-sm">
-              <span className="mb-1 block font-medium text-neutral-700">
-                Motivo da alteração <span className="text-status-red">*</span>
-              </span>
-              <input
-                required
-                minLength={5}
-                value={motivo}
-                onChange={(e) => setMotivo(e.target.value)}
-                placeholder="Ex.: ata da reunião do comitê de 12/08"
-                className="min-h-11 w-full rounded-md border border-neutral-300 px-3 text-sm"
-              />
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={salvando}
-            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-brand-blue-700 px-4 text-sm font-medium text-white hover:bg-brand-blue-800 disabled:opacity-60"
-          >
-            <Save aria-hidden="true" className="h-4 w-4" />
-            {salvando ? 'Salvando...' : 'Salvar alteração'}
-          </button>
-
-          {erro && (
-            <p className="mt-3 flex items-start gap-2 text-sm text-status-red" role="alert">
-              <AlertTriangle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />
-              {erro}
-            </p>
-          )}
-          {sucesso && (
-            <p className="mt-3 text-sm text-brand-green-700" role="status">
-              {sucesso}
-            </p>
-          )}
-        </form>
-      )}
+      <ProjectCostEstimate projetoId={project.id} />
 
       <section className="mt-8">
         <h2 className="flex items-center gap-2 text-base font-semibold text-neutral-900">
           <History aria-hidden="true" className="h-4 w-4" />
           Histórico
         </h2>
+
+        {audit.status === 'loading' && (
+          <div className="mt-3 h-16 animate-pulse rounded-md bg-neutral-100" aria-label="Carregando histórico" />
+        )}
+
+        {/* Sem este ramo, uma consulta recusada por falta de índice deixava a
+            seção em branco — indistinguível de "nunca aconteceu nada". */}
+        {audit.status === 'error' && (
+          <p className="mt-2 text-sm text-status-red" role="alert">
+            Não foi possível carregar o histórico: {audit.message}
+          </p>
+        )}
 
         {audit.status === 'ready' && audit.data.length === 0 && (
           <p className="mt-2 text-sm text-neutral-600">Nenhum evento registrado.</p>
@@ -231,6 +148,34 @@ export function ProjectDetailPage() {
           </ol>
         )}
       </section>
+    </div>
+  );
+}
+
+/**
+ * Abrangência: o texto da fonte e a sua leitura em municípios.
+ *
+ * Os dois aparecem juntos de propósito. A contagem é derivada, e derivação
+ * sem o original ao lado não pode ser conferida contra o documento.
+ */
+function Abrangencia({ texto, municipios }: { texto: string | null; municipios: string[] | null }) {
+  return (
+    <div>
+      <dt className="text-xs font-medium uppercase tracking-wide text-neutral-500">Abrangência</dt>
+      <dd className={`mt-0.5 text-sm ${texto ? 'text-neutral-800' : 'italic text-neutral-500'}`}>
+        {texto ?? 'Não informada'}
+        {municipios !== null ? (
+          <span className="mt-0.5 block text-xs text-neutral-500">
+            {municipios.length} municípios
+          </span>
+        ) : (
+          texto && (
+            <span className="mt-0.5 block text-xs text-neutral-500">
+              Sem lista de municípios: a fonte não a determina.
+            </span>
+          )
+        )}
+      </dd>
     </div>
   );
 }

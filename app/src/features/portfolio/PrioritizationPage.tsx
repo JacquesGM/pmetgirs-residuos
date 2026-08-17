@@ -1,70 +1,97 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Info } from 'lucide-react';
-import { listProjects } from '../../data/firestore/portfolio';
-import { DEFAULT_POLICY } from '../../domain/scoring/policy';
-import { classifyHorizon, computePriority, recommend } from '../../domain/scoring/score';
-import type { Recommendation } from '../../domain/scoring/score';
+import { listGutPriorities, listProjects } from '../../data/firestore/portfolio';
+import { listEstimativas } from '../../data/firestore/costEstimates';
+import type { CostCategoryResult } from '../../domain/scoring/score';
 import { useAsync } from './useAsync';
 import { Pill } from './StateLabels';
 
-const RECOMENDACAO_LABEL: Record<Recommendation, string> = {
-  quick_win: 'Ganho rápido',
-  iniciar_preparacao: 'Iniciar preparação',
-  estruturar_para_captacao: 'Estruturar para captação',
-  estrategico_longo_prazo: 'Estratégico de longo prazo',
-  bloqueado: 'Bloqueado',
-  reavaliar: 'Reavaliar',
+const ROTULO_DA_FAIXA: Record<CostCategoryResult, string> = {
+  no_new_disbursement: 'Sem novo desembolso',
+  low: 'Baixo custo',
+  medium: 'Médio custo',
+  high: 'Alto custo',
+  estimating: 'Em estruturação',
+  not_informed: 'Não informado',
 };
 
-const RECOMENDACAO_TONE: Record<Recommendation, 'ok' | 'info' | 'warn' | 'alert' | 'neutral'> = {
-  quick_win: 'ok',
-  iniciar_preparacao: 'info',
-  estruturar_para_captacao: 'info',
-  estrategico_longo_prazo: 'neutral',
-  bloqueado: 'alert',
-  reavaliar: 'warn',
+const TOM_DA_FAIXA: Record<CostCategoryResult, 'ok' | 'info' | 'warn' | 'alert' | 'neutral'> = {
+  no_new_disbursement: 'ok',
+  low: 'ok',
+  medium: 'info',
+  high: 'warn',
+  estimating: 'neutral',
+  not_informed: 'neutral',
 };
 
 /**
- * Priorização.
+ * Priorização, pela matriz GUT do próprio Plano de Ações.
  *
- * Nenhum projeto do PMetGIRS tem avaliação por dimensão ainda — as notas
- * entram por aqui quando alguém avaliar, com evidência. Enquanto isso, a tela
- * mostra a política vigente, a fórmula e o estado real: sem cobertura, sem
- * nota. Exibir um ranking inventado seria pior que não exibir ranking.
+ * Esta tela já mostrou duas colunas: a prioridade da fonte e uma "prioridade
+ * calculada" por uma matriz de sete critérios ponderados. A segunda saiu em
+ * 16/08/2026, junto com o formulário que a alimentaria.
+ *
+ * A razão é a mesma que tirou os outros formulários: os sete critérios não
+ * existem em documento nenhum do PMetGIRS. Sem formulário, a coluna ficaria
+ * "sem nota" nas dez linhas para sempre; com formulário, ela seria preenchida
+ * por quem estivesse com a tela aberta, e um ranking assim tem a aparência de
+ * medida sem ser uma. A priorização que existe é a GUT, feita em 2023 sobre
+ * dezesseis temas, e é ela que a tela mostra.
+ *
+ * O achado INC-22 continua valendo: o plano combina GUT, OKR, SMART, BSC e
+ * SNIS sem modelo único de integração. Mostrar a GUT não resolve isso — apenas
+ * não acrescenta um oitavo método por conta própria.
  */
 export function PrioritizationPage() {
-  const [mostrarFormula, setMostrarFormula] = useState(false);
   const projetos = useAsync(() => listProjects({ limit: 200 }), []);
+  const fontes = useAsync(
+    async () => ({ custos: await listEstimativas(), gut: await listGutPriorities() }),
+    [],
+  );
 
   const linhas = useMemo(() => {
     if (projetos.status !== 'ready') return [];
-    return projetos.data
-      .map((p) => {
-        // Sem avaliação por dimensão registrada, a entrada é vazia — e o
-        // resultado sai sem nota, como deve.
-        const prioridade = computePriority(DEFAULT_POLICY, []);
-        const recomendacao = recommend({
-          priorityScore: prioridade.score,
-          readinessScore: null,
-          costCategory: 'not_informed',
-          isBlocked: false,
-        });
-        return { projeto: p, prioridade, recomendacao, horizonte: classifyHorizon(null) };
-      })
-      .sort((a, b) => (b.prioridade.score ?? -1) - (a.prioridade.score ?? -1));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projetos.status, projetos.status === 'ready' ? projetos.data : null]);
 
-  const semNota = linhas.filter((l) => l.prioridade.score === null).length;
+    const porGut = new Map<string, { pontuacao: number; ranking: number; tema: string }>();
+    if (fontes.status === 'ready') {
+      for (const t of fontes.data.gut) {
+        for (const pid of t.projetosRelacionados) {
+          porGut.set(pid, { pontuacao: t.pontuacao, ranking: t.ranking, tema: t.tema });
+        }
+      }
+    }
+
+    const porCusto = new Map(
+      fontes.status === 'ready' ? fontes.data.custos.map((c) => [c.entityId, c.costCategory]) : [],
+    );
+
+    return projetos.data
+      .map((p) => ({
+        projeto: p,
+        gut: porGut.get(p.id) ?? null,
+        custo: porCusto.get(p.id) ?? ('not_informed' as CostCategoryResult),
+      }))
+      // Ordem do ranking da fonte. Quem não tem tema vai para o fim — não por
+      // ser menos importante, mas porque a matriz não o classificou.
+      .sort((a, b) => (a.gut?.ranking ?? 99) - (b.gut?.ranking ?? 99));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    projetos.status,
+    projetos.status === 'ready' ? projetos.data : null,
+    fontes.status,
+    fontes.status === 'ready' ? fontes.data : null,
+  ]);
+
+  const semTema = linhas.filter((l) => l.gut === null).length;
+  const totalTemas = fontes.status === 'ready' ? fontes.data.gut.length : 0;
 
   return (
     <div className="max-w-5xl">
       <h1 className="text-2xl font-bold text-neutral-900">Priorização</h1>
       <p className="mt-1 max-w-prose text-sm text-neutral-600">
-        Matriz de critérios com pesos configuráveis. A pontuação organiza a conversa; ela não aprova,
-        não contrata e não publica projeto.
+        A priorização é a do próprio Plano de Ações, pela matriz GUT. O sistema a transcreve e a
+        exibe; não a recalcula nem a substitui por outra.
       </p>
 
       <div className="mt-5 flex items-start gap-3 rounded-lg border border-brand-blue-200 bg-brand-blue-50 p-4">
@@ -79,75 +106,34 @@ export function PrioritizationPage() {
         </div>
       </div>
 
-      <section className="mt-8">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-base font-semibold text-neutral-900">
-            Política vigente — versão {DEFAULT_POLICY.version}
-          </h2>
-          <button
-            type="button"
-            onClick={() => setMostrarFormula((v) => !v)}
-            aria-expanded={mostrarFormula}
-            className="text-sm font-medium text-brand-blue-700 hover:underline"
-          >
-            {mostrarFormula ? 'Ocultar a fórmula' : 'Como a nota é calculada?'}
-          </button>
-        </div>
-
-        {mostrarFormula && (
-          <div className="mt-3 rounded-lg border border-neutral-200 bg-white p-4 text-sm text-neutral-700">
-            <p>
-              A nota de cada critério vai de 0 a 5 e é convertida para a escala do peso. A soma é
-              normalizada pelo peso efetivamente avaliado, e depois multiplicada por um{' '}
-              <strong>fator de cobertura</strong>:
-            </p>
-            <p className="mt-2 font-mono text-xs text-neutral-800">
-              fator = 0,60 + 0,40 × (peso avaliado ÷ 100)
-            </p>
-            <p className="mt-2">
-              O fator existe para que um projeto avaliado em uma única dimensão não empate com outro
-              avaliado em todas. A diferença de confiança aparece no número, e não só numa nota de
-              rodapé.
-            </p>
-            <p className="mt-2">
-              Critério sem avaliação fica <strong>sem nota</strong> e reduz a cobertura — nunca vira
-              zero. Zero é uma afirmação; ausência de dado não é.
-            </p>
-            <p className="mt-2">
-              Abaixo de {DEFAULT_POLICY.minimumCoverage}% de cobertura, o sistema não publica nota.
-            </p>
-          </div>
-        )}
-
-        <div className="mt-3 overflow-x-auto rounded-lg border border-neutral-200 bg-white">
-          <table className="w-full min-w-[560px] text-sm">
-            <caption className="sr-only">Critérios de priorização e seus pesos</caption>
-            <thead>
-              <tr className="border-b border-neutral-200 bg-neutral-50 text-left">
-                <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">Critério</th>
-                <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">O que mede</th>
-                <th scope="col" className="px-4 py-2.5 text-right font-semibold text-neutral-700">Peso</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DEFAULT_POLICY.priority.map((c) => (
-                <tr key={c.key} className="border-b border-neutral-100 last:border-0">
-                  <th scope="row" className="px-4 py-2.5 text-left font-medium text-neutral-800">{c.label}</th>
-                  <td className="px-4 py-2.5 text-neutral-600">{c.help}</td>
-                  <td className="px-4 py-2.5 text-right tabular-nums font-medium">{c.weight}%</td>
-                </tr>
-              ))}
-              <tr className="bg-neutral-50">
-                <th scope="row" className="px-4 py-2.5 text-left font-semibold">Total</th>
-                <td />
-                <td className="px-4 py-2.5 text-right tabular-nums font-semibold">100%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <section className="mt-8 rounded-lg border border-neutral-200 bg-white p-5">
+        <h2 className="text-base font-semibold text-neutral-900">Como a matriz GUT pontua</h2>
+        <dl className="mt-3 grid gap-4 sm:grid-cols-3">
+          <Criterio
+            letra="G"
+            nome="Gravidade"
+            texto="O tamanho do dano se nada for feito."
+          />
+          <Criterio
+            letra="U"
+            nome="Urgência"
+            texto="Quanto tempo resta antes que agir deixe de adiantar."
+          />
+          <Criterio
+            letra="T"
+            nome="Tendência"
+            texto="Se o problema piora sozinho com o tempo."
+          />
+        </dl>
+        <p className="mt-4 text-sm text-neutral-700">
+          Cada um vale de 1 a 5 e a pontuação é o <strong>produto</strong> dos três — de 1 a 125.
+          Por ser produto e não soma, uma nota baixa em qualquer um dos três derruba o total: um
+          problema grave que não piora e não tem prazo pontua pouco.
+        </p>
         <p className="mt-2 text-xs text-neutral-500">
-          Estes pesos são parâmetros de governança, não números do PMetGIRS. Precisam de aprovação
-          antes de uso institucional e podem ser alterados pelo proprietário em Configurações.
+          Fonte: Plano de Ações do PMetGIRS, Tabelas 5 e 6 (ENGECONSULT, 2023), sobre{' '}
+          {totalTemas || 16} temas. Numa das dezesseis linhas o produto impresso não fecha com os
+          fatores; a divergência está registrada em Pontos em Revisão.
         </p>
       </section>
 
@@ -164,62 +150,89 @@ export function PrioritizationPage() {
 
         {projetos.status === 'ready' && linhas.length > 0 && (
           <>
-            {semNota === linhas.length && (
-              <div className="mt-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-neutral-800">
-                <p className="font-medium">Nenhum projeto tem avaliação registrada ainda.</p>
-                <p className="mt-1">
-                  Os {linhas.length} projetos migrados vieram dos documentos técnicos sem notas por
-                  dimensão. Sem cobertura de evidência, o sistema não produz nota — e um ranking
-                  inventado seria pior que nenhum ranking.
-                </p>
-              </div>
-            )}
-
             <div className="mt-3 overflow-x-auto rounded-lg border border-neutral-200 bg-white">
               <table className="w-full min-w-[720px] text-sm">
                 <caption className="sr-only">
-                  Projetos ordenados por prioridade, com cobertura de evidência e encaminhamento sugerido
+                  Ações do portfólio na ordem da matriz GUT do Plano de Ações, com o tema
+                  correspondente e a faixa de custo transcrita
                 </caption>
                 <thead>
                   <tr className="border-b border-neutral-200 bg-neutral-50 text-left">
                     <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">Projeto</th>
-                    <th scope="col" className="px-4 py-2.5 text-right font-semibold text-neutral-700">Prioridade</th>
-                    <th scope="col" className="px-4 py-2.5 text-right font-semibold text-neutral-700">Cobertura</th>
-                    <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">Encaminhamento sugerido</th>
+                    <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">
+                      Tema na matriz
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 text-right font-semibold text-neutral-700">
+                      Pontuação GUT
+                    </th>
+                    <th scope="col" className="px-4 py-2.5 font-semibold text-neutral-700">
+                      Faixa de custo
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {linhas.map(({ projeto, prioridade, recomendacao }) => (
+                  {linhas.map(({ projeto, gut, custo }) => (
                     <tr key={projeto.id} className="border-b border-neutral-100 last:border-0">
                       <th scope="row" className="px-4 py-2.5 text-left font-medium">
-                        <Link to={`/app/projetos/${projeto.id}`} className="text-brand-blue-700 hover:underline">
+                        <Link
+                          to={`/app/projetos/${projeto.id}`}
+                          className="text-brand-blue-700 hover:underline"
+                        >
                           {projeto.name}
                         </Link>
                       </th>
+                      <td className="px-4 py-2.5 text-neutral-600">
+                        {gut?.tema ?? <span className="italic text-neutral-500">sem tema</span>}
+                      </td>
                       <td className="px-4 py-2.5 text-right tabular-nums">
-                        {prioridade.score === null ? (
-                          <span className="italic text-neutral-500">sem nota</span>
+                        {gut === null ? (
+                          <span className="italic text-neutral-500">—</span>
                         ) : (
-                          <span className="font-semibold">{prioridade.score}</span>
+                          <>
+                            <span className="font-semibold">{gut.pontuacao}</span>
+                            <span className="block text-xs font-normal text-neutral-500">
+                              {gut.ranking}º de {totalTemas || 16}
+                            </span>
+                          </>
                         )}
                       </td>
-                      <td className="px-4 py-2.5 text-right tabular-nums text-neutral-600">
-                        {prioridade.coverage}%
-                      </td>
                       <td className="px-4 py-2.5">
-                        <Pill tone={RECOMENDACAO_TONE[recomendacao.recommendation]}>
-                          {RECOMENDACAO_LABEL[recomendacao.recommendation]}
-                        </Pill>
-                        <span className="mt-0.5 block text-xs text-neutral-500">{recomendacao.why}</span>
+                        <Pill tone={TOM_DA_FAIXA[custo]}>{ROTULO_DA_FAIXA[custo]}</Pill>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+
+            {semTema > 0 && (
+              <p className="mt-3 max-w-prose text-sm text-neutral-600">
+                {semTema} de {linhas.length} ações não têm tema na matriz: são ações do Anexo III, e
+                a GUT cobre os dezesseis temas do capítulo 2, não todas as ações do plano. Ficar sem
+                pontuação aqui não as torna menos importantes — significa que a fonte não as
+                priorizou.
+              </p>
+            )}
           </>
         )}
       </section>
+    </div>
+  );
+}
+
+function Criterio({ letra, nome, texto }: { letra: string; nome: string; texto: string }) {
+  return (
+    <div>
+      <dt className="flex items-baseline gap-2">
+        <span
+          aria-hidden="true"
+          className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-blue-100 text-sm font-bold text-brand-blue-800"
+        >
+          {letra}
+        </span>
+        <span className="font-medium text-neutral-800">{nome}</span>
+      </dt>
+      <dd className="mt-1 text-sm text-neutral-600">{texto}</dd>
     </div>
   );
 }

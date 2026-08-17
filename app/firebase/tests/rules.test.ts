@@ -137,6 +137,49 @@ describe('fronteira público / privado', () => {
     const db = ctx(VIEWER).firestore();
     await assertSucceeds(getDoc(doc(db, `workspaces/${WID}/projects/proj-1`)));
   });
+
+  /**
+   * Toda coleção de conteúdo precisa constar de isContentCollection(), senão a
+   * regra genérica nega a leitura e a tela de publicação inteira quebra —
+   * `Promise.all` rejeita se uma única coleção falhar.
+   *
+   * Foi o que aconteceu com `municipalIndicators` em 16/08/2026: os 242
+   * registros existiam no banco, gravados pelo Admin SDK, que não passa pelas
+   * Rules. Nenhum teste cobria a coleção nova, e a falha só apareceu na tela.
+   */
+  it('toda coleção de conteúdo publicável é legível por membro ativo', async () => {
+    const db = ctx(VIEWER).firestore();
+    // A lista vem do registro de publicação e das coleções que a área interna
+    // lê. Escrevê-la à mão aqui foi o que deixou `gutPriorities` passar: a
+    // coleção entrou no sistema, não entrou na regra, e a tela de Priorização
+    // caiu inteira porque um `Promise.all` rejeita se uma leitura falhar.
+    for (const colecao of [
+      'projects', 'goals', 'indicators', 'municipalIndicators', 'municipalities',
+      'infrastructures', 'inconsistencies', 'documents', 'glossary',
+      'costEstimates', 'gutPriorities', 'dependencies', 'evidence', 'milestones',
+    ]) {
+      await assertSucceeds(getDoc(doc(db, `workspaces/${WID}/${colecao}/qualquer-id`)));
+    }
+  });
+
+  it('assessments saiu da lista quando o formulário saiu', async () => {
+    // A coleção nunca recebeu documento, e nenhuma tela escreve nela desde que
+    // o formulário de avaliação foi removido, em 16/08/2026. Uma permissão que
+    // nenhuma tela usa é superfície de escrita invisível — pior que uma
+    // visível, porque não aparece em revisão de interface.
+    //
+    // O teste é aqui e não só um comentário: sem ele, recolocar 'assessments'
+    // na lista passaria despercebido.
+    const db = ctx(VIEWER).firestore();
+    await assertFails(getDoc(doc(db, `workspaces/${WID}/assessments/qualquer-id`)));
+  });
+
+  it('coleção fora da lista de conteúdo permanece negada', async () => {
+    // Prova que o teste acima não passa por vacuidade: uma coleção inventada
+    // é recusada pela mesma regra.
+    const db = ctx(VIEWER).firestore();
+    await assertFails(getDoc(doc(db, `workspaces/${WID}/colecaoInexistente/qualquer-id`)));
+  });
 });
 
 // ------------------------------------------------- ESCALADA DE PRIVILÉGIO
@@ -419,6 +462,75 @@ describe('buildMutation contra as Rules', () => {
   it('editor cria projeto pelo caminho real da aplicação', async () => {
     const db = ctx(EDITOR).firestore();
     await assertSucceeds(commit(db, criar(EDITOR.uid, 'editor'), 'ev-app-1'));
+  });
+
+  const dependencia = (uid: string, role: string) => ({
+    workspaceId: WID,
+    collection: 'dependencies',
+    id: 'proj-anterior--proj-app',
+    data: {
+      predecessorId: 'proj-anterior',
+      successorId: 'proj-app',
+      type: 'finish_to_start',
+      lagDays: 0,
+      mandatory: true,
+      justification: 'Plano de Ações do PMetGIRS, Anexo III.',
+      sharedResourceId: null,
+    },
+    actorUid: uid,
+    actorRole: role as never,
+    action: 'create' as const,
+    reason: 'Precedência transcrita do Plano de Ações',
+  });
+
+  it('dependência transcrita passa pelo caminho real, com auditoria no mesmo lote', async () => {
+    // A migração usa o Admin SDK, que não passa pelas Rules. Este teste existe
+    // para que a coleção continue coberta por regra explícita mesmo assim —
+    // foi a ausência disso que derrubou as telas de municipalIndicators e
+    // gutPriorities.
+    const db = ctx(EDITOR).firestore();
+    await assertSucceeds(commit(db, dependencia(EDITOR.uid, 'editor'), 'ev-dep-1'));
+  });
+
+  const estimar = (uid: string, role: string) => ({
+    workspaceId: WID,
+    collection: 'costEstimates',
+    id: 'proj-app',
+    data: {
+      entityCollection: 'projects',
+      entityId: 'proj-app',
+      requiresNewDisbursement: true,
+      capexMinCents: 100_000_00,
+      capexMaxCents: 200_000_00,
+      annualOpexCents: null,
+      currency: 'BRL',
+      baseYear: 2024,
+      sourceLabel: 'Prognóstico Geral, Tabela 73',
+      assumptions: ['Inclui conexão elétrica'],
+      confidenceScore: 40,
+      asOfDate: null,
+      underEstimation: false,
+      costCategory: 'medium',
+    },
+    actorUid: uid,
+    actorRole: role as never,
+    action: 'create' as const,
+    reason: 'Primeira estimativa a partir do EVTE',
+  });
+
+  it('editor registra estimativa de custo pelo caminho real', async () => {
+    const db = ctx(EDITOR).firestore();
+    await assertSucceeds(commit(db, estimar(EDITOR.uid, 'editor'), 'ev-custo-1'));
+  });
+
+  it('leitor não registra estimativa de custo', async () => {
+    const db = ctx(VIEWER).firestore();
+    await assertFails(commit(db, estimar(VIEWER.uid, 'viewer'), 'ev-custo-2'));
+  });
+
+  it('leitor não registra dependência', async () => {
+    const db = ctx(VIEWER).firestore();
+    await assertFails(commit(db, dependencia(VIEWER.uid, 'viewer'), 'ev-dep-2'));
   });
 
   it('editor atualiza projeto pelo caminho real, com versão +1', async () => {

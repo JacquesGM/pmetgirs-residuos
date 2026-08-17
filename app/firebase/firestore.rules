@@ -102,14 +102,19 @@ service cloud.firestore {
     // Por isso a regra genérica de conteúdo abaixo é fechada por uma lista
     // explícita, e nenhuma coleção de governança aparece nela.
 
+    // 'assessments' saiu desta lista em 16/08/2026, junto com o formulário de
+    // avaliação. A coleção nunca recebeu um documento, e nenhuma tela escreve
+    // nela — mantê-la aqui deixaria aberta uma porta de escrita que a
+    // interface não mostra, que é a pior espécie: invisível.
     function isContentCollection(name) {
       return name in [
         'plans', 'axes', 'programs', 'projects', 'actions', 'milestones',
-        'assessments', 'costEstimates', 'evidence', 'dependencies',
+        'costEstimates', 'evidence', 'dependencies',
         'resources', 'resourceAllocations', 'stakeholders',
         'challenges', 'opportunities', 'fundingSources',
         'documents', 'inconsistencies', 'indicators', 'goals',
-        'infrastructures', 'municipalities', 'imports', 'glossary'
+        'infrastructures', 'municipalities', 'imports', 'glossary',
+        'municipalIndicators', 'gutPriorities'
       ];
     }
 
