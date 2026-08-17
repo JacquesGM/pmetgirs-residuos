@@ -9,6 +9,7 @@ import { InfrastructureCompositionChart } from '../charts/InfrastructureComposit
 import { DownloadButton } from '../ui/DownloadButton';
 import type { DownloadColumn } from '../../lib/download';
 import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
+import { TreatmentCentrals } from './TreatmentCentrals';
 
 const infraestruturasEmbutidas = infraestruturasData as Infraestrutura[];
 
@@ -134,6 +135,8 @@ export function Infrastructure() {
           </li>
         ))}
       </ul>
+
+      <TreatmentCentrals />
     </Section>
   );
 }

@@ -24,6 +24,7 @@ export type PublicCollection =
   | 'documents'
   | 'inconsistencies'
   | 'municipalIndicators'
+  | 'treatmentCentrals'
   | 'glossary'
   | 'evidence';
 
@@ -140,6 +141,41 @@ export const PUBLIC_ALLOWLIST: Record<PublicCollection, string[]> = {
     // significando "editado uma vez". Ver runbook: exige renomear o campo de
     // domínio e remigrar a coleção.
   ],
+  /**
+   * Central de tratamento em operação.
+   *
+   * Tudo aqui é informação pública sobre instalação licenciada: operadora,
+   * endereço, capacidade, tecnologia. Os valores financeiros atravessam porque
+   * foram fornecidos pelas operadoras para um diagnóstico público — não são
+   * dado interno do IRM.
+   */
+  treatmentCentrals: [
+    'name',
+    'operator',
+    'hostMunicipalityId',
+    'address',
+    'operationStartDate',
+    'areaM2',
+    'designCapacityTonnes',
+    'dailyCapacityTonnes',
+    'annualCapacityTonnes',
+    'averageDailyIntakeTonnes',
+    'usefulLifeYears',
+    'dailyLeachateM3',
+    'leachateTechnology',
+    'biogasLabel',
+    'energyLabel',
+    'carbonCreditsTco2e',
+    'newCellCostPerM2',
+    'opexPerTonne',
+    'leachateCostPerM3',
+    'municipalityIds',
+    'servedOutsideRegion',
+    'sourceLabel',
+    'validationStatus',
+    'note',
+  ],
+
   /**
    * Indicadores municipais: cada valor com a sua unidade, ano e fonte.
    *

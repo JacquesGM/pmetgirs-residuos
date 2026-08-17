@@ -8,6 +8,7 @@ import type {
   IndicadorMunicipal,
   EstimativaDeCustoRegistro,
   TemaGut,
+  CentralDeTratamento,
   Infraestrutura,
   Meta,
   Municipio,
@@ -431,6 +432,63 @@ export function transformMunicipalIndicator(i: IndicadorMunicipal): MigrationRec
       note: i.observacao,
     },
     gaps: gapsFor({ value: i.valor, note: i.observacao }),
+  };
+}
+
+// ------------------------------------------------ centrais de tratamento
+
+/**
+ * Central de Tratamento de Resíduos em operação.
+ *
+ * A infraestrutura que o portal mostrava era só a planejada — "25 usinas de
+ * triagem", nenhuma construída. Estas quatro já operam, recebem resíduos de
+ * dezenove dos vinte e dois municípios e não apareciam em lugar nenhum.
+ *
+ * `municipalityIds` reaproveita o mesmo campo dos projetos, o que faz a
+ * central aparecer ligada ao município no mapa sem precisar de outra ligação.
+ */
+export function transformTreatmentCentral(c: CentralDeTratamento): MigrationRecord {
+  return {
+    collection: 'treatmentCentrals',
+    id: c.id,
+    legacyId: c.id,
+    data: {
+      name: c.nome,
+      nameNormalized: normalizeName(c.nome),
+      operator: c.operadora,
+      hostMunicipalityId: c.municipioSede,
+      address: c.endereco,
+      operationStartDate: c.inicioOperacao,
+      areaM2: c.areaM2,
+      designCapacityTonnes: c.capacidadeProjetoToneladas,
+      dailyCapacityTonnes: c.capacidadeDiariaTdia,
+      annualCapacityTonnes: c.capacidadeAnualTano,
+      averageDailyIntakeTonnes: c.recebimentoDiarioMedioTdia,
+      usefulLifeYears: c.vidaUtilAnos,
+      dailyLeachateM3: c.lixiviadoDiarioM3,
+      leachateTechnology: c.tecnologiaChorume,
+      biogasLabel: c.biogas,
+      energyLabel: c.geracaoEnergia,
+      carbonCreditsTco2e: c.creditoCarbonoTco2e,
+      newCellCostPerM2: c.custoNovaCelulaPorM2,
+      opexPerTonne: c.opexPorTonelada,
+      leachateCostPerM3: c.custoTratamentoChorumePorM3,
+      municipalityIds: c.municipiosAtendidos,
+      servedOutsideRegion: c.municipiosAtendidosForaDaRmrj,
+      sourceLabel: c.fonte,
+      validationStatus: mapLegacyValidationStatus(c.statusValidacao).validation ?? 'validated',
+      note: c.observacao,
+    },
+    gaps: gapsFor({
+      operationStartDate: c.inicioOperacao,
+      areaM2: c.areaM2,
+      annualCapacityTonnes: c.capacidadeAnualTano,
+      averageDailyIntakeTonnes: c.recebimentoDiarioMedioTdia,
+      energyLabel: c.geracaoEnergia,
+      opexPerTonne: c.opexPorTonelada,
+      newCellCostPerM2: c.custoNovaCelulaPorM2,
+      leachateCostPerM3: c.custoTratamentoChorumePorM3,
+    }),
   };
 }
 

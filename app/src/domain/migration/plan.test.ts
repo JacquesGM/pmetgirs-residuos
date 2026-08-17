@@ -9,6 +9,7 @@ import indicadores from '../../data/indicadores.json';
 import indicadoresMunicipais from '../../data/indicadoresMunicipais.json';
 import estimativasDeCusto from '../../data/estimativasDeCusto.json';
 import priorizacaoGut from '../../data/priorizacaoGut.json';
+import centraisDeTratamento from '../../data/centraisDeTratamento.json';
 import infraestruturas from '../../data/infraestruturas.json';
 import metas from '../../data/metas.json';
 import municipios from '../../data/municipios.json';
@@ -29,6 +30,7 @@ const sources: MigrationSources = {
   indicadoresMunicipais,
   estimativasDeCusto,
   priorizacaoGut,
+  centraisDeTratamento,
   evolucao,
   glossario,
   atualizacoes,
@@ -38,12 +40,12 @@ const plan = buildMigrationPlan(sources, 'pmetgirs-rmrj');
 const errors = plan.issues.filter((i) => i.severity === 'error');
 
 describe('reconciliação dos registros', () => {
-  it('a origem tem 765 registros', () => {
-    expect(plan.totalSourceRecords).toBe(765);
+  it('a origem tem 769 registros', () => {
+    expect(plan.totalSourceRecords).toBe(769);
   });
 
   it('o plano produz exatamente um registro por registro de origem', () => {
-    expect(plan.records).toHaveLength(765);
+    expect(plan.records).toHaveLength(769);
   });
 
   it('não perde nem duplica nenhuma coleção', () => {
@@ -65,6 +67,7 @@ describe('reconciliação dos registros', () => {
       gutPriorities: 16,
       // Derivadas do campo `dependencias` dos projetos, uma aresta por id.
       dependencies: 2,
+      treatmentCentrals: 4,
       indicators: 56,
       milestones: 9,
       glossary: 10,

@@ -293,3 +293,44 @@ export interface Atualizacao {
   fonte: string;
   arquivosAfetados: string[];
 }
+
+/**
+ * Central de Tratamento de Resíduos em operação.
+ *
+ * Tipo próprio, e não mais um registro de `Infraestrutura`: aquele modela
+ * contagem agregada do que se pretende construir — "25 usinas de triagem" —,
+ * e estas são instalações individuais que já operam, cada uma com capacidade,
+ * vida útil, tratamento de chorume, biogás, energia e municípios atendidos.
+ * Forçá-las no mesmo molde perderia tudo isso.
+ */
+export interface CentralDeTratamento {
+  id: string;
+  nome: string;
+  operadora: string;
+  /** Município onde a central fica, entre os 22 da RMRJ. */
+  municipioSede: string;
+  endereco: string;
+  /** ISO AAAA-MM-DD, ou nulo quando a fonte não informa. */
+  inicioOperacao: string | null;
+  areaM2: number | null;
+  capacidadeProjetoToneladas: number | null;
+  capacidadeDiariaTdia: number | null;
+  capacidadeAnualTano: number | null;
+  recebimentoDiarioMedioTdia: number | null;
+  vidaUtilAnos: number | null;
+  lixiviadoDiarioM3: number | null;
+  tecnologiaChorume: string | null;
+  /** Texto com unidade: as fontes usam Nm³/ano numas e Nm³/h noutras. */
+  biogas: string | null;
+  geracaoEnergia: string | null;
+  creditoCarbonoTco2e: number | null;
+  custoNovaCelulaPorM2: number | null;
+  opexPorTonelada: number | null;
+  custoTratamentoChorumePorM3: number | null;
+  municipiosAtendidos: string[];
+  /** A CTR de Seropédica atende municípios fora da região; eles ficam como texto. */
+  municipiosAtendidosForaDaRmrj: string[];
+  fonte: string;
+  statusValidacao: StatusValidacao;
+  observacao: string | null;
+}

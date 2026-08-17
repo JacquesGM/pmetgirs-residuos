@@ -13,6 +13,7 @@ import type {
   Eixo,
   Indicador,
   IndicadorMunicipal,
+  CentralDeTratamento,
   Meta,
   Municipio,
   StatusProjeto,
@@ -172,6 +173,44 @@ export function toIndicadorMunicipal(doc: PublishedDocument): IndicadorMunicipal
         d.validationStatus as string | null,
         d.actualityStatus as string | null,
       ),
+    observacao: textoOuNulo(d, 'note'),
+  };
+}
+
+// -------------------------------------------------- centrais de tratamento
+
+/** Lista de texto vinda da projeção; ausente vira lista vazia, nunca nulo. */
+function listaDeTexto(d: Record<string, unknown>, chave: string): string[] {
+  return Array.isArray(d[chave]) ? (d[chave] as unknown[]).filter((x): x is string => typeof x === 'string') : [];
+}
+
+export function toCentralDeTratamento(doc: PublishedDocument): CentralDeTratamento {
+  const d = doc.data;
+  return {
+    id: doc.id,
+    nome: texto(d, 'name'),
+    operadora: texto(d, 'operator'),
+    municipioSede: texto(d, 'hostMunicipalityId'),
+    endereco: texto(d, 'address'),
+    inicioOperacao: textoOuNulo(d, 'operationStartDate'),
+    areaM2: numero(d, 'areaM2'),
+    capacidadeProjetoToneladas: numero(d, 'designCapacityTonnes'),
+    capacidadeDiariaTdia: numero(d, 'dailyCapacityTonnes'),
+    capacidadeAnualTano: numero(d, 'annualCapacityTonnes'),
+    recebimentoDiarioMedioTdia: numero(d, 'averageDailyIntakeTonnes'),
+    vidaUtilAnos: numero(d, 'usefulLifeYears'),
+    lixiviadoDiarioM3: numero(d, 'dailyLeachateM3'),
+    tecnologiaChorume: textoOuNulo(d, 'leachateTechnology'),
+    biogas: textoOuNulo(d, 'biogasLabel'),
+    geracaoEnergia: textoOuNulo(d, 'energyLabel'),
+    creditoCarbonoTco2e: numero(d, 'carbonCreditsTco2e'),
+    custoNovaCelulaPorM2: numero(d, 'newCellCostPerM2'),
+    opexPorTonelada: numero(d, 'opexPerTonne'),
+    custoTratamentoChorumePorM3: numero(d, 'leachateCostPerM3'),
+    municipiosAtendidos: listaDeTexto(d, 'municipalityIds'),
+    municipiosAtendidosForaDaRmrj: listaDeTexto(d, 'servedOutsideRegion'),
+    fonte: texto(d, 'sourceLabel'),
+    statusValidacao: 'dado_oficial_validado',
     observacao: textoOuNulo(d, 'note'),
   };
 }
@@ -447,6 +486,12 @@ export const COLECOES_PUBLICAVEIS: ColecaoPublicavel[] = [
     rotulo: 'Alegações de valor',
     mapear: () => ({}),
     emiteArquivo: false,
+  },
+  {
+    colecao: 'treatmentCentrals',
+    arquivo: 'centrais-de-tratamento',
+    rotulo: 'Centrais de tratamento',
+    mapear: toCentralDeTratamento,
   },
   {
     colecao: 'municipalIndicators',

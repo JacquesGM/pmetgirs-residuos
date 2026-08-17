@@ -65,6 +65,7 @@ function loadSources(): MigrationSources {
     indicadoresMunicipais: readJson('indicadoresMunicipais'),
     estimativasDeCusto: readJson('estimativasDeCusto'),
     priorizacaoGut: readJson('priorizacaoGut'),
+    centraisDeTratamento: readJson('centraisDeTratamento'),
     evolucao: readJson('evolucao'),
     glossario: readJson('glossario'),
     atualizacoes: readJson('atualizacoes'),

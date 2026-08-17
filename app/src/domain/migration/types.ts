@@ -20,6 +20,7 @@ export type TargetCollection =
   | 'costEstimates'
   | 'gutPriorities'
   | 'dependencies'
+  | 'treatmentCentrals'
   | 'indicators'
   | 'milestones'
   | 'glossary'
@@ -89,6 +90,7 @@ export interface MigrationSources {
   indicadoresMunicipais: unknown[];
   estimativasDeCusto: unknown[];
   priorizacaoGut: unknown[];
+  centraisDeTratamento: unknown[];
   evolucao: unknown[];
   glossario: unknown[];
   atualizacoes: unknown[];

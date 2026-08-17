@@ -1,6 +1,12 @@
 {
   "files": [
     {
+      "bytes": 5484,
+      "path": "current/centrais-de-tratamento.json",
+      "registros": 4,
+      "sha256": "0dd842477b39804a7a3a70e416bb022f3ee88b2ce84105bf4cc4e4be7de10d1e"
+    },
+    {
       "bytes": 1550,
       "path": "current/documentos.json",
       "registros": 3,
@@ -61,8 +67,9 @@
       "sha256": "a1ab23ae3f472598385ead57f2e3e4d7c332603f858c39daadc94b2f13b89b04"
     }
   ],
-  "generatedAt": "2026-08-17T15:51:59.309Z",
+  "generatedAt": "2026-08-17T18:24:11.654Z",
   "recordCounts": {
+    "centrais-de-tratamento": 4,
     "documentos": 3,
     "eixos": 12,
     "glossario": 10,
@@ -77,6 +84,7 @@
   "schemaVersion": 1,
   "sourceReleaseIds": [
     "836bwERNCXB56n5JF8kn",
+    "Ovk1jztc0LrIz2CbwQu2",
     "axBf0SBVhSkgjAYvFkJ6",
     "u22VKqyMyLa4NhVQpbGd"
   ],

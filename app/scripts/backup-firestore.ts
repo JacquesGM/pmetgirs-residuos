@@ -47,6 +47,7 @@ const COLECOES_INTERNAS = [
   'costEstimates',
   'gutPriorities',
   'dependencies',
+  'treatmentCentrals',
   'imports',
   'settings',
   'approvalRequests',
@@ -56,6 +57,7 @@ const COLECOES_INTERNAS = [
 
 const COLECOES_PUBLICAS = [
   'projects',
+  'treatmentCentrals',
   'axes',
   'indicators',
   'municipalIndicators',
