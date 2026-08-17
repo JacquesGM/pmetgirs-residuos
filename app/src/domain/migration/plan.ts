@@ -197,8 +197,10 @@ function collectGapNotices(plan: MigrationPlan): MigrationIssue[] {
       severity: 'warning',
       code: 'meta_sem_linha_de_base',
       message:
-        `${semLinhaBase.length} metas sem linha de base nem resultado atual. Há alvo e prazo, ` +
-        'mas não há progresso a mostrar. Os números existem nos documentos técnicos.',
+        `${semLinhaBase.length} metas sem linha de base nem resultado atual. Nenhuma delas ` +
+        'declara alvo numérico: o plano as enuncia como ações contínuas, com resultado esperado ' +
+        'em prosa. Onde há linha de base, ela veio do Diagnóstico, não do Plano de Ações — ' +
+        'conferir lá caso a caso é o caminho, e não presumir que o número exista.',
     });
   }
 

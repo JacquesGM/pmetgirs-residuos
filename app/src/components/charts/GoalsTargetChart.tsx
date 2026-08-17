@@ -7,17 +7,36 @@ import { useColecaoPublicada } from '../../data/snapshot/useColecaoPublicada';
 
 const metasEmbutidos = metasData as Meta[];
 
+/** Primeiro número do texto. Serve para a cobertura, que abre o enunciado. */
 function parseLeadingNumber(text: string): number {
   const match = text.match(/\d+/);
   return match ? Number(match[0]) : 0;
 }
 
-function montarDados(metas: Meta[]) {
+/**
+ * Ano-limite do prazo: o ÚLTIMO número do texto, não o primeiro.
+ *
+ * Os três prazos da coleta seletiva são "Até 2 anos", "De 2 a 10 anos" e
+ * "20 anos". Lendo o primeiro número, o intervalo devolvia 2 — e o gráfico
+ * plotava 75% de cobertura já no ano 2, ao lado dos 50% do mesmo ano. A linha
+ * dava um salto vertical e o plano aparecia mais rápido do que é.
+ *
+ * Para uma meta, o número que compromete é o do fim do intervalo: "de 2 a 10
+ * anos" é uma promessa para o ano 10. Antecipá-la seria afirmar mais do que o
+ * documento afirma.
+ */
+export function anoLimiteDoPrazo(prazo: string | null): number {
+  const numeros = (prazo ?? '').match(/\d+/g);
+  return numeros ? Number(numeros[numeros.length - 1]) : 0;
+}
+
+export function montarDados(metas: Meta[]) {
   return ['coleta-seletiva-50', 'coleta-seletiva-75', 'coleta-seletiva-100']
   .map((id) => metas.find((m) => m.id === id))
   .filter((m): m is Meta => Boolean(m))
   .map((meta) => ({
-    ano: parseLeadingNumber(meta.prazo ?? ''),
+    ano: anoLimiteDoPrazo(meta.prazo),
+    prazo: meta.prazo ?? 'não informado',
     percentual: parseLeadingNumber(meta.resultadoEsperado),
     nome: meta.nome,
     resultadoAtual: meta.resultadoAtual,
@@ -31,8 +50,12 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
     <div className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm shadow-md">
       <p className="font-semibold text-neutral-900">{ponto.nome}</p>
       <p className="text-brand-green-700">
-        Meta: <strong>{ponto.percentual}%</strong> em até {ponto.ano} anos
+        Meta: <strong>{ponto.percentual}%</strong>
       </p>
+      {/* O prazo como o documento o escreve. "De 2 a 10 anos" não é "em até 10
+          anos": o ponto está no fim do intervalo porque é ali que a promessa
+          vence, e a redação original evita que o eixo vire a única leitura. */}
+      <p className="text-neutral-600">Prazo no plano: {ponto.prazo}</p>
     </div>
   );
 }
@@ -41,7 +64,7 @@ export function GoalsTargetChart() {
   const metas = useColecaoPublicada<Meta>('metas', metasEmbutidos);
   const chartData = useMemo(() => montarDados(metas), [metas]);
 
-  const trajetoria = chartData.map((d) => `${d.percentual}% em até ${d.ano} anos`).join(', ');
+  const trajetoria = chartData.map((d) => `${d.percentual}% no prazo "${d.prazo}"`).join(', ');
 
   return (
     <ChartFigure
@@ -53,13 +76,20 @@ export function GoalsTargetChart() {
       height="16rem"
       intro={
         <p className="text-xs text-neutral-500">
-          Linha tracejada = metas do Plano de Ações. Não representa resultado obtido: o resultado atual de
-          cada meta segue &quot;Em atualização&quot; (ver cards abaixo).
+          Linha tracejada = metas do Plano de Ações. Não representa resultado obtido: nenhuma das 44
+          metas traz medição nos documentos do PMetGIRS. Cada ponto está no fim do prazo declarado,
+          que é quando a promessa vence.
         </p>
       }
       table={{
-        columns: ['Meta', 'Prazo (anos)', 'Cobertura alvo', 'Resultado atual'],
-        rows: chartData.map((d) => [d.nome, d.ano, `${d.percentual}%`, d.resultadoAtual ?? 'Em atualização']),
+        columns: ['Meta', 'Prazo no plano', 'Ano-limite', 'Cobertura alvo', 'Resultado atual'],
+        rows: chartData.map((d) => [
+          d.nome,
+          d.prazo,
+          d.ano,
+          `${d.percentual}%`,
+          d.resultadoAtual ?? 'não consta dos documentos',
+        ]),
       }}
     >
       <ResponsiveContainer width="100%" height="100%">

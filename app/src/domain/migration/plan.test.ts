@@ -385,6 +385,42 @@ describe('dependências, que sempre estiveram na origem', () => {
   });
 });
 
+describe('metas sem linha de base', () => {
+  // O aviso da migração já afirmou "Há alvo e prazo, mas não há progresso a
+  // mostrar. Os números existem nos documentos técnicos." As duas frases eram
+  // falsas: nenhuma das 44 metas declara alvo, e a existência dos números era
+  // presunção, não constatação.
+  //
+  // Um aviso que afirma demais é pior que nenhum: manda a próxima pessoa
+  // procurar dado que não existe, e o silêncio dela é lido como desleixo.
+
+  it('nenhuma meta declara alvo numérico — o plano as enuncia em prosa', () => {
+    const semAlvo = (metas as Record<string, unknown>[]).filter((m) => !m.alvo);
+    expect(semAlvo).toHaveLength((metas as unknown[]).length);
+  });
+
+  it('as metas da Tabela 24 dizem O QUE medir, não o medido', () => {
+    // Elas declaram unidade — "Tonelada eq de CO2 emitida", "MWh de energia
+    // gerado" — e nenhum valor. Declarar a unidade não é declarar a medida, e
+    // tratar isso como lacuna de transcrição inventaria uma busca sem alvo.
+    const t24 = (metas as Record<string, unknown>[]).filter((m) =>
+      String(m.fonte ?? '').includes('Tabela 24'),
+    );
+    expect(t24.length).toBeGreaterThan(0);
+    for (const m of t24) {
+      expect(m.metodologia, `${m.nome} sem unidade`).toBeTruthy();
+      expect(m.linhaBase, `${m.nome} com linha de base inesperada`).toBeNull();
+    }
+  });
+
+  it('o aviso não afirma que existe alvo', () => {
+    const aviso = plan.issues.find((i) => i.code === 'meta_sem_linha_de_base');
+    expect(aviso).toBeDefined();
+    expect(aviso?.message).not.toMatch(/Há alvo/);
+    expect(aviso?.message).toMatch(/não presumir que o número exista/);
+  });
+});
+
 describe('abrangência lida como lista de municípios', () => {
   const projetosMigrados = plan.records.filter((r) => r.collection === 'projects');
   const ids = (municipios as { id: string }[]).map((m) => m.id);

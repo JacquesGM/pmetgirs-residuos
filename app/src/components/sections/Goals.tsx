@@ -46,23 +46,70 @@ export function Goals() {
                   <Icon aria-hidden="true" className="h-5 w-5" />
                 </span>
                 <p className="mt-3 text-sm font-semibold text-neutral-900">{meta.nome}</p>
-                <p className="mt-2 text-2xl font-bold text-brand-green-700">{meta.resultadoEsperado}</p>
-                <p className="mt-1 text-sm text-neutral-500">Prazo: {meta.prazo}</p>
+
+                {/* Prosa, e apresentada como prosa. Este texto já ocupou o
+                    lugar do número — 2xl, negrito, verde —, a tipografia que o
+                    resto do portal reserva a valor medido. Nenhuma das 44
+                    metas declara alvo numérico: o plano as enuncia como ações
+                    com resultado esperado em palavras. Um "Queima de Metano em
+                    Flares" em corpo de indicador faz uma intenção parecer uma
+                    medição. */}
+                <p className="mt-2 text-xs font-medium uppercase tracking-wide text-neutral-500">
+                  Resultado esperado
+                </p>
+                <p className="mt-0.5 text-sm leading-relaxed text-neutral-800">
+                  {meta.resultadoEsperado}
+                </p>
+
+                <p className="mt-2 text-sm text-neutral-500">Prazo: {meta.prazo ?? 'não informado'}</p>
                 <div className="mt-3">
                   <StatusBadge status={meta.situacao} />
                 </div>
-                <InfoDisclosure label="Linha de base, resultado e fonte">
-                  <span className="block">
-                    Linha de base: <DataValue value={meta.linhaBase} status="em_atualizacao" />
-                  </span>
+                <InfoDisclosure label="Como esta meta é medida, e o que ainda não se mede">
+                  <span className="block">Unidade de medida: {meta.metodologia}</span>
+
+                  {/* "Em atualização" promete um número a caminho. Para a linha
+                      de base isso vale quando o Diagnóstico a traz — foi de lá
+                      que vieram as dez que existem. Onde não vem, o certo é
+                      dizer que a fonte não declara, e não sugerir espera. */}
                   <span className="mt-1 block">
-                    Resultado atual: <DataValue value={meta.resultadoAtual} status="em_atualizacao" />
+                    Linha de base:{' '}
+                    {meta.linhaBase ? (
+                      <DataValue value={meta.linhaBase} status="dado_oficial_validado" />
+                    ) : (
+                      <span className="italic text-neutral-500">
+                        os documentos do PMetGIRS não declaram linha de base para esta meta
+                      </span>
+                    )}
                   </span>
+
+                  {/* Vale para as 44, sem exceção: nenhuma tem resultado
+                      atual. Não é atraso de carga deste sistema — o valor não
+                      consta dos documentos do PMetGIRS.
+
+                      A frase para aqui de propósito. É tentador explicar a
+                      ausência pelo Sistema de Informações Gerenciais, que o
+                      plano prevê e que não existe; mas o achado que o Relatório
+                      documenta trata de INDICADORES dependerem do Banco de
+                      Dados, e não do resultado destas metas. Ligar as duas
+                      coisas seria inferência apresentada como fato. */}
+                  <span className="mt-1 block">
+                    Resultado atual:{' '}
+                    <span className="italic text-neutral-500">
+                      não consta dos documentos do PMetGIRS — nenhuma das 44 metas traz medição
+                    </span>
+                  </span>
+
                   <span className="mt-1 block">Fonte: {meta.fonte}</span>
-                  <span className="mt-1 block">
-                    Data de referência da linha de base:{' '}
-                    <DataValue value={formatarDataDeReferencia(meta.ultimaAtualizacao)} status="em_atualizacao" />
-                  </span>
+                  {meta.linhaBase && (
+                    <span className="mt-1 block">
+                      Data de referência da linha de base:{' '}
+                      <DataValue
+                        value={formatarDataDeReferencia(meta.ultimaAtualizacao)}
+                        status="em_atualizacao"
+                      />
+                    </span>
+                  )}
                 </InfoDisclosure>
               </Card>
             </li>
