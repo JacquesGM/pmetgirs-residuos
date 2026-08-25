@@ -1,0 +1,11 @@
+# Endereco desativado. O portal passou a ser publicado em
+# https://projeto-iguacu-irm.web.app/
+#
+# A varredura segue liberada de proposito: as paginas daqui declaram
+# noindex e redirecionam para o endereco novo, e um Disallow impediria os
+# buscadores de ver essas instrucoes -- o conteudo antigo continuaria
+# indexado, que e justamente o que se quer evitar.
+User-agent: *
+Allow: /
+
+Sitemap: https://projeto-iguacu-irm.web.app/sitemap.xml
